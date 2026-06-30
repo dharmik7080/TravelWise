@@ -1,0 +1,43 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block content %}
+<div id="content-main">
+    <!-- TravelPlanner Quick Stats Card -->
+    <div style="margin-bottom: 25px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #198754;">
+        <h3 style="margin-top: 0; margin-bottom: 15px; font-weight: bold; color: #333; font-family: 'Poppins', sans-serif;"><i class="fa-solid fa-chart-line text-success" style="margin-right: 8px;"></i>TravelPlanner Quick Statistics</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">Total Users</span>
+                <span style="font-size: 1.8rem; font-weight: bold; color: #212529;">{{ total_users }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">Total Destinations</span>
+                <span style="font-size: 1.8rem; font-weight: bold; color: #212529;">{{ total_destinations }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">Total Trips</span>
+                <span style="font-size: 1.8rem; font-weight: bold; color: #212529;">{{ total_trips }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">Total Packages</span>
+                <span style="font-size: 1.8rem; font-weight: bold; color: #212529;">{{ total_packages }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shortcuts to Commonly Managed Models -->
+    <div style="margin-bottom: 25px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #0d6efd;">
+        <h3 style="margin-top: 0; margin-bottom: 15px; font-weight: bold; color: #333; font-family: 'Poppins', sans-serif;"><i class="fa-solid fa-link text-primary" style="margin-right: 8px;"></i>Quick Management Shortcuts</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <a href="/admin/destinations/destination/" class="button" style="background-color: #0d6efd; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 500; display: inline-block;">Manage Destinations</a>
+            <a href="/admin/trips/trip/" class="button" style="background-color: #0d6efd; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 500; display: inline-block;">Manage Trips</a>
+            <a href="/admin/packages/package/" class="button" style="background-color: #0d6efd; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 500; display: inline-block;">Manage Packages</a>
+            <a href="/admin/attractions/attraction/" class="button" style="background-color: #0d6efd; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 500; display: inline-block;">Manage Attractions</a>
+            <a href="/admin/auth/user/" class="button" style="background-color: #6c757d; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 500; display: inline-block;">Manage Users</a>
+        </div>
+    </div>
+
+    {{ block.super }}
+</div>
+{% endblock %}

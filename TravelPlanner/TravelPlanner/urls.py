@@ -21,6 +21,27 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from destinations.views import HomeView
 
+# Wrap admin.site.index to inject quick homepage metrics
+from django.contrib.auth import get_user_model
+from destinations.models import Destination
+from trips.models import Trip
+from packages.models import Package
+
+original_admin_index = admin.site.index
+
+def custom_admin_index(request, extra_context=None):
+    extra_context = extra_context or {}
+    User = get_user_model()
+    extra_context.update({
+        'total_users': User.objects.count(),
+        'total_destinations': Destination.objects.count(),
+        'total_trips': Trip.objects.count(),
+        'total_packages': Package.objects.count(),
+    })
+    return original_admin_index(request, extra_context)
+
+admin.site.index = custom_admin_index
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),

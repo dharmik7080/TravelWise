@@ -355,3 +355,161 @@ class ImportDestinationsCommandTests(TestCase):
             self.assertIsNone(weather)
 
 
+class DestinationAdminTests(TestCase):
+    def setUp(self):
+        self.username = "admin"
+        self.password = "adminpass"
+        self.admin_user = User.objects.create_superuser(
+            username=self.username,
+            email="admin@example.com",
+            password=self.password
+        )
+        self.dest = Destination.objects.create(
+            destination_name="Grand Canyon Admin",
+            city="Tusayan",
+            state="Arizona",
+            category="Nature",
+            description="Deep canyon.",
+            best_season="Spring",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=150.00,
+            average_rating=4.8
+        )
+
+    def test_destination_admin_list_display_and_features(self):
+        from django.contrib.admin.sites import site
+        from .admin import DestinationAdmin
+        
+        # Verify class registration
+        self.assertIn(Destination, site._registry)
+        admin_instance = site._registry[Destination]
+        self.assertIsInstance(admin_instance, DestinationAdmin)
+        
+        # Verify display columns config matches requirements
+        expected_list_display = ('image_preview', 'destination_name', 'state', 'category', 'budget_level', 'best_season', 'average_rating')
+        self.assertEqual(admin_instance.list_display, expected_list_display)
+        
+        # Verify search fields configuration
+        expected_search_fields = ('destination_name', 'city')
+        self.assertEqual(admin_instance.search_fields, expected_search_fields)
+        
+        # Verify list filters configuration
+        expected_list_filter = ('state', 'category', 'budget_level')
+        self.assertEqual(admin_instance.list_filter, expected_list_filter)
+        
+        # Verify ordering configuration
+        self.assertEqual(admin_instance.ordering, ('destination_name',))
+        
+        # Verify pagination limit
+        self.assertEqual(admin_instance.list_per_page, 20)
+
+    def test_destination_admin_image_preview_generation(self):
+        from django.contrib.admin.sites import site
+        admin_instance = site._registry[Destination]
+        
+        # Test image_preview returns "No Image" when field is empty
+        preview_html = admin_instance.image_preview(self.dest)
+        self.assertIn("No Image", preview_html)
+        
+        # Test image_preview_form returns placeholder string when field is empty
+        preview_form_html = admin_instance.image_preview_form(self.dest)
+        self.assertIn("No image uploaded yet.", preview_form_html)
+
+
+class DestinationCSVExportTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        self.username = "admin"
+        self.password = "adminpass"
+        self.admin_user = User.objects.create_superuser(
+            username=self.username,
+            email="admin@example.com",
+            password=self.password
+        )
+        self.dest = Destination.objects.create(
+            destination_name="Grand Canyon Export",
+            city="Tusayan",
+            state="Arizona",
+            category="Nature",
+            description="Deep canyon.",
+            best_season="Spring",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=150.00,
+            average_rating=4.8
+        )
+
+    def test_destination_csv_export_requires_staff(self):
+        # Unauthenticated redirects to admin login
+        response = self.client.get('/admin/destinations/destination/export-csv/')
+        self.assertEqual(response.status_code, 302)
+
+        # Non-staff user redirects to admin login
+        from django.contrib.auth.models import User
+        User.objects.create_user(username="simple_user", password="simple_password")
+        self.client.login(username="simple_user", password="simple_password")
+        response = self.client.get('/admin/destinations/destination/export-csv/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_destination_csv_export_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.get('/admin/destinations/destination/export-csv/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/csv')
+        self.assertIn('attachment; filename="destinations.csv"', response['Content-Disposition'])
+        
+        content = b"".join(response.streaming_content).decode('utf-8')
+        self.assertIn("destination_name", content)
+        self.assertIn("Grand Canyon Export", content)
+        self.assertIn("Arizona", content)
+
+
+class DestinationModelValidationTests(TestCase):
+    def test_destination_validation_invalid_rating(self):
+        from django.core.exceptions import ValidationError
+        dest = Destination(
+            destination_name="Invalid Rating Dest",
+            city="City",
+            category="Nature",
+            description="Desc",
+            best_season="Summer",
+            budget_level="Moderate",
+            average_cost_per_day=100.00,
+            average_rating=6.0  # Invalid rating
+        )
+        with self.assertRaises(ValidationError):
+            dest.clean()
+
+    def test_destination_validation_negative_cost(self):
+        from django.core.exceptions import ValidationError
+        dest = Destination(
+            destination_name="Negative Cost Dest",
+            city="City",
+            category="Nature",
+            description="Desc",
+            best_season="Summer",
+            budget_level="Moderate",
+            average_cost_per_day=-50.00,  # Negative cost
+            average_rating=4.5
+        )
+        with self.assertRaises(ValidationError):
+            dest.clean()
+
+    def test_destination_validation_invalid_ideal_days(self):
+        from django.core.exceptions import ValidationError
+        dest = Destination(
+            destination_name="Invalid Days Dest",
+            city="City",
+            category="Nature",
+            description="Desc",
+            best_season="Summer",
+            budget_level="Moderate",
+            average_cost_per_day=100.00,
+            ideal_days=0,  # Zero or negative
+            average_rating=4.5
+        )
+        with self.assertRaises(ValidationError):
+            dest.clean()
+
+

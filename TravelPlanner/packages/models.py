@@ -13,5 +13,12 @@ class Package(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='packages/', blank=True, null=True)
 
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.price is not None and self.price < 0:
+            raise ValidationError({'price': 'Price must be positive.'})
+        if self.duration is not None and self.duration <= 0:
+            raise ValidationError({'duration': 'Duration must be greater than zero.'})
+
     def __str__(self):
         return f"{self.package_name} ({self.duration} Days)"

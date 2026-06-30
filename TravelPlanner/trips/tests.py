@@ -417,4 +417,203 @@ class TripsAccessTests(TestCase):
         self.assertEqual(day2.morning, "New Morning 2")
 
 
+class TripAdminTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        self.username = "admin"
+        self.password = "adminpass"
+        self.admin_user = User.objects.create_superuser(
+            username=self.username,
+            email="admin@example.com",
+            password=self.password
+        )
+        self.user = User.objects.create_user(
+            username="traveller_jane",
+            password="jane_password",
+            email="jane@example.com"
+        )
+        self.destination = Destination.objects.create(
+            destination_name="Yosemite Valley Admin",
+            city="Yosemite",
+            state="California",
+            category="Nature",
+            description="Scenic valley.",
+            best_season="Summer",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=200.00,
+            average_rating=4.9
+        )
+        self.trip = Trip.objects.create(
+            user=self.user,
+            destination=self.destination,
+            start_date='2026-07-15',
+            end_date='2026-07-20',
+            number_of_travelers=2,
+            budget=800.00,
+            travel_type='Couple'
+        )
+
+    def test_trip_admin_list_display_and_features(self):
+        from django.contrib.admin.sites import site
+        from .admin import TripAdmin, TripStatusListFilter
+        
+        self.assertIn(Trip, site._registry)
+        admin_instance = site._registry[Trip]
+        self.assertIsInstance(admin_instance, TripAdmin)
+        
+        expected_list_display = ('get_username', 'destination', 'start_date', 'end_date', 'budget', 'travel_type')
+        self.assertEqual(admin_instance.list_display, expected_list_display)
+        
+        expected_search_fields = ('user__username', 'destination__destination_name')
+        self.assertEqual(admin_instance.search_fields, expected_search_fields)
+        
+        # Test get_username returns correct string
+        self.assertEqual(admin_instance.get_username(self.trip), "traveller_jane")
+        
+        # Test custom TripStatusListFilter lookups
+        filter_instance = TripStatusListFilter(None, {'status': 'upcoming'}, Trip, admin_instance)
+        lookups = filter_instance.lookups(None, admin_instance)
+        self.assertEqual(lookups, (('upcoming', 'Upcoming'), ('completed', 'Completed')))
+
+    def test_trip_admin_queryset_optimization(self):
+        from django.contrib.admin.sites import site
+        admin_instance = site._registry[Trip]
+        
+        request = None
+        queryset = admin_instance.get_queryset(request)
+        # Check select_related has 'user' and 'destination'
+        self.assertTrue(queryset.query.select_related)
+        self.assertIn('user', queryset.query.select_related)
+        self.assertIn('destination', queryset.query.select_related)
+
+
+class TripCSVExportTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        self.username = "admin"
+        self.password = "adminpass"
+        self.admin_user = User.objects.create_superuser(
+            username=self.username,
+            email="admin@example.com",
+            password=self.password
+        )
+        self.user = User.objects.create_user(
+            username="traveller_jane",
+            password="jane_password",
+            email="jane@example.com"
+        )
+        self.destination = Destination.objects.create(
+            destination_name="Yosemite Valley Admin Export",
+            city="Yosemite",
+            state="California",
+            category="Nature",
+            description="Scenic valley.",
+            best_season="Summer",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=200.00,
+            average_rating=4.9
+        )
+        self.trip = Trip.objects.create(
+            user=self.user,
+            destination=self.destination,
+            start_date='2026-07-15',
+            end_date='2026-07-20',
+            number_of_travelers=2,
+            budget=800.00,
+            travel_type='Couple'
+        )
+
+    def test_trip_csv_export_requires_staff(self):
+        response = self.client.get('/admin/trips/trip/export-csv/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_trip_csv_export_success(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.get('/admin/trips/trip/export-csv/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/csv')
+        self.assertIn('attachment; filename="trips.csv"', response['Content-Disposition'])
+        
+        content = b"".join(response.streaming_content).decode('utf-8')
+        self.assertIn("user__username", content)
+        self.assertIn("destination__destination_name", content)
+        self.assertIn("traveller_jane", content)
+        self.assertIn("Yosemite Valley Admin Export", content)
+        self.assertIn("Couple", content)
+
+
+class TripModelValidationTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth.models import User
+        self.user = User.objects.create_user(username="valid_user", password="valid_password")
+        self.destination = Destination.objects.create(
+            destination_name="Yosemite Valley Validated",
+            city="Yosemite",
+            state="California",
+            category="Nature",
+            description="Scenic valley.",
+            best_season="Summer",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=200.00,
+            average_rating=4.9
+        )
+
+    def test_trip_validation_dates_order(self):
+        from django.core.exceptions import ValidationError
+        trip = Trip(
+            user=self.user,
+            destination=self.destination,
+            start_date='2026-07-20',
+            end_date='2026-07-15',  # End before start
+            number_of_travelers=2,
+            budget=800.00,
+            travel_type='Couple'
+        )
+        with self.assertRaises(ValidationError):
+            trip.clean()
+
+    def test_trip_validation_negative_budget(self):
+        from django.core.exceptions import ValidationError
+        trip = Trip(
+            user=self.user,
+            destination=self.destination,
+            start_date='2026-07-15',
+            end_date='2026-07-20',
+            number_of_travelers=2,
+            budget=-800.00,  # Negative budget
+            travel_type='Couple'
+        )
+        with self.assertRaises(ValidationError):
+            trip.clean()
+
+    def test_trip_validation_negative_travelers(self):
+        from django.core.exceptions import ValidationError
+        trip = Trip(
+            user=self.user,
+            destination=self.destination,
+            start_date='2026-07-15',
+            end_date='2026-07-20',
+            number_of_travelers=0,  # Invalid traveler count
+            budget=800.00,
+            travel_type='Couple'
+        )
+        with self.assertRaises(ValidationError):
+            trip.clean()
+
+    def test_itinerary_template_validation_day_number(self):
+        from django.core.exceptions import ValidationError
+        template = ItineraryTemplate(
+            destination=self.destination,
+            day_number=0,  # Invalid day number
+            morning="Morning",
+            afternoon="Afternoon",
+            evening="Evening"
+        )
+        with self.assertRaises(ValidationError):
+            template.clean()
+
+
 

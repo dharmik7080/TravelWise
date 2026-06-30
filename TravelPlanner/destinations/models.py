@@ -28,5 +28,14 @@ class Destination(models.Model):
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
     image = models.ImageField(upload_to='destinations/', blank=True, null=True)
 
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.average_rating is not None and (self.average_rating < 0.0 or self.average_rating > 5.0):
+            raise ValidationError({'average_rating': 'Rating must be between 0.0 and 5.0.'})
+        if self.average_cost_per_day is not None and self.average_cost_per_day < 0:
+            raise ValidationError({'average_cost_per_day': 'Average cost per day must be positive.'})
+        if self.ideal_days is not None and self.ideal_days <= 0:
+            raise ValidationError({'ideal_days': 'Ideal days must be greater than zero.'})
+
     def __str__(self):
         return f"{self.destination_name} ({self.city})"
