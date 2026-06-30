@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}{{ destination.destination_name }} | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}{{ destination.destination_name }} | TravelWise{% endblock %}
 
 {% block content %}
 <div class="container py-5 flex-grow-1">
@@ -174,7 +175,7 @@
                                 <div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">{{ package.package_type }}</span>
-                                        <h5 class="fw-bold text-dark mb-0">${{ package.price }} <span class="fs-6 text-muted fw-normal">/ pax</span></h5>
+                                        <h5 class="fw-bold text-dark mb-0">₹{{ package.price|intcomma }} <span class="fs-6 text-muted fw-normal">/ pax</span></h5>
                                     </div>
                                     <h5 class="fw-bold mb-2">{{ package.package_name }}</h5>
                                     <p class="text-muted small mb-2"><i class="fa-regular fa-clock me-1"></i> {{ package.duration }} Days duration</p>
@@ -229,7 +230,7 @@
 
                     <div class="mb-4">
                         <span class="text-muted small d-block">Average Cost Per Day</span>
-                        <span class="fw-bold text-primary fs-4"><i class="fa-solid fa-dollar-sign me-1"></i>{{ destination.average_cost_per_day }}</span>
+                        <span class="fw-bold text-primary fs-4">₹{{ destination.average_cost_per_day|intcomma }}</span>
                     </div>
 
                     <h5 class="fw-bold mb-3 text-dark border-bottom pb-2 pt-2">Vibe / Suitability</h5>

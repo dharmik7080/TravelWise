@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Login | TravelPlanner{% endblock %}
+{% block title %}Login | TravelWise{% endblock %}
 
 {% block content %}
 <div class="container py-5 flex-grow-1 d-flex align-items-center">
@@ -10,7 +10,7 @@
                     <div class="text-center mb-4">
                         <i class="fa-solid fa-compass fa-3x text-primary mb-3"></i>
                         <h2 class="fw-bold text-dark">Welcome Back</h2>
-                        <p class="text-muted">Sign in to your TravelPlanner account</p>
+                        <p class="text-muted">Sign in to your TravelWise account</p>
                     </div>
 
                     <form method="post" novalidate>
@@ -47,7 +47,7 @@
                         </div>
                     </form>
                     <div class="text-center mt-4 pt-3 border-top">
-                        <span class="text-muted small">New to TravelPlanner?</span>
+                        <span class="text-muted small">New to TravelWise?</span>
                         <a href="{% url 'accounts:register' %}" class="small fw-semibold text-primary ms-1">Create Account</a>
                     </div>
                 </div>

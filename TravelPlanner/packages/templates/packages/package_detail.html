@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Package: {{ package.package_name }} | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}Package: {{ package.package_name }} | TravelWise{% endblock %}
 
 {% block content %}
 <div class="container py-5 flex-grow-1">
@@ -46,7 +47,7 @@
                         </div>
                         <div>
                             <small class="text-muted d-block">Price</small>
-                            <span class="fw-bold text-dark fs-5">${{ package.price }} <span class="fs-6 text-muted fw-normal">/ person</span></span>
+                            <span class="fw-bold text-dark fs-5">₹{{ package.price|intcomma }} <span class="fs-6 text-muted fw-normal">/ person</span></span>
                         </div>
                     </div>
 

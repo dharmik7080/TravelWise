@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     'attractions',
     'packages',
     'seasons',
+
+    # Third-party apps
+    'rest_framework',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

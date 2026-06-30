@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home | TravelPlanner{% endblock %}
+{% block title %}Home | TravelWise{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -67,8 +67,8 @@
         <div class="row align-items-center">
             <div class="col-lg-8 col-md-10">
                 <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 text-uppercase tracking-wider">Plan Your Next Getaway</span>
-                <h1 class="display-3 fw-bold mb-4">Discover the World,<br>One Trip at a Time</h1>
-                <p class="lead mb-4 fs-4">Plan, customize, and track your dream itineraries using our comprehensive, interactive travel planner tool built specifically for travelers who explore with passion.</p>
+                <h1 class="display-3 fw-bold mb-4">Discover India's<br>Most Beautiful Destinations</h1>
+                <p class="lead mb-4 fs-4">Plan memorable journeys with curated destinations, travel packages, weather insights and personalized itineraries.</p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
                     <a href="#" class="btn btn-primary btn-lg px-4 py-3 shadow-lg"><i class="fa-solid fa-map-location-dot me-2"></i>Start Planning</a>
                     <a href="#about" class="btn btn-outline-light btn-lg px-4 py-3"><i class="fa-solid fa-circle-info me-2"></i>Learn More</a>
@@ -77,6 +77,42 @@
         </div>
     </div>
 </header>
+
+<!-- Statistics Section -->
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="card border p-4 shadow-sm rounded-4 h-100 card-hover">
+                    <div class="text-primary mb-2"><i class="bi bi-geo-alt-fill fs-1"></i></div>
+                    <h2 class="fw-bold text-dark mb-1">75+</h2>
+                    <p class="text-muted mb-0 small fw-semibold">Destinations</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border p-4 shadow-sm rounded-4 h-100 card-hover">
+                    <div class="text-success mb-2"><i class="bi bi-camera-fill fs-1"></i></div>
+                    <h2 class="fw-bold text-dark mb-1">390+</h2>
+                    <p class="text-muted mb-0 small fw-semibold">Attractions</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border p-4 shadow-sm rounded-4 h-100 card-hover">
+                    <div class="text-warning mb-2"><i class="bi bi-box-seam-fill fs-1"></i></div>
+                    <h2 class="fw-bold text-dark mb-1">225+</h2>
+                    <p class="text-muted mb-0 small fw-semibold">Packages</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border p-4 shadow-sm rounded-4 h-100 card-hover">
+                    <div class="text-info mb-2"><i class="bi bi-emoji-smile-fill fs-1"></i></div>
+                    <h2 class="fw-bold text-dark mb-1">100%</h2>
+                    <p class="text-muted mb-0 small fw-semibold">Travel Experiences</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Featured Destinations Section -->
 <section class="py-5 bg-white">
@@ -137,7 +173,7 @@
                             <div class="card-body p-4 flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Best Value</span>
-                                    <h5 class="fw-bold text-primary mb-0">$1,499 <span class="fs-6 fw-normal text-muted">/ person</span></h5>
+                                    <h5 class="fw-bold text-primary mb-0">₹18,999 <span class="fs-6 fw-normal text-muted">/ person</span></h5>
                                 </div>
                                 <h3 class="card-title fw-bold mt-2">Tropical Island Getaway</h3>
                                 <p class="card-text text-muted my-3">Escape to white sands, clear lagoon pools, and fully-serviced beachside villas. Includes 5 nights, breakfast, snorkeling, and spa packages.</p>
@@ -180,8 +216,8 @@
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="pe-lg-4">
-                    <h2 class="section-title">About TravelPlanner</h2>
-                    <p class="lead text-muted mb-4">TravelPlanner is an intuitive, collaborative project dashboard designed to help travelers discover destinations, set budgets, and compile comprehensive itineraries in one place.</p>
+                    <h2 class="section-title">About TravelWise</h2>
+                    <p class="lead text-muted mb-4">TravelWise is an intuitive, collaborative project dashboard designed to help travelers discover destinations, set budgets, and compile comprehensive itineraries in one place.</p>
                     <p class="text-secondary mb-4">Developed as a modern web app, this tool leverages Django's robust backend architecture to power account administration, secure API synchronization, and itinerary scheduling modules.</p>
                     <div class="row g-4">
                         <div class="col-sm-6">
@@ -210,14 +246,45 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="bg-light p-5 rounded-4 shadow-sm border text-center">
-                    <i class="fa-solid fa-code fa-4x text-primary mb-4"></i>
-                    <h4 class="fw-bold">Under Construction</h4>
-                    <p class="text-muted px-md-3">The application models, views, and authentication APIs are currently being integrated. Check back soon for the complete collaborative traveler experience!</p>
-                    <div class="mt-4 pt-2 border-top">
-                        <span class="badge bg-secondary">Django 5.2.15</span>
-                        <span class="badge bg-secondary ms-1">Bootstrap 5</span>
-                        <span class="badge bg-secondary ms-1">Python 3</span>
+                <div class="p-3">
+                    <h3 class="fw-bold text-dark mb-4"><i class="bi bi-star-fill text-primary me-2"></i>Why Choose TravelWise?</h3>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="card h-100 p-3 border shadow-sm rounded-3 card-hover">
+                                <h5 class="fw-bold text-primary mb-2"><i class="bi bi-geo-alt-fill me-2"></i>75+ Destinations</h5>
+                                <p class="text-muted small mb-0">Carefully curated tourist spots across India.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card h-100 p-3 border shadow-sm rounded-3 card-hover">
+                                <h5 class="fw-bold text-success mb-2"><i class="bi bi-camera-fill me-2"></i>390+ Attractions</h5>
+                                <p class="text-muted small mb-0">Must-visit landmarks, historic forts, and natural sights.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card h-100 p-3 border shadow-sm rounded-3 card-hover">
+                                <h5 class="fw-bold text-warning mb-2"><i class="bi bi-box-seam-fill me-2"></i>225+ Packages</h5>
+                                <p class="text-muted small mb-0">Budget, Standard, and Luxury experiences ready for you.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card h-100 p-3 border shadow-sm rounded-3 card-hover">
+                                <h5 class="fw-bold text-info mb-2"><i class="bi bi-sliders me-2"></i>Smart Trip Planning</h5>
+                                <p class="text-muted small mb-0">Easily schedule daily routes and activities.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card h-100 p-3 border shadow-sm rounded-3 card-hover">
+                                <h5 class="fw-bold text-danger mb-2"><i class="bi bi-cloud-sun-fill me-2"></i>Live Weather</h5>
+                                <p class="text-muted small mb-0">Real-time seasonal weather insights for smart packing.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card h-100 p-3 border shadow-sm rounded-3 card-hover">
+                                <h5 class="fw-bold text-dark mb-2"><i class="bi bi-journal-text me-2"></i>Personalized Itineraries</h5>
+                                <p class="text-muted small mb-0">Tailored travel guides based on your preferences.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -167,7 +167,7 @@ class AdminHomepageTests(TestCase):
         self.assertEqual(response.context['total_destinations'], 0)
 
         # Check HTML renders correctly
-        self.assertContains(response, "TravelPlanner Quick Statistics")
+        self.assertContains(response, "TravelWise Quick Statistics")
         self.assertContains(response, "Quick Management Shortcuts")
         self.assertContains(response, "Manage Destinations")
         self.assertContains(response, "Manage Trips")

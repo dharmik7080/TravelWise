@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}{{ trip.destination.destination_name }} Trip Details | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}{{ trip.destination.destination_name }} Trip Details | TravelWise{% endblock %}
 
 {% block content %}
 <div class="container py-5 flex-grow-1">
@@ -21,7 +22,7 @@
                             <p class="text-primary fw-semibold mb-0"><i class="fa-solid fa-location-dot me-1"></i> {{ trip.destination.city }}, {{ trip.destination.state }}</p>
                         </div>
                         <div class="text-end">
-                            <span class="badge bg-success px-3 py-2 rounded-pill fs-6 fw-bold">${{ trip.budget }}</span>
+                            <span class="badge bg-success px-3 py-2 rounded-pill fs-6 fw-bold">₹{{ trip.budget|intcomma }}</span>
                             <small class="text-muted d-block mt-1">Total Budget</small>
                         </div>
                     </div>

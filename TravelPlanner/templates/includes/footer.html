@@ -1,5 +1,38 @@
-<footer class="footer mt-auto py-3 bg-white border-top">
-    <div class="container text-center">
-        <span class="text-muted">&copy; {% now "Y" %} TravelPlanner. All rights reserved.</span>
+<footer class="footer mt-auto py-5 bg-white border-top">
+    <div class="container">
+        <div class="row g-4 mb-4">
+            <!-- Brand Column -->
+            <div class="col-md-4">
+                <h5 class="fw-bold text-dark mb-2"><i class="fa-solid fa-compass text-primary me-2"></i>TravelWise</h5>
+                <p class="text-muted small">Discover &bull; Plan &bull; Explore</p>
+                <p class="text-muted small mt-3">Built using Django, Bootstrap 5 and SQLite.</p>
+            </div>
+            <!-- Quick Links -->
+            <div class="col-6 col-md-4">
+                <h6 class="fw-bold text-secondary mb-3">Quick Links</h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><a href="{% url 'home' %}" class="text-decoration-none text-muted small">Home</a></li>
+                    <li class="mb-2"><a href="{% url 'destinations:list' %}" class="text-decoration-none text-muted small">Destinations</a></li>
+                    <li class="mb-2"><a href="{% url 'packages:list' %}" class="text-decoration-none text-muted small">Packages</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="mb-2"><a href="{% url 'trips:index' %}" class="text-decoration-none text-muted small">Trips</a></li>
+                        <li class="mb-2"><a href="{% url 'dashboard:index' %}" class="text-decoration-none text-muted small">Dashboard</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- Support -->
+            <div class="col-6 col-md-4">
+                <h6 class="fw-bold text-secondary mb-3">Support</h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><a href="#" class="text-decoration-none text-muted small">Contact</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none text-muted small">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none text-muted small">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="text-muted opacity-25">
+        <div class="d-flex justify-content-between align-items-center flex-wrap pt-2">
+            <span class="text-muted small">&copy; 2026 TravelWise. All rights reserved.</span>
+        </div>
     </div>
 </footer>

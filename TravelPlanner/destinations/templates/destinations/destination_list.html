@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Destinations | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}Destinations | TravelWise{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -40,7 +41,7 @@
         <!-- Search Input Row -->
         <div class="input-group mb-4 border rounded-3 overflow-hidden">
             <span class="input-group-text bg-white border-0 ps-3"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-            <input type="text" name="q" class="form-control border-0 py-2.5 ps-2" placeholder="Search by name, city, or state..." value="{{ q }}">
+            <input type="text" name="q" class="form-control border-0 py-2.5 ps-2" placeholder="Search destinations..." value="{{ q }}">
             {% if q %}
                 <a href="{% url 'destinations:list' %}" class="btn btn-link text-secondary bg-white border-0 d-flex align-items-center" style="text-decoration:none;"><i class="fa-solid fa-xmark fs-5"></i></a>
             {% endif %}

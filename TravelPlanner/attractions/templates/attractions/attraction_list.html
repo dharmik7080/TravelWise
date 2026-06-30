@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Tourist Attractions | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}Tourist Attractions | TravelWise{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -40,7 +41,7 @@
         <!-- Search Input Row -->
         <div class="input-group mb-4 border rounded-3 overflow-hidden">
             <span class="input-group-text bg-white border-0 ps-3"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-            <input type="text" name="q" class="form-control border-0 py-2.5 ps-2" placeholder="Search attractions by name..." value="{{ q }}">
+            <input type="text" name="q" class="form-control border-0 py-2.5 ps-2" placeholder="Search attractions..." value="{{ q }}">
             {% if q %}
                 <a href="{% url 'attractions:list' %}" class="btn btn-link text-secondary bg-white border-0 d-flex align-items-center" style="text-decoration:none;"><i class="fa-solid fa-xmark fs-5"></i></a>
             {% endif %}
@@ -78,34 +79,30 @@
             </div>
         </div>
 
-        <!-- Actions Row -->
-        <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-            {% if q or request.GET.destination or request.GET.category or request.GET.entry_type %}
-                <a href="{% url 'attractions:list' %}" class="btn btn-outline-secondary px-4 py-2 small fw-semibold"><i class="fa-solid fa-rotate-left me-2"></i>Clear Filters</a>
-            {% endif %}
-            <button type="submit" class="btn btn-primary px-4 py-2 small fw-semibold"><i class="fa-solid fa-filter me-2"></i>Apply Filters</button>
+        <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
+            <button type="submit" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-filter me-2"></i>Apply Filters</button>
+            <a href="{% url 'attractions:list' %}" class="btn btn-light border px-4 py-2 text-secondary"><i class="fa-solid fa-rotate-left me-2"></i>Reset</a>
         </div>
     </form>
 
     {% if attractions %}
+    <!-- Attractions Grid -->
     <div class="row g-4">
         {% for attraction in attractions %}
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0">
-                <div style="overflow:hidden; border-top-left-radius: .375rem; border-top-right-radius: .375rem;">
+            <div class="card h-100 border shadow-sm rounded-4 overflow-hidden card-hover">
+                <div class="position-relative">
                     {% if attraction.image %}
-                        <img src="{{ attraction.image.url }}" class="card-img-top hover-zoom-img" alt="{{ attraction.attraction_name }}">
+                    <img src="{{ attraction.image.url }}" class="card-img-top hover-zoom-img" alt="{{ attraction.attraction_name }}">
                     {% else %}
-                        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 220px;">
-                            <i class="fa-regular fa-image fa-3x"></i>
-                        </div>
+                    <img src="{% static 'images/placeholder_attraction.jpg' %}" class="card-img-top hover-zoom-img" alt="{{ attraction.attraction_name }}">
                     {% endif %}
                 </div>
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-primary small fw-semibold">
-                                <i class="fa-solid fa-location-dot me-1"></i> 
+                            <span class="text-secondary small fw-semibold">
+                                <i class="fa-solid fa-location-dot me-1"></i>
                                 {{ attraction.destination.destination_name }}
                             </span>
                             <span class="badge bg-primary bg-opacity-10 text-primary">{{ attraction.category }}</span>
@@ -116,7 +113,7 @@
                     <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
                         <span class="fw-semibold text-dark small">
                             <i class="fa-solid fa-wallet text-secondary me-1"></i>
-                            {% if attraction.entry_fee == 0 %}Free{% else %}${{ attraction.entry_fee }}{% endif %}
+                            {% if attraction.entry_fee == 0 %}Free{% else %}₹{{ attraction.entry_fee|intcomma }}{% endif %}
                         </span>
                         <a href="{% url 'attractions:detail' attraction.pk %}" class="btn btn-sm btn-outline-primary px-3">View Details</a>
                     </div>

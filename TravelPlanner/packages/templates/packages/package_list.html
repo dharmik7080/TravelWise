@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Travel Packages | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}Travel Packages | TravelWise{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -64,7 +65,7 @@
                     <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
                         <div>
                             <span class="text-muted small d-block">{{ package.duration }} Days</span>
-                            <span class="fw-bold text-dark fs-5">${{ package.price }}</span>
+                             <span class="fw-bold text-dark fs-5">₹{{ package.price|intcomma }}</span>
                         </div>
                         <a href="{% url 'packages:detail' package.pk %}" class="btn btn-sm btn-outline-primary px-3">View Details</a>
                     </div>

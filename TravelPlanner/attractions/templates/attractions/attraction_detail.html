@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}{{ attraction.attraction_name }} | TravelPlanner{% endblock %}
+{% load humanize %}
+{% block title %}{{ attraction.attraction_name }} | TravelWise{% endblock %}
 
 {% block content %}
 <div class="container py-5 flex-grow-1">
@@ -46,7 +47,7 @@
                         </div>
                         <div>
                             <small class="text-muted d-block">Entry Fee</small>
-                            <span class="fw-bold text-dark">{% if attraction.entry_fee == 0 %}Free{% else %}${{ attraction.entry_fee }}{% endif %}</span>
+                            <span class="fw-bold text-dark">{% if attraction.entry_fee == 0 %}Free{% else %}₹{{ attraction.entry_fee|intcomma }}{% endif %}</span>
                         </div>
                     </div>
 

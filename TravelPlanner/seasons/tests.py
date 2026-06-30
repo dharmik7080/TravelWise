@@ -36,3 +36,39 @@ class BestSeasonTests(TestCase):
         self.assertContains(response, "December to February")
         self.assertContains(response, "26°C")
         self.assertContains(response, "Great time for whale watching off the coast.")
+
+
+class ImportSeasonsCommandTests(TestCase):
+    def setUp(self):
+        self.destination = Destination.objects.create(
+            destination_name="Lahore",
+            city="Lahore",
+            state="Punjab",
+            category="Heritage",
+            description="Historic city.",
+            best_season="Winter",
+            ideal_days=3,
+            budget_level="Budget",
+            average_cost_per_day=50.00,
+            average_rating=4.5
+        )
+
+    def test_import_seasons_command_success(self):
+        import tempfile
+        import csv
+        from django.core.management import call_command
+
+        with tempfile.NamedTemporaryFile(mode='w+', suffix='.csv', delete=False) as f:
+            csv_path = f.name
+            writer = csv.writer(f)
+            writer.writerow([
+                'destination_name', 'season', 'peak_months', 
+                'average_temperature', 'rainfall', 'travel_tip'
+            ])
+            writer.writerow([
+                'Lahore', 'Winter', 'Nov-Feb', '15C', 'Low', 'Enjoy historical monuments.'
+            ])
+        
+        call_command('import_seasons', csv_path)
+        self.assertEqual(BestSeason.objects.filter(destination=self.destination).count(), 1)
+        self.assertTrue(BestSeason.objects.filter(season='Winter', destination=self.destination).exists())
