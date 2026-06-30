@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | TravelPlanner{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)), url('{% static "images/hero_travel.jpg" %}') no-repeat center center/cover;
+        min-height: 550px;
+        display: flex;
+        align-items: center;
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .section-title {
+        font-weight: 700;
+        position: relative;
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 4px;
+        background-color: #0d6efd;
+        border-radius: 2px;
+    }
+
+    .card-img-wrapper {
+        overflow: hidden;
+        border-top-left-radius: calc(0.375rem - 1px);
+        border-top-right-radius: calc(0.375rem - 1px);
+    }
+
+    .hover-zoom-img {
+        transition: transform 0.4s ease;
+        height: 240px;
+        object-fit: cover;
+    }
+
+    .card:hover .hover-zoom-img {
+        transform: scale(1.06);
+    }
+
+    .card {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        border: none;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<header class="hero-section text-center text-md-start py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-10">
+                <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 text-uppercase tracking-wider">Plan Your Next Getaway</span>
+                <h1 class="display-3 fw-bold mb-4">Discover the World,<br>One Trip at a Time</h1>
+                <p class="lead mb-4 fs-4">Plan, customize, and track your dream itineraries using our comprehensive, interactive travel planner tool built specifically for travelers who explore with passion.</p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                    <a href="#" class="btn btn-primary btn-lg px-4 py-3 shadow-lg"><i class="fa-solid fa-map-location-dot me-2"></i>Start Planning</a>
+                    <a href="#about" class="btn btn-outline-light btn-lg px-4 py-3"><i class="fa-solid fa-circle-info me-2"></i>Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Featured Destinations Section -->
+<section class="py-5 bg-white">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <h2 class="section-title m-0">Featured Destinations</h2>
+            <a href="{% url 'destinations:list' %}" class="btn btn-outline-primary btn-sm px-3 py-2 fw-semibold"><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>View All</a>
+        </div>
+        <div class="row g-4">
+            {% for dest in featured_destinations %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-img-wrapper position-relative">
+                        {% if dest.image %}
+                            <img src="{{ dest.image.url }}" class="card-img-top hover-zoom-img" alt="{{ dest.destination_name }}" style="height: 240px; object-fit: cover; transition: transform 0.4s ease;">
+                        {% else %}
+                            <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 240px;">
+                                <i class="fa-regular fa-image fa-3x"></i>
+                            </div>
+                        {% endif %}
+                        <span class="badge bg-warning text-dark border shadow-sm position-absolute top-0 end-0 m-3 fw-bold"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
+                    </div>
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <span class="text-primary fw-semibold small"><i class="fa-solid fa-location-dot me-1"></i> {{ dest.city }}{% if dest.state %}, {{ dest.state }}{% endif %}</span>
+                            <h4 class="card-title fw-bold text-dark mt-2 mb-3">{{ dest.destination_name }}</h4>
+                            <p class="card-text text-muted small">{{ dest.description|truncatewords:20 }}</p>
+                        </div>
+                        <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary w-100 mt-3 py-2 fw-semibold">Explore Destination</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fa-solid fa-map-location-dot fa-3x text-muted opacity-50 mb-3"></i>
+                <h5 class="fw-bold text-secondary">No Featured Destinations Yet</h5>
+                <p class="text-muted small">Check back later or register a new travel destination spot.</p>
+                <a href="{% url 'destinations:list' %}" class="btn btn-primary mt-2 px-4">Explore Catalog</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Packages Section -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <h2 class="section-title">Featured Trip Packages</h2>
+        <div class="row g-4">
+            <!-- Beach Package -->
+            <div class="col-lg-8">
+                <div class="card h-100 overflow-hidden">
+                    <div class="row g-0 h-100">
+                        <div class="col-md-5">
+                            <img src="{% static 'images/pkg_beach.jpg' %}" class="w-100 h-100 object-fit-cover" style="min-height: 250px;" alt="Beach Resort">
+                        </div>
+                        <div class="col-md-7 d-flex flex-column">
+                            <div class="card-body p-4 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Best Value</span>
+                                    <h5 class="fw-bold text-primary mb-0">$1,499 <span class="fs-6 fw-normal text-muted">/ person</span></h5>
+                                </div>
+                                <h3 class="card-title fw-bold mt-2">Tropical Island Getaway</h3>
+                                <p class="card-text text-muted my-3">Escape to white sands, clear lagoon pools, and fully-serviced beachside villas. Includes 5 nights, breakfast, snorkeling, and spa packages.</p>
+                                <div class="d-flex gap-3 text-secondary mb-3 small">
+                                    <span><i class="fa-regular fa-clock me-1"></i> 6 Days</span>
+                                    <span><i class="fa-solid fa-hotel me-1"></i> Luxury Villa</span>
+                                    <span><i class="fa-solid fa-utensils me-1"></i> All Meals Included</span>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 bg-transparent border-0 pt-0">
+                                <a href="#" class="btn btn-primary px-4">View Package details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Planner Card -->
+            <div class="col-lg-4">
+                <div class="card h-100 bg-dark text-white p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="mb-4 text-primary">
+                            <i class="fa-solid fa-sliders fa-3x"></i>
+                        </div>
+                        <h3 class="fw-bold text-white mb-3">Custom Itineraries</h3>
+                        <p class="text-light-50 text-secondary">Don't want pre-built packages? Build your own custom timeline, book hotels, and map destinations using our dynamic drag-and-drop builder.</p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-light w-100 py-3 fw-semibold"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Create Custom Trip</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Project Section -->
+<section id="about" class="py-5 bg-white border-bottom">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="pe-lg-4">
+                    <h2 class="section-title">About TravelPlanner</h2>
+                    <p class="lead text-muted mb-4">TravelPlanner is an intuitive, collaborative project dashboard designed to help travelers discover destinations, set budgets, and compile comprehensive itineraries in one place.</p>
+                    <p class="text-secondary mb-4">Developed as a modern web app, this tool leverages Django's robust backend architecture to power account administration, secure API synchronization, and itinerary scheduling modules.</p>
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle me-3">
+                                    <i class="fa-solid fa-shield-halved fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-0">Secure Planning</h6>
+                                    <small class="text-muted">User authentication and safe storage.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle me-3">
+                                    <i class="fa-solid fa-share-nodes fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-0">Shareable Trips</h6>
+                                    <small class="text-muted">Easily export or share with friends.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-light p-5 rounded-4 shadow-sm border text-center">
+                    <i class="fa-solid fa-code fa-4x text-primary mb-4"></i>
+                    <h4 class="fw-bold">Under Construction</h4>
+                    <p class="text-muted px-md-3">The application models, views, and authentication APIs are currently being integrated. Check back soon for the complete collaborative traveler experience!</p>
+                    <div class="mt-4 pt-2 border-top">
+                        <span class="badge bg-secondary">Django 5.2.15</span>
+                        <span class="badge bg-secondary ms-1">Bootstrap 5</span>
+                        <span class="badge bg-secondary ms-1">Python 3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

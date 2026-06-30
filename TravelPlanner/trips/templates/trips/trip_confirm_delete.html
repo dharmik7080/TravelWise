@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Cancel Trip to {{ trip.destination.destination_name }} | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center">
+                <div class="text-danger mb-4">
+                    <i class="fa-solid fa-triangle-exclamation fa-4x"></i>
+                </div>
+                <h2 class="fw-bold text-dark">Delete Planned Trip?</h2>
+                <p class="text-muted small px-3">Are you sure you want to delete your trip to <strong>{{ trip.destination.destination_name }}</strong>? This action is permanent and cannot be undone.</p>
+                
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger py-2.5 fw-semibold">
+                            <i class="fa-regular fa-trash-can me-2"></i>Yes, Delete Trip
+                        </button>
+                        <a href="{% url 'trips:detail' trip.pk %}" class="btn btn-outline-secondary py-2.5 fw-semibold">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block title %}My Trips | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
+        <div>
+            <h1 class="fw-bold text-dark m-0"><i class="fa-solid fa-route text-primary me-2"></i>My Trips</h1>
+            <p class="text-muted mb-0">Review, plan, and schedule your custom itineraries.</p>
+        </div>
+        <a href="{% url 'trips:plan' %}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-plus me-2"></i>Plan a New Trip</a>
+    </div>
+    <hr class="mb-4">
+
+    {% if trips %}
+    <div class="row g-4">
+        {% for trip in trips %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                {% if trip.destination.image %}
+                    <img src="{{ trip.destination.image.url }}" class="card-img-top" alt="{{ trip.destination.destination_name }}" style="height: 180px; object-fit: cover;">
+                {% else %}
+                    <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 180px;">
+                        <i class="fa-regular fa-image fa-3x"></i>
+                    </div>
+                {% endif %}
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold">{{ trip.travel_type }}</span>
+                            <span class="text-muted small"><i class="fa-solid fa-calendar me-1"></i>{{ trip.start_date }}</span>
+                        </div>
+                        <h4 class="card-title fw-bold text-dark mb-2">{{ trip.destination.destination_name }}</h4>
+                        <p class="card-text text-muted small"><i class="fa-solid fa-location-dot me-1 text-secondary"></i>{{ trip.destination.city }}, {{ trip.destination.state }}</p>
+                        
+                        <div class="row g-2 border-top border-bottom py-2 my-3">
+                            <div class="col-6">
+                                <small class="text-muted d-block">Travelers</small>
+                                <span class="fw-semibold text-dark">{{ trip.number_of_travelers }} Pax</span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block">Budget</small>
+                                <span class="fw-semibold text-primary">${{ trip.budget }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row g-2 border-bottom pb-3 mb-3">
+                            <div class="col-12">
+                                <small class="text-muted d-block">Dates</small>
+                                <span class="fw-semibold text-dark small">{{ trip.start_date }} to {{ trip.end_date }}</span>
+                            </div>
+                        </div>
+
+                        {% if trip.notes %}
+                        <p class="card-text text-muted small"><i class="fa-regular fa-note-sticky me-1"></i>{{ trip.notes|truncatewords:15 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex gap-2 mt-4 pt-3 border-top">
+                        <a href="{% url 'trips:detail' trip.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1 fw-semibold">View</a>
+                        <a href="{% url 'trips:update' trip.pk %}" class="btn btn-sm btn-outline-secondary flex-grow-1 fw-semibold">Edit</a>
+                        <a href="{% url 'trips:delete' trip.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1 fw-semibold">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav class="mt-5" aria-label="Trips navigation">
+        <ul class="pagination justify-content-center shadow-sm rounded-3 overflow-hidden d-inline-flex border">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link border-0 text-primary py-2 px-3" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link border-0 text-primary py-2 px-3" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link border-0 text-muted py-2 px-3">&laquo;&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link border-0 text-muted py-2 px-3">&laquo;</span>
+                </li>
+            {% endif %}
+
+            {% for num in paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link border-0 bg-primary text-white py-2 px-3 fw-bold">{{ num }}</span>
+                    </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link border-0 text-primary py-2 px-3" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link border-0 text-primary py-2 px-3" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link border-0 text-primary py-2 px-3" href="?page={{ paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link border-0 text-muted py-2 px-3">&raquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link border-0 text-muted py-2 px-3">&raquo;&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    {% else %}
+    <div class="row justify-content-center py-5">
+        <div class="col-md-6 text-center bg-white p-5 rounded-4 shadow-sm border">
+            <div class="text-primary mb-4">
+                <i class="fa-solid fa-map-location-dot fa-4x"></i>
+            </div>
+            <h3 class="fw-bold">No Trips Found</h3>
+            <p class="text-muted px-md-4 mt-2">You haven't planned any trips yet. Create a new custom itinerary to start organizing your travel timeline.</p>
+            <div class="mt-4">
+                <a href="{% url 'trips:plan' %}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-plus me-2"></i>Plan a New Trip</a>
+                <a href="{% url 'dashboard:index' %}" class="btn btn-outline-secondary px-4 py-2 ms-2"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

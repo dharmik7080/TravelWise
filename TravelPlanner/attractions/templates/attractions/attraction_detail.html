@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}{{ attraction.attraction_name }} | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <!-- Back to parent catalog -->
+    <div class="mb-4">
+        <a href="{% url 'destinations:detail' attraction.destination.pk %}" class="text-decoration-none small text-muted fw-semibold">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to {{ attraction.destination.destination_name }} Details
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main details -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                {% if attraction.image %}
+                    <img src="{{ attraction.image.url }}" class="w-100 object-fit-cover" style="max-height: 450px;" alt="{{ attraction.attraction_name }}">
+                {% else %}
+                    <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 350px;">
+                        <i class="fa-regular fa-image fa-4x"></i>
+                    </div>
+                {% endif %}
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary text-uppercase px-3 py-2">{{ attraction.category }}</span>
+                        <span class="text-primary fw-semibold"><i class="fa-solid fa-location-dot me-1"></i> {{ attraction.destination.destination_name }}</span>
+                    </div>
+                    <h1 class="fw-bold text-dark mb-4">{{ attraction.attraction_name }}</h1>
+                    
+                    <h5 class="fw-bold text-dark mt-4 mb-3">About Attraction</h5>
+                    <p class="text-muted leading-relaxed" style="white-space: pre-line;">{{ attraction.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar stats -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-dark border-bottom pb-2">Attraction Statistics</h5>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light p-2.5 rounded-3 me-3 text-secondary border">
+                            <i class="fa-solid fa-wallet text-secondary fa-fw"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Entry Fee</small>
+                            <span class="fw-bold text-dark">{% if attraction.entry_fee == 0 %}Free{% else %}${{ attraction.entry_fee }}{% endif %}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-light p-2.5 rounded-3 me-3 text-secondary border">
+                            <i class="fa-solid fa-clock text-secondary fa-fw"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Hours of Operation</small>
+                            <span class="fw-bold text-dark">{{ attraction.opening_time|time:"g:i A" }} - {{ attraction.closing_time|time:"g:i A" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light p-2.5 rounded-3 me-3 text-secondary border">
+                            <i class="fa-solid fa-hourglass-half text-secondary fa-fw"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block">Average Visit Time</small>
+                            <span class="fw-bold text-dark">{{ attraction.average_visit_time }} minutes</span>
+                        </div>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <div class="d-grid gap-2 border-top pt-3">
+                        <a href="{% url 'attractions:update' attraction.pk %}" class="btn btn-outline-primary fw-semibold"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Attraction</a>
+                        <a href="{% url 'attractions:delete' attraction.pk %}" class="btn btn-outline-danger fw-semibold"><i class="fa-solid fa-trash me-2"></i>Delete Attraction</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

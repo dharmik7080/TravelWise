@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block title %}{% if object %}Update {{ object.destination_name }}{% else %}Add Destination{% endif %} | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3">
+                            <i class="fa-solid fa-earth-americas fa-2x"></i>
+                        </div>
+                        <div>
+                            <h2 class="fw-bold text-dark mb-1">{% if object %}Edit Destination{% else %}Add New Destination{% endif %}</h2>
+                            <p class="text-muted mb-0">{% if object %}Update information for {{ object.destination_name }}{% else %}Register a new getaway destination in the travel directory.{% endif %}</p>
+                        </div>
+                    </div>
+                    <hr class="mb-5">
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- Basic details -->
+                            <div class="col-md-6">
+                                <label for="{{ form.destination_name.id_for_label }}" class="form-label fw-semibold text-secondary small">Destination Name *</label>
+                                {{ form.destination_name }}
+                                {% if form.destination_name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.destination_name.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="{{ form.category.id_for_label }}" class="form-label fw-semibold text-secondary small">Category *</label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.category.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="{{ form.city.id_for_label }}" class="form-label fw-semibold text-secondary small">City *</label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.city.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="{{ form.state.id_for_label }}" class="form-label fw-semibold text-secondary small">State</label>
+                                {{ form.state }}
+                                {% if form.state.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.state.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="{{ form.region.id_for_label }}" class="form-label fw-semibold text-secondary small">Region</label>
+                                {{ form.region }}
+                                {% if form.region.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.region.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold text-secondary small">Description *</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.description.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Trip stats -->
+                            <div class="col-md-6 col-lg-3">
+                                <label for="{{ form.best_season.id_for_label }}" class="form-label fw-semibold text-secondary small">Best Season *</label>
+                                {{ form.best_season }}
+                                {% if form.best_season.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.best_season.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <label for="{{ form.ideal_days.id_for_label }}" class="form-label fw-semibold text-secondary small">Ideal Duration (Days) *</label>
+                                {{ form.ideal_days }}
+                                {% if form.ideal_days.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.ideal_days.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <label for="{{ form.budget_level.id_for_label }}" class="form-label fw-semibold text-secondary small">Budget Level *</label>
+                                {{ form.budget_level }}
+                                {% if form.budget_level.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.budget_level.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6 col-lg-3">
+                                <label for="{{ form.average_cost_per_day.id_for_label }}" class="form-label fw-semibold text-secondary small">Avg Cost per Day ($) *</label>
+                                {{ form.average_cost_per_day }}
+                                {% if form.average_cost_per_day.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.average_cost_per_day.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Ratings and upload -->
+                            <div class="col-md-6">
+                                <label for="{{ form.average_rating.id_for_label }}" class="form-label fw-semibold text-secondary small">Average Rating (0.0 to 5.0)</label>
+                                {{ form.average_rating }}
+                                {% if form.average_rating.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.average_rating.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.image.id_for_label }}" class="form-label fw-semibold text-secondary small">Cover Image</label>
+                                {{ form.image }}
+                                {% if form.image.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {% for error in form.image.errors %}
+                                            <p class="mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Friendliness Checkboxes -->
+                            <div class="col-12 py-2">
+                                <div class="card bg-light border-0 rounded-3">
+                                    <div class="card-body p-3">
+                                        <label class="form-label fw-semibold text-dark mb-3 small d-block">Suitability / Vibe (Check all that apply)</label>
+                                        <div class="d-flex flex-wrap gap-4">
+                                            <div class="form-check">
+                                                {{ form.family_friendly }}
+                                                <label class="form-check-label text-secondary small" for="{{ form.family_friendly.id_for_label }}">Family Friendly</label>
+                                            </div>
+                                            <div class="form-check">
+                                                {{ form.couple_friendly }}
+                                                <label class="form-check-label text-secondary small" for="{{ form.couple_friendly.id_for_label }}">Couple Friendly</label>
+                                            </div>
+                                            <div class="form-check">
+                                                {{ form.solo_friendly }}
+                                                <label class="form-check-label text-secondary small" for="{{ form.solo_friendly.id_for_label }}">Solo Friendly</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-3 border-top d-flex justify-content-end gap-2">
+                            {% if object %}
+                                <a href="{% url 'destinations:detail' object.pk %}" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+                            {% else %}
+                                <a href="{% url 'destinations:list' %}" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold"><i class="fa-solid fa-cloud-arrow-up me-2"></i>Save Destination</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

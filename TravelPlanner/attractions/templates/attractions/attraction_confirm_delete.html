@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Delete Attraction | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center">
+                <div class="text-danger mb-4">
+                    <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-circle d-inline-block mb-3">
+                        <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark m-0">Confirm Deletion</h3>
+                </div>
+                <p class="text-muted mb-4">Are you sure you want to permanently delete the tourist attraction <strong>"{{ object.attraction_name }}"</strong>? This action cannot be undone.</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger py-2.5 fw-semibold">
+                            <i class="fa-solid fa-trash me-2"></i>Delete Attraction
+                        </button>
+                        <a href="{% url 'attractions:detail' object.pk %}" class="btn btn-outline-secondary py-2.5 fw-semibold">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Edit Itinerary for {{ trip.destination.destination_name }} | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle d-inline-block mb-3">
+                        <i class="fa-solid fa-route fa-2x"></i>
+                    </div>
+                    <h2 class="fw-bold m-0">Edit Itinerary</h2>
+                    <p class="text-muted small mt-1">Update your daily morning, afternoon, and evening activities for {{ trip.destination.destination_name }}.</p>
+                </div>
+                
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    
+                    {% for form in formset %}
+                    <div class="card border shadow-sm rounded-3 mb-4 overflow-hidden">
+                        <div class="card-header bg-light py-3 border-bottom">
+                            <h5 class="fw-bold text-dark m-0">
+                                Day {% if form.instance.day_number %}{{ form.instance.day_number }}{% else %}{{ forloop.counter }}{% endif %}
+                            </h5>
+                            {{ form.id }}
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="{{ form.morning.id_for_label }}" class="form-label fw-semibold text-dark small mb-1">Morning Activity</label>
+                                    {{ form.morning }}
+                                    {% for error in form.morning.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-12">
+                                    <label for="{{ form.afternoon.id_for_label }}" class="form-label fw-semibold text-dark small mb-1">Afternoon Activity</label>
+                                    {{ form.afternoon }}
+                                    {% for error in form.afternoon.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-12">
+                                    <label for="{{ form.evening.id_for_label }}" class="form-label fw-semibold text-dark small mb-1">Evening Activity</label>
+                                    {{ form.evening }}
+                                    {% for error in form.evening.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="d-grid gap-2 mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary py-2.5 fw-semibold">
+                            <i class="fa-solid fa-check me-2"></i>Save Itinerary Changes
+                        </button>
+                        <a href="{% url 'trips:detail' trip.pk %}" class="btn btn-outline-secondary py-2.5 fw-semibold">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

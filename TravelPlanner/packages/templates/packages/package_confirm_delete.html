@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Delete Package | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center">
+                <div class="text-danger mb-4">
+                    <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-circle d-inline-block mb-3">
+                        <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark m-0">Confirm Deletion</h3>
+                </div>
+                <p class="text-muted mb-4">Are you sure you want to permanently delete the travel package <strong>"{{ object.package_name }}"</strong>? This action cannot be undone.</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger py-2.5 fw-semibold">
+                            <i class="fa-solid fa-trash me-2"></i>Delete Package
+                        </button>
+                        <a href="{% url 'packages:detail' object.pk %}" class="btn btn-outline-secondary py-2.5 fw-semibold">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

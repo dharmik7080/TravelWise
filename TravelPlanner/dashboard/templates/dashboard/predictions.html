@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}AI Travel Predictions | TravelPlanner{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="fw-bold text-dark"><i class="fa-solid fa-chart-line text-warning me-2"></i>AI Predictions Portal</h1>
+            <p class="text-muted">Explore predictive analytics regarding flight delays and travel costs.</p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row justify-content-center py-5">
+        <div class="col-md-7 text-center bg-white p-5 rounded-4 shadow-sm border">
+            <div class="text-warning mb-4">
+                <i class="fa-solid fa-robot fa-4x animate-bounce"></i>
+            </div>
+            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3 fw-semibold">Under Active Development</span>
+            <h3 class="fw-bold">AI Analytical Engine Setup</h3>
+            <p class="text-muted px-md-4 mt-2">We are currently integrating delayed flight tracking models and neural network projection algorithms. Soon you will see delay risks, flight estimations, and local pricing trends inside this portal!</p>
+            <div class="mt-4 pt-3 border-top d-flex justify-content-center gap-3">
+                <a href="{% url 'dashboard:index' %}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-gauge-high me-2"></i>Go back to Dashboard</a>
+                <button class="btn btn-outline-secondary px-4 py-2" disabled><i class="fa-solid fa-bell me-2"></i>Notify Me</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
