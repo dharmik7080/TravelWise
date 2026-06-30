@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Home | TravelWise{% endblock %}
 
@@ -163,33 +164,40 @@
         <h2 class="section-title">Featured Trip Packages</h2>
         <div class="row g-4">
             <!-- Beach Package -->
+            {% if featured_package %}
             <div class="col-lg-8">
-                <div class="card h-100 overflow-hidden">
+                <div class="card h-100 overflow-hidden card-hover">
                     <div class="row g-0 h-100">
                         <div class="col-md-5">
-                            <img src="{% static 'images/pkg_beach.jpg' %}" class="w-100 h-100 object-fit-cover" style="min-height: 250px;" alt="Beach Resort">
+                            {% if featured_package.image %}
+                                <img src="{{ featured_package.image.url }}" class="w-100 h-100 object-fit-cover hover-zoom-img" style="min-height: 250px;" alt="{{ featured_package.package_name }}">
+                            {% else %}
+                                <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100" style="min-height: 250px;">
+                                    <i class="fa-regular fa-image fa-3x"></i>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="col-md-7 d-flex flex-column">
                             <div class="card-body p-4 flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Best Value</span>
-                                    <h5 class="fw-bold text-primary mb-0">₹18,999 <span class="fs-6 fw-normal text-muted">/ person</span></h5>
+                                    <span class="badge bg-success bg-opacity-10 text-success px-2 py-1">{{ featured_package.package_type }}</span>
+                                    <h5 class="fw-bold text-primary mb-0">₹{{ featured_package.price|intcomma }} <span class="fs-6 fw-normal text-muted">/ person</span></h5>
                                 </div>
-                                <h3 class="card-title fw-bold mt-2">Tropical Island Getaway</h3>
-                                <p class="card-text text-muted my-3">Escape to white sands, clear lagoon pools, and fully-serviced beachside villas. Includes 5 nights, breakfast, snorkeling, and spa packages.</p>
+                                <h3 class="card-title fw-bold mt-2">{{ featured_package.package_name }}</h3>
+                                <p class="card-text text-muted my-3">{{ featured_package.description|truncatewords:20 }}</p>
                                 <div class="d-flex gap-3 text-secondary mb-3 small">
-                                    <span><i class="fa-regular fa-clock me-1"></i> 6 Days</span>
-                                    <span><i class="fa-solid fa-hotel me-1"></i> Luxury Villa</span>
-                                    <span><i class="fa-solid fa-utensils me-1"></i> All Meals Included</span>
+                                    <span><i class="fa-regular fa-clock me-1"></i> {{ featured_package.duration }} Days</span>
+                                    <span><i class="fa-solid fa-location-dot me-1"></i> {{ featured_package.destination.destination_name }}</span>
                                 </div>
                             </div>
                             <div class="card-footer p-4 bg-transparent border-0 pt-0">
-                                <a href="#" class="btn btn-primary px-4">View Package details</a>
+                                <a href="{% url 'packages:detail' featured_package.pk %}" class="btn btn-primary px-4">View Package Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
 
             <!-- Custom Planner Card -->
             <div class="col-lg-4">
