@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+
+{% block title %}API Documentation | TravelWise{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row g-4">
+        <!-- Sidebar Navigation -->
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 sticky-top" style="top: 2rem; z-index: 100;">
+                <h5 class="fw-bold text-dark mb-3 px-2">Endpoints</h5>
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active rounded-pill px-3 py-2 mb-2 fw-semibold" id="nav-overview-tab" data-bs-toggle="pill" href="#nav-overview" role="tab">Overview</a>
+                    <a class="nav-link rounded-pill px-3 py-2 mb-2 fw-semibold" id="nav-destinations-tab" data-bs-toggle="pill" href="#nav-destinations" role="tab">Destinations</a>
+                    <a class="nav-link rounded-pill px-3 py-2 mb-2 fw-semibold" id="nav-attractions-tab" data-bs-toggle="pill" href="#nav-attractions" role="tab">Attractions</a>
+                    <a class="nav-link rounded-pill px-3 py-2 mb-2 fw-semibold" id="nav-packages-tab" data-bs-toggle="pill" href="#nav-packages" role="tab">Packages</a>
+                    <a class="nav-link rounded-pill px-3 py-2 mb-2 fw-semibold" id="nav-trips-tab" data-bs-toggle="pill" href="#nav-trips" role="tab">Trips</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-lg-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                
+                <!-- Overview Section -->
+                <div class="tab-pane fade show active" id="nav-overview" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h2 class="fw-bold text-dark mb-3">TravelWise Developer API</h2>
+                        <p class="text-muted leading-relaxed">
+                            Welcome to the TravelWise API documentation. Our REST API exposes all backend resources including travel destinations, local attractions, package bundles, and custom traveler itineraries.
+                        </p>
+                        <div class="alert alert-info border-0 rounded-4 p-3 mb-0">
+                            <h6 class="fw-bold"><i class="bi bi-info-circle-fill me-2"></i>Authentication Requirement</h6>
+                            Session cookies are used for authentication. All write operations (POST, PUT, PATCH, DELETE) and user-private records (Trips) require a valid active session. Standard error formatting returns JSON with detail exceptions.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destinations Section -->
+                <div class="tab-pane fade" id="nav-destinations" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h3 class="fw-bold text-dark mb-4">Destinations API</h3>
+                        
+                        <!-- List Destinations -->
+                        <div class="border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold"><span class="badge bg-success me-2">GET</span> <code>/api/destinations/</code></h5>
+                            <p class="text-muted">Retrieve a paginated list of all destinations. Supports dynamic filters, search queries, and custom sorting.</p>
+                            
+                            <h6>Query Parameters:</h6>
+                            <table class="table table-bordered table-striped small">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>search</code></td><td>string</td><td>Search term matched against destination name, city, state, or category.</td></tr>
+                                    <tr><td><code>state</code></td><td>string</td><td>Exact state matching (case-insensitive).</td></tr>
+                                    <tr><td><code>category</code></td><td>string</td><td>Exact category matching.</td></tr>
+                                    <tr><td><code>ordering</code></td><td>string</td><td>Sort result set. Allowed: <code>destination_name</code>, <code>average_cost_per_day</code>, <code>average_rating</code>. Prefix with <code>-</code> for descending.</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h6>Example Request:</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>GET /api/destinations/?category=Beach&ordering=average_cost_per_day</code></pre>
+
+                            <h6>Example Response (Status 200 OK):</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "destination_id": 1,
+      "destination_name": "Goa Beach",
+      "city": "Panaji",
+      "state": "Goa",
+      "region": "West",
+      "category": "Beach",
+      "description": "Lovely sunny beaches.",
+      "best_season": "Winter",
+      "ideal_days": 3,
+      "budget_level": "Moderate",
+      "average_cost_per_day": "4500.00",
+      "family_friendly": true,
+      "couple_friendly": true,
+      "solo_friendly": true,
+      "average_rating": "4.50",
+      "image": "/media/destinations/goa.jpg"
+    }
+  ]
+}</code></pre>
+                        </div>
+
+                        <!-- Create Destination -->
+                        <div>
+                            <h5 class="fw-bold"><span class="badge bg-primary me-2">POST</span> <code>/api/destinations/</code></h5>
+                            <p class="text-muted">Create a new travel destination record. <span class="badge bg-danger">Staff Only</span></p>
+                            
+                            <h6>Required Body Parameters (JSON):</h6>
+                            <ul class="small">
+                                <li><code>destination_name</code> (string, unique)</li>
+                                <li><code>city</code> (string)</li>
+                                <li><code>category</code> (string)</li>
+                                <li><code>description</code> (string)</li>
+                                <li><code>best_season</code> (string)</li>
+                                <li><code>budget_level</code> (string: 'Budget', 'Moderate', 'Luxury')</li>
+                                <li><code>average_cost_per_day</code> (decimal)</li>
+                            </ul>
+
+                            <h6>Example Request Body:</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "destination_name": "Manali Hills",
+  "city": "Manali",
+  "state": "Himachal Pradesh",
+  "category": "Hill Station",
+  "description": "Snowy valley retreat.",
+  "best_season": "Summer",
+  "budget_level": "Moderate",
+  "average_cost_per_day": "3500.00"
+}</code></pre>
+
+                            <h6>Example Response (Status 201 Created):</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "destination_id": 2,
+  "destination_name": "Manali Hills",
+  "city": "Manali",
+  "state": "Himachal Pradesh",
+  "category": "Hill Station",
+  "description": "Snowy valley retreat.",
+  "best_season": "Summer",
+  "ideal_days": 1,
+  "budget_level": "Moderate",
+  "average_cost_per_day": "3500.00",
+  "family_friendly": true,
+  "couple_friendly": true,
+  "solo_friendly": true,
+  "average_rating": "0.00",
+  "image": null
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attractions Section -->
+                <div class="tab-pane fade" id="nav-attractions" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h3 class="fw-bold text-dark mb-4">Attractions API</h3>
+                        
+                        <div class="border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold"><span class="badge bg-success me-2">GET</span> <code>/api/attractions/</code></h5>
+                            <p class="text-muted">List tourist attractions. Supports filtering by destination.</p>
+                            
+                            <h6>Query Parameters:</h6>
+                            <table class="table table-bordered table-striped small">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>destination</code></td><td>integer</td><td>Filter by Destination ID.</td></tr>
+                                    <tr><td><code>category</code></td><td>string</td><td>Filter by attraction category.</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h6>Example Response (Status 200 OK):</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "count": 1,
+  "results": [
+    {
+      "id": 1,
+      "attraction_name": "Calangute Watersports",
+      "destination": 1,
+      "destination_name": "Goa Beach",
+      "category": "Adventure",
+      "description": "Water activities.",
+      "entry_fee": "350.00",
+      "opening_time": "09:00:00",
+      "closing_time": "17:00:00",
+      "average_visit_time": 90,
+      "image": null
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Packages Section -->
+                <div class="tab-pane fade" id="nav-packages" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h3 class="fw-bold text-dark mb-4">Packages API</h3>
+                        
+                        <div class="border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold"><span class="badge bg-success me-2">GET</span> <code>/api/packages/</code></h5>
+                            <p class="text-muted">List tour packages. Supports filtering by destination.</p>
+                            
+                            <h6>Query Parameters:</h6>
+                            <table class="table table-bordered table-striped small">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>destination</code></td><td>integer</td><td>Filter by Destination ID.</td></tr>
+                                    <tr><td><code>package_type</code></td><td>string</td><td>Filter by package traveler suitabilities.</td></tr>
+                                </tbody>
+                            </table>
+
+                            <h6>Example Response (Status 200 OK):</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "count": 1,
+  "results": [
+    {
+      "id": 1,
+      "package_name": "Goa Weekend Getaway",
+      "destination": 1,
+      "destination_name": "Goa Beach",
+      "duration": 3,
+      "package_type": "Solo",
+      "price": "8000.00",
+      "description": "Short weekend beach stay.",
+      "image": null
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trips Section -->
+                <div class="tab-pane fade" id="nav-trips" role="tabpanel">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h3 class="fw-bold text-dark mb-4">Trips API</h3>
+                        
+                        <!-- List Trips -->
+                        <div class="border-bottom pb-4 mb-4">
+                            <h5 class="fw-bold"><span class="badge bg-success me-2">GET</span> <code>/api/trips/</code></h5>
+                            <p class="text-muted">List user's trips. Results are strictly limited to the authenticated user. <span class="badge bg-warning text-dark">Authenticated Only</span></p>
+
+                            <h6>Example Response (Status 200 OK):</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "count": 1,
+  "results": [
+    {
+      "id": 1,
+      "destination_name": "Goa Beach",
+      "user_username": "traveller1",
+      "start_date": "2026-10-10",
+      "end_date": "2026-10-12",
+      "number_of_travelers": 2,
+      "budget": "15000.00",
+      "travel_type": "Couple",
+      "notes": null,
+      "created_at": "2026-07-01T12:00:00Z",
+      "destination": 1
+    }
+  ]
+}</code></pre>
+                        </div>
+
+                        <!-- Create Trip -->
+                        <div>
+                            <h5 class="fw-bold"><span class="badge bg-primary me-2">POST</span> <code>/api/trips/</code></h5>
+                            <p class="text-muted">Create a trip. Dynamically auto-generates structured ItineraryDays using templates or fallbacks. <span class="badge bg-warning text-dark">Authenticated Only</span></p>
+                            
+                            <h6>Required Body Parameters (JSON):</h6>
+                            <ul class="small">
+                                <li><code>destination</code> (integer, ID)</li>
+                                <li><code>start_date</code> (string, YYYY-MM-DD)</li>
+                                <li><code>end_date</code> (string, YYYY-MM-DD)</li>
+                                <li><code>number_of_travelers</code> (integer)</li>
+                                <li><code>budget</code> (decimal)</li>
+                                <li><code>travel_type</code> (string: 'Solo', 'Couple', 'Family', 'Friends')</li>
+                            </ul>
+
+                            <h6>Example Request Body:</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "destination": 1,
+  "start_date": "2026-10-10",
+  "end_date": "2026-10-12",
+  "number_of_travelers": 2,
+  "budget": "15000.00",
+  "travel_type": "Couple"
+}</code></pre>
+
+                            <h6>Example Response (Status 201 Created):</h6>
+                            <pre class="bg-light p-3 rounded-3 small"><code>{
+  "id": 2,
+  "destination_name": "Goa Beach",
+  "user_username": "traveller1",
+  "start_date": "2026-10-10",
+  "end_date": "2026-10-12",
+  "number_of_travelers": 2,
+  "budget": "15000.00",
+  "travel_type": "Couple",
+  "notes": null,
+  "created_at": "2026-07-01T12:05:00Z",
+  "destination": 1
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
