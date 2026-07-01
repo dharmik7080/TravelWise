@@ -90,38 +90,34 @@
     <div class="row g-4">
         {% for attraction in attractions %}
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border shadow-sm rounded-4 overflow-hidden card-hover">
-                <div class="position-relative">
+            <div class="card h-100 border-0 card-hover">
+                <div class="card-img-wrapper position-relative">
                     {% if attraction.image %}
-                    <img src="{{ attraction.image.url }}" class="card-img-top hover-zoom-img" alt="{{ attraction.attraction_name }}">
+                        <img src="{{ attraction.image.url }}" class="hover-zoom-img" alt="{{ attraction.attraction_name }}">
                     {% else %}
-                    <img src="{% static 'images/placeholder_attraction.jpg' %}" class="card-img-top hover-zoom-img" alt="{{ attraction.attraction_name }}">
+                        <img src="{% static 'images/placeholder_attraction.jpg' %}" class="hover-zoom-img" alt="{{ attraction.attraction_name }}">
                     {% endif %}
                 </div>
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-secondary small fw-semibold">
-                                <i class="fa-solid fa-location-dot me-1"></i>
-                                {{ attraction.destination.destination_name }}
-                            </span>
-                            <span class="badge bg-primary bg-opacity-10 text-primary">{{ attraction.category }}</span>
-                        </div>
-                        <h4 class="card-title fw-bold text-dark mb-2">{{ attraction.attraction_name }}</h4>
-                        <p class="card-text text-muted small">{{ attraction.description|truncatewords:20 }}</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
-                        <span class="fw-semibold text-dark small">
-                            <i class="fa-solid fa-wallet text-secondary me-1"></i>
-                            {% if attraction.entry_fee == 0 %}Free{% else %}₹{{ attraction.entry_fee|intcomma }}{% endif %}
+                        <span class="text-primary fw-semibold small">
+                            <i class="fa-solid fa-location-dot me-1"></i>
+                            {{ attraction.destination.destination_name }}
                         </span>
-                        <a href="{% url 'attractions:detail' attraction.pk %}" class="btn btn-sm btn-outline-primary px-3">View Details</a>
+                        <h4 class="fw-bold text-dark mt-2 mb-2">{{ attraction.attraction_name }}</h4>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill fw-bold">{{ attraction.category }}</span>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill fw-bold">
+                                {% if attraction.entry_fee == 0 %}Free Entry{% else %}Entry: ₹{{ attraction.entry_fee|intcomma }}{% endif %}
+                            </span>
+                        </div>
+                        <p class="text-muted small mb-0">{{ attraction.description|truncatewords:20 }}</p>
                     </div>
+                    <a href="{% url 'attractions:detail' attraction.pk %}" class="btn btn-outline-primary w-100 mt-4 py-2 fw-semibold">View Details</a>
                 </div>
             </div>
         </div>
-        {% endfor %}
-    </div>
+        {% endfor %}</div>
 
     <!-- Pagination -->
     {% if is_paginated %}

@@ -7,20 +7,20 @@
     <!-- Welcome Banner Section -->
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card border-0 shadow-sm bg-dark text-white rounded-4 overflow-hidden position-relative">
+            <div class="card border-0 shadow-lg text-white rounded-5 overflow-hidden position-relative" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;">
                 <!-- Background decorative elements -->
-                <div class="position-absolute top-0 end-0 p-5 opacity-10 text-white" style="font-size: 8rem;">
+                <div class="position-absolute top-0 end-0 p-5 opacity-10 text-white" style="font-size: 8rem; pointer-events: none;">
                     <i class="fa-solid fa-plane-departure"></i>
                 </div>
                 <div class="card-body p-4 p-md-5 z-1">
                     <div class="row align-items-center">
                         <div class="col-md-8">
-                            <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider">Welcome back</span>
-                            <h1 class="display-6 fw-bold mb-2">{{ greeting }}, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</h1>
-                            <p class="text-white-50 mb-0"><i class="fa-regular fa-calendar me-2"></i>{{ current_date|date:"l, F d, Y" }}</p>
+                            <span class="badge bg-primary bg-opacity-25 text-white border border-primary border-opacity-40 px-3 py-2 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider">Welcome back</span>
+                            <h1 class="display-6 fw-bold text-white mb-2">{{ greeting }}, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</h1>
+                            <p class="text-light opacity-75 mb-0"><i class="fa-regular fa-calendar me-2 text-primary"></i>{{ current_date|date:"l, F d, Y" }} | Explore India's beautiful tourist sights dynamically with TravelWise AI.</p>
                         </div>
                         <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                            <a href="{% url 'trips:plan' %}" class="btn btn-primary btn-lg px-4 py-2.5 fw-semibold shadow"><i class="fa-solid fa-plus me-2"></i>Plan a New Trip</a>
+                            <a href="{% url 'trips:plan' %}" class="btn btn-primary btn-lg px-4 py-2.5 fw-semibold shadow-sm"><i class="fa-solid fa-plus me-2"></i>Plan a New Trip</a>
                         </div>
                     </div>
                 </div>
@@ -31,9 +31,9 @@
     <!-- Statistics Cards Section -->
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+            <div class="card border border-primary-subtle shadow-sm rounded-4 h-100 p-3 card-hover" style="background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%) !important;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3">
+                    <div class="text-white p-3 rounded-3 shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
                         <i class="fa-solid fa-route fa-lg"></i>
                     </div>
                     <div>
@@ -44,9 +44,9 @@
             </div>
         </div>
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+            <div class="card border border-warning-subtle shadow-sm rounded-4 h-100 p-3 card-hover" style="background: linear-gradient(135deg, #ffffff 0%, #fffdf5 100%) !important;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3">
+                    <div class="text-white p-3 rounded-3 shadow-sm" style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);">
                         <i class="fa-solid fa-plane-departure fa-lg"></i>
                     </div>
                     <div>
@@ -57,9 +57,9 @@
             </div>
         </div>
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+            <div class="card border border-success-subtle shadow-sm rounded-4 h-100 p-3 card-hover" style="background: linear-gradient(135deg, #ffffff 0%, #f6fdf9 100%) !important;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="bg-success bg-opacity-10 text-success p-3 rounded-3">
+                    <div class="text-white p-3 rounded-3 shadow-sm" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
                         <i class="fa-solid fa-circle-check fa-lg"></i>
                     </div>
                     <div>
@@ -70,9 +70,9 @@
             </div>
         </div>
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+            <div class="card border border-info-subtle shadow-sm rounded-4 h-100 p-3 card-hover" style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%) !important;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="bg-info bg-opacity-10 text-info p-3 rounded-3">
+                    <div class="text-white p-3 rounded-3 shadow-sm" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
                         <i class="fa-solid fa-wallet fa-lg"></i>
                     </div>
                     <div>

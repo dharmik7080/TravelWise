@@ -1,38 +1,59 @@
-<footer class="footer mt-auto py-5 bg-white border-top">
+<footer class="footer mt-auto footer-premium">
     <div class="container">
-        <div class="row g-4 mb-4">
-            <!-- Brand Column -->
-            <div class="col-md-4">
-                <h5 class="fw-bold text-dark mb-2"><i class="fa-solid fa-compass text-primary me-2"></i>TravelWise</h5>
-                <p class="text-muted small">Discover &bull; Plan &bull; Explore</p>
-                <p class="text-muted small mt-3">Built using Django, Bootstrap 5 and SQLite.</p>
+        <div class="row g-4 mb-5">
+            <!-- About & Brand Column -->
+            <div class="col-md-3">
+                <h5 class="fw-bold mb-3"><i class="fa-solid fa-compass text-primary me-2"></i>TravelWise</h5>
+                <p class="text-muted small mb-0" style="line-height: 1.6;">
+                    Discover destinations, predict travel costs, check live weather forecasts, and compile custom itineraries in one intelligent travel planner.
+                </p>
             </div>
-            <!-- Quick Links -->
-            <div class="col-6 col-md-4">
-                <h6 class="fw-bold text-secondary mb-3">Quick Links</h6>
+            
+            <!-- Quick Links Column -->
+            <div class="col-6 col-md-2 offset-md-1">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
                 <ul class="list-unstyled mb-0">
-                    <li class="mb-2"><a href="{% url 'home' %}" class="text-decoration-none text-muted small">Home</a></li>
-                    <li class="mb-2"><a href="{% url 'destinations:list' %}" class="text-decoration-none text-muted small">Destinations</a></li>
-                    <li class="mb-2"><a href="{% url 'packages:list' %}" class="text-decoration-none text-muted small">Packages</a></li>
+                    <li class="mb-2"><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+                    <li class="mb-2"><a href="{% url 'destinations:list' %}" class="footer-link">Destinations</a></li>
+                    <li class="mb-2"><a href="{% url 'packages:list' %}" class="footer-link">Packages</a></li>
                     {% if user.is_authenticated %}
-                        <li class="mb-2"><a href="{% url 'trips:index' %}" class="text-decoration-none text-muted small">Trips</a></li>
-                        <li class="mb-2"><a href="{% url 'dashboard:index' %}" class="text-decoration-none text-muted small">Dashboard</a></li>
+                        <li class="mb-2"><a href="{% url 'trips:index' %}" class="footer-link">My Trips</a></li>
+                        <li class="mb-2"><a href="{% url 'dashboard:index' %}" class="footer-link">Dashboard</a></li>
                     {% endif %}
                 </ul>
             </div>
-            <!-- Support -->
-            <div class="col-6 col-md-4">
-                <h6 class="fw-bold text-secondary mb-3">Support</h6>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-muted small">Contact</a></li>
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-muted small">Privacy Policy</a></li>
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-muted small">Terms</a></li>
+            
+            <!-- Technologies Column -->
+            <div class="col-6 col-md-3">
+                <h6 class="fw-bold mb-3">Technologies Used</h6>
+                <ul class="list-unstyled mb-0 text-muted small" style="line-height: 1.8;">
+                    <li><i class="fa-brands fa-python me-1 text-primary"></i> Django Backend</li>
+                    <li><i class="fa-brands fa-bootstrap me-1 text-purple" style="color: #563d7c;"></i> Bootstrap 5 CSS</li>
+                    <li><i class="fa-solid fa-database me-1 text-secondary"></i> SQLite Database</li>
+                    <li><i class="fa-solid fa-brain me-1 text-info"></i> Scikit-Learn Model</li>
+                    <li><i class="fa-solid fa-cloud-sun me-1 text-warning"></i> OpenWeather API</li>
                 </ul>
+            </div>
+
+            <!-- Contact & Social Column -->
+            <div class="col-md-3">
+                <h6 class="fw-bold mb-3">Contact & Links</h6>
+                <ul class="list-unstyled mb-3 text-muted small">
+                    <li class="mb-2"><i class="fa-solid fa-envelope me-2"></i>support@travelwise.com</li>
+                    <li class="mb-2"><i class="fa-solid fa-location-dot me-2"></i>New Delhi, India</li>
+                </ul>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-dark px-3 py-1.5 fw-bold font-monospace">
+                    <i class="fa-brands fa-github me-1.5"></i>GitHub Repository
+                </a>
             </div>
         </div>
         <hr class="text-muted opacity-25">
         <div class="d-flex justify-content-between align-items-center flex-wrap pt-2">
             <span class="text-muted small">&copy; 2026 TravelWise. All rights reserved.</span>
+            <div class="text-muted small">
+                <a href="#" class="footer-link me-3">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+            </div>
         </div>
     </div>
 </footer>

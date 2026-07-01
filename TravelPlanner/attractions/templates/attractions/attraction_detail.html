@@ -37,13 +37,13 @@
 
         <!-- Sidebar stats -->
         <div class="col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card border border-primary-subtle shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #ffffff 0%, #f4f7fe 100%) !important;">
                 <div class="card-body p-4">
                     <h5 class="fw-bold mb-4 text-dark border-bottom pb-2">Attraction Statistics</h5>
                     
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-light p-2.5 rounded-3 me-3 text-secondary border">
-                            <i class="fa-solid fa-wallet text-secondary fa-fw"></i>
+                        <div class="bg-white p-2.5 rounded-3 me-3 text-primary border shadow-sm">
+                            <i class="fa-solid fa-wallet text-primary fa-fw"></i>
                         </div>
                         <div>
                             <small class="text-muted d-block">Entry Fee</small>
@@ -52,8 +52,8 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-light p-2.5 rounded-3 me-3 text-secondary border">
-                            <i class="fa-solid fa-clock text-secondary fa-fw"></i>
+                        <div class="bg-white p-2.5 rounded-3 me-3 text-primary border shadow-sm">
+                            <i class="fa-solid fa-clock text-primary fa-fw"></i>
                         </div>
                         <div>
                             <small class="text-muted d-block">Hours of Operation</small>
@@ -62,8 +62,8 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-4">
-                        <div class="bg-light p-2.5 rounded-3 me-3 text-secondary border">
-                            <i class="fa-solid fa-hourglass-half text-secondary fa-fw"></i>
+                        <div class="bg-white p-2.5 rounded-3 me-3 text-primary border shadow-sm">
+                            <i class="fa-solid fa-hourglass-half text-primary fa-fw"></i>
                         </div>
                         <div>
                             <small class="text-muted d-block">Average Visit Time</small>
@@ -72,9 +72,9 @@
                     </div>
 
                     {% if user.is_authenticated %}
-                    <div class="d-grid gap-2 border-top pt-3">
-                        <a href="{% url 'attractions:update' attraction.pk %}" class="btn btn-outline-primary fw-semibold"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Attraction</a>
-                        <a href="{% url 'attractions:delete' attraction.pk %}" class="btn btn-outline-danger fw-semibold"><i class="fa-solid fa-trash me-2"></i>Delete Attraction</a>
+                    <div class="d-grid gap-2 border-top pt-4 mt-4">
+                        <a href="{% url 'attractions:update' attraction.pk %}" class="btn btn-outline-primary btn-sm fw-semibold"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Attraction</a>
+                        <a href="{% url 'attractions:delete' attraction.pk %}" class="btn btn-outline-danger btn-sm fw-semibold"><i class="fa-solid fa-trash me-2"></i>Delete Attraction</a>
                     </div>
                     {% endif %}
                 </div>

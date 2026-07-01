@@ -113,35 +113,32 @@
     <div class="row g-4">
         {% for dest in destinations %}
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0">
-                <div style="overflow:hidden; border-top-left-radius: .375rem; border-top-right-radius: .375rem;">
+            <div class="card h-100 border-0 card-hover">
+                <div class="card-img-wrapper position-relative">
                     {% if dest.image %}
-                        <img src="{{ dest.image.url }}" class="card-img-top hover-zoom-img" alt="{{ dest.destination_name }}">
+                        <img src="{{ dest.image.url }}" class="hover-zoom-img" alt="{{ dest.destination_name }}">
                     {% else %}
-                        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 220px;">
+                        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100" style="min-height: 220px;">
                             <i class="fa-regular fa-image fa-3x"></i>
                         </div>
                     {% endif %}
+                    <span class="badge bg-warning text-dark border-0 shadow-sm position-absolute top-0 end-0 m-3 px-3 py-1.5 rounded-pill fw-bold"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
                 </div>
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-primary small fw-semibold">
-                                <i class="fa-solid fa-location-dot me-1"></i> 
-                                {{ dest.city }}{% if dest.state %}, {{ dest.state }}{% endif %}
-                            </span>
-                            <span class="badge bg-light text-dark border"><i class="fa-solid fa-star text-warning me-1"></i>{{ dest.average_rating }}</span>
-                        </div>
-                        <h4 class="card-title fw-bold text-dark mb-2">{{ dest.destination_name }}</h4>
-                        <span class="badge bg-primary bg-opacity-10 text-primary mb-3">{{ dest.category }}</span>
-                        <p class="card-text text-muted small">{{ dest.description|truncatewords:20 }}</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
-                        <span class="fw-semibold text-dark small">
-                            <i class="fa-solid fa-wallet text-secondary me-1"></i>{{ dest.budget_level }}
+                        <span class="text-primary fw-semibold small">
+                            <i class="fa-solid fa-location-dot me-1"></i> 
+                            {{ dest.city }}{% if dest.state %}, {{ dest.state }}{% endif %}
                         </span>
-                        <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-sm btn-outline-primary px-3">View Details</a>
+                        <h4 class="fw-bold text-dark mt-2 mb-2">{{ dest.destination_name }}</h4>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill fw-bold">{{ dest.category }}</span>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill fw-bold">{{ dest.budget_level }}</span>
+                            <span class="badge bg-info bg-opacity-10 text-info rounded-pill fw-bold"><i class="fa-regular fa-sun me-1"></i>{{ dest.best_season }}</span>
+                        </div>
+                        <p class="text-muted small mb-0">{{ dest.description|truncatewords:20 }}</p>
                     </div>
+                    <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary w-100 mt-4 py-2 fw-semibold">View Details</a>
                 </div>
             </div>
         </div>
