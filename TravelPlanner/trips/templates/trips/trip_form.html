@@ -33,6 +33,36 @@
                     {% endfor %}
                     
                     <div class="d-grid gap-2 mt-4 pt-2">
+                        <button type="button" id="btn-estimate-cost" class="btn btn-info py-2.5 fw-semibold text-white">
+                            <i class="fa-solid fa-calculator me-2"></i>Estimate Trip Cost
+                        </button>
+                    </div>
+
+                    <!-- Cost Estimate Result Card -->
+                    <div class="card border border-info-subtle bg-info bg-opacity-10 rounded-3 mt-3 d-none" id="cost-estimate-card">
+                        <div class="card-body p-4 text-center">
+                            <span class="text-muted small d-block mb-1 text-uppercase fw-semibold">Estimated Trip Cost</span>
+                            <h3 id="cost-estimate-value" class="fw-bold text-success mb-3">₹0</h3>
+                            <div class="text-start border-top pt-3 mx-auto" style="max-width: 280px;">
+                                <small class="text-muted d-block mb-2">Estimated using:</small>
+                                <ul class="list-unstyled mb-0 text-muted small">
+                                    <li><i class="fa-solid fa-circle-check text-success me-2"></i>Destination</li>
+                                    <li><i class="fa-solid fa-circle-check text-success me-2"></i>Number of travelers</li>
+                                    <li><i class="fa-solid fa-circle-check text-success me-2"></i>Duration</li>
+                                    <li><i class="fa-solid fa-circle-check text-success me-2"></i>Package Type</li>
+                                    <li><i class="fa-solid fa-circle-check text-success me-2"></i>Travel Season</li>
+                                </ul>
+                                <small class="text-muted d-block mt-3 text-center font-monospace" style="font-size: 10px;">Actual expenses may vary.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cost-estimate-error" class="alert alert-danger border shadow-sm rounded-3 d-none mt-3" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <span id="cost-estimate-error-msg">Please correct the errors above.</span>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-3">
                         <button type="submit" class="btn btn-primary py-2.5 fw-semibold">
                             <i class="fa-solid fa-route me-2"></i>Save Itinerary
                         </button>
@@ -41,6 +71,137 @@
                         </a>
                     </div>
                 </form>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const btnEstimate = document.getElementById('btn-estimate-cost');
+                    const costCard = document.getElementById('cost-estimate-card');
+                    const costValue = document.getElementById('cost-estimate-value');
+                    const errorContainer = document.getElementById('cost-estimate-error');
+                    const errorMsg = document.getElementById('cost-estimate-error-msg');
+
+                    // Inputs to monitor for changes
+                    const inputs = [
+                        document.getElementById('id_destination'),
+                        document.getElementById('id_start_date'),
+                        document.getElementById('id_end_date'),
+                        document.getElementById('id_number_of_travelers'),
+                        document.getElementById('id_package_type')
+                    ];
+
+                    // Clear previous prediction and require a new estimate on input change
+                    inputs.forEach(input => {
+                        if (input) {
+                            input.addEventListener('change', clearPrediction);
+                            input.addEventListener('input', clearPrediction);
+                        }
+                    });
+
+                    function clearPrediction() {
+                        costCard.classList.add('d-none');
+                        errorContainer.classList.add('d-none');
+                        inputs.forEach(input => {
+                            if (input) {
+                                input.classList.remove('is-invalid');
+                                const errorDiv = input.parentNode.querySelector('.invalid-feedback');
+                                if (errorDiv) {
+                                    errorDiv.remove();
+                                }
+                            }
+                        });
+                    }
+
+                    btnEstimate.addEventListener('click', function() {
+                        // Clear existing errors
+                        clearPrediction();
+
+                        let hasErrors = false;
+
+                        // Validation
+                        inputs.forEach(input => {
+                            if (input && !input.value.trim()) {
+                                input.classList.add('is-invalid');
+                                hasErrors = true;
+                                
+                                // Append invalid feedback message if it doesn't exist
+                                let feedback = input.parentNode.querySelector('.invalid-feedback');
+                                if (!feedback) {
+                                    feedback = document.createElement('div');
+                                    feedback.className = 'invalid-feedback small mt-1';
+                                    feedback.innerText = 'This field is required.';
+                                    input.parentNode.appendChild(feedback);
+                                }
+                            }
+                        });
+
+                        if (hasErrors) {
+                            errorContainer.classList.remove('d-none');
+                            errorMsg.innerText = "Please complete all required fields before estimating.";
+                            return;
+                        }
+
+                        const destination = document.getElementById('id_destination').value;
+                        const startDate = document.getElementById('id_start_date').value;
+                        const endDate = document.getElementById('id_end_date').value;
+                        const travelers = document.getElementById('id_number_of_travelers').value;
+                        const packageType = document.getElementById('id_package_type').value;
+
+                        // Get CSRF Token
+                        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                        // Form data
+                        const formData = new FormData();
+                        formData.append('destination_id', destination);
+                        formData.append('start_date', startDate);
+                        formData.append('end_date', endDate);
+                        formData.append('number_of_travelers', travelers);
+                        formData.append('package_type', packageType);
+
+                        // Set loading state
+                        btnEstimate.disabled = true;
+                        const originalHtml = btnEstimate.innerHTML;
+                        btnEstimate.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Estimating...';
+
+                        fetch("{% url 'trips:estimate_cost' %}", {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': csrfToken
+                            },
+                            body: formData
+                        })
+                        .then(response => {
+                            btnEstimate.disabled = false;
+                            btnEstimate.innerHTML = originalHtml;
+                            
+                            if (!response.ok) {
+                                throw new Error("API call failed");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.estimated_cost !== undefined) {
+                                costCard.classList.remove('d-none');
+                                // Format using Indian currency formatting with no decimal places
+                                const costFormatted = new Intl.NumberFormat('en-IN', {
+                                    style: 'currency',
+                                    currency: 'INR',
+                                    maximumFractionDigits: 0
+                                }).format(data.estimated_cost);
+                                costValue.innerText = costFormatted;
+                            } else {
+                                errorContainer.classList.remove('d-none');
+                                errorMsg.innerText = "Unable to estimate trip cost. Please try again.";
+                            }
+                        })
+                        .catch(err => {
+                            btnEstimate.disabled = false;
+                            btnEstimate.innerHTML = originalHtml;
+                            errorContainer.classList.remove('d-none');
+                            errorMsg.innerText = "Unable to estimate trip cost. Please try again.";
+                        });
+                    });
+                });
+                </script>
             </div>
         </div>
     </div>

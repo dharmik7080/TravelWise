@@ -543,6 +543,33 @@ class TripCSVExportTests(TestCase):
         self.assertIn("Yosemite Valley Admin Export", content)
         self.assertIn("Couple", content)
 
+    def test_trip_cost_estimation_endpoint(self):
+        self.client.login(username=self.username, password=self.password)
+        url = reverse('trips:estimate_cost')
+        
+        # Valid data
+        data = {
+            'destination_id': self.destination.destination_id,
+            'start_date': '2026-10-10',
+            'end_date': '2026-10-15',
+            'number_of_travelers': '2',
+            'package_type': 'Standard'
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('estimated_cost', response.json())
+        self.assertTrue(response.json()['estimated_cost'] > 0)
+
+        # Invalid date order
+        data['end_date'] = '2026-10-09'
+        response2 = self.client.post(url, data)
+        self.assertEqual(response2.status_code, 400)
+        self.assertIn('error', response2.json())
+
+        # Missing parameters
+        response3 = self.client.post(url, {})
+        self.assertEqual(response3.status_code, 400)
+
 
 class TripModelValidationTests(TestCase):
     def setUp(self):

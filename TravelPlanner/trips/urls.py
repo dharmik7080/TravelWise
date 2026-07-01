@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     TripsIndexView, TripCreateView, TripDetailView,
-    TripUpdateView, TripDeleteView, TripItineraryUpdateView
+    TripUpdateView, TripDeleteView, TripItineraryUpdateView,
+    TripCostEstimateView
 )
 
 app_name = 'trips'
@@ -9,6 +10,7 @@ app_name = 'trips'
 urlpatterns = [
     path('', TripsIndexView.as_view(), name='index'),
     path('plan/', TripCreateView.as_view(), name='plan'),
+    path('estimate-cost/', TripCostEstimateView.as_view(), name='estimate_cost'),
     path('<int:pk>/', TripDetailView.as_view(), name='detail'),
     path('<int:pk>/edit/', TripUpdateView.as_view(), name='update'),
     path('<int:pk>/delete/', TripDeleteView.as_view(), name='delete'),

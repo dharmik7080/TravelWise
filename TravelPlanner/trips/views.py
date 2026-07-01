@@ -163,3 +163,73 @@ class TripItineraryUpdateView(LoginRequiredMixin, generic.UpdateView):
             return redirect('trips:detail', pk=self.object.pk)
         else:
             return self.form_invalid(form)
+
+
+from django.http import JsonResponse
+from django.views import View
+from datetime import datetime
+from destinations.models import Destination
+from ml.prediction_service import PredictionService
+
+class TripCostEstimateView(LoginRequiredMixin, View):
+    """
+    AJAX view to predict/estimate total trip cost based on form inputs.
+    """
+    def post(self, request, *args, **kwargs):
+        destination_id = request.POST.get('destination_id')
+        start_date_str = request.POST.get('start_date')
+        end_date_str = request.POST.get('end_date')
+        travelers_str = request.POST.get('number_of_travelers', '1')
+        package_type = request.POST.get('package_type', 'Standard')
+
+        if not (destination_id and start_date_str and end_date_str):
+            return JsonResponse({'error': 'Please select Destination, Start Date, and End Date.'}, status=400)
+
+        try:
+            destination = Destination.objects.get(pk=destination_id)
+        except Destination.DoesNotExist:
+            return JsonResponse({'error': 'Selected destination does not exist.'}, status=400)
+
+        try:
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+            if start_date > end_date:
+                return JsonResponse({'error': 'End date must be after or equal to start date.'}, status=400)
+            
+            days = (end_date - start_date).days + 1
+        except ValueError:
+            return JsonResponse({'error': 'Invalid date values provided.'}, status=400)
+
+        try:
+            travelers = int(travelers_str)
+            if travelers < 1:
+                return JsonResponse({'error': 'Number of travelers must be at least 1.'}, status=400)
+        except ValueError:
+            return JsonResponse({'error': 'Invalid number of travelers.'}, status=400)
+
+        # Infer Season from start_date
+        month = start_date.month
+        if month in [12, 1, 2]:
+            season = 'Winter'
+        elif month in [3, 4, 5]:
+            season = 'Summer'
+        elif month in [6, 7, 8]:
+            season = 'Monsoon'
+        elif month in [9, 10, 11]:
+            season = 'Autumn'
+        else:
+            season = 'Spring'
+
+        # Get Prediction
+        predicted_cost = PredictionService.predict_cost(
+            destination=destination.destination_name,
+            travelers=travelers,
+            days=days,
+            package_type=package_type,
+            season=season
+        )
+
+        if predicted_cost is None:
+            return JsonResponse({'error': 'Estimation model failed. Please try again later.'}, status=500)
+
+        return JsonResponse({'estimated_cost': predicted_cost})

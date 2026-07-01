@@ -6,6 +6,13 @@ class TripForm(forms.ModelForm):
     ModelForm for registering a traveler's Trip, including date,
     traveler count, and budget validation checks.
     """
+    package_type = forms.ChoiceField(
+        choices=[],
+        required=False,
+        label="Package Type (for Cost Estimation)",
+        initial='Standard',
+    )
+
     class Meta:
         model = Trip
         fields = [
@@ -20,6 +27,15 @@ class TripForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        from packages.models import Package
+        try:
+            db_types = sorted(list(Package.objects.values_list('package_type', flat=True).distinct()))
+            choices = [(t, t) for t in db_types if t]
+        except Exception:
+            choices = [('Budget', 'Budget'), ('Standard', 'Standard'), ('Luxury', 'Luxury')]
+        
+        self.fields['package_type'].choices = choices
+
         for name, field in self.fields.items():
             if isinstance(field.widget, forms.CheckboxInput):
                 field.widget.attrs.update({'class': 'form-check-input'})
