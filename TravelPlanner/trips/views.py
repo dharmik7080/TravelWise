@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from .models import Trip
 from .forms import TripForm, ItineraryDayFormSet
-from destinations.weather_service import get_current_weather
+from services.weather_service import WeatherService
 
 
 class TripsIndexView(LoginRequiredMixin, generic.ListView):
@@ -94,7 +94,7 @@ class TripDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_weather'] = get_current_weather(self.object.destination.city)
+        context['current_weather'] = WeatherService.get_weather(self.object.destination.city)
         return context
 
 

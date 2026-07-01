@@ -80,7 +80,7 @@ class DestinationListView(generic.ListView):
         return context
 
 
-from .weather_service import get_current_weather
+from services.weather_service import WeatherService
 
 class DestinationDetailView(generic.DetailView):
     """
@@ -94,7 +94,7 @@ class DestinationDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Fetch current weather stats based on the destination city name
-        context['current_weather'] = get_current_weather(self.object.city)
+        context['current_weather'] = WeatherService.get_weather(self.object.city)
         return context
 
 

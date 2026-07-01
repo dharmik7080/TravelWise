@@ -242,7 +242,7 @@ class TripsAccessTests(TestCase):
         self.assertEqual(len(response.context['trips']), 8)  # Paginated at 8 items
         self.assertTrue(response.context['is_paginated'])
 
-    @patch('trips.views.get_current_weather')
+    @patch('trips.views.WeatherService.get_weather')
     def test_trip_detail_view_weather_rendering(self, mock_get_weather):
         mock_get_weather.return_value = {
             'temp': 22,

@@ -225,7 +225,9 @@ class DestinationCRUDTests(TestCase):
 class ImportDestinationsCommandTests(TestCase):
     def setUp(self):
         import tempfile
+        from django.core.cache import cache
         self.temp_dir = tempfile.TemporaryDirectory()
+        cache.clear()
 
     def tearDown(self):
         self.temp_dir.cleanup()
@@ -353,6 +355,39 @@ class ImportDestinationsCommandTests(TestCase):
              patch('django.conf.settings.OPENWEATHER_API_KEY', 'valid_test_key'):
             weather = get_current_weather("Tusayan")
             self.assertIsNone(weather)
+
+    def test_weather_service_caching(self):
+        from unittest.mock import patch, MagicMock
+        from services.weather_service import WeatherService
+        from django.core.cache import cache
+        import json
+
+        cache.clear()
+        mock_response_data = {
+            'main': {'temp': 20.0, 'humidity': 50},
+            'weather': [{'main': 'Rain', 'icon': '10d'}],
+            'wind': {'speed': 5.0}
+        }
+
+        with patch('urllib.request.urlopen') as mock_urlopen, \
+             patch('django.conf.settings.OPENWEATHER_API_KEY', 'valid_test_key'):
+            mock_response = MagicMock()
+            mock_response.status = 200
+            mock_response.read.return_value = json.dumps(mock_response_data).encode('utf-8')
+            mock_urlopen.return_value.__enter__.return_value = mock_response
+
+            # First call fetches from API and caches
+            weather1 = WeatherService.get_weather("Ooty")
+            self.assertIsNotNone(weather1)
+            self.assertEqual(weather1['temp'], 20)
+            self.assertEqual(mock_urlopen.call_count, 1)
+
+            # Second call should fetch from cache, urlopen is NOT called again
+            weather2 = WeatherService.get_weather("Ooty")
+            self.assertIsNotNone(weather2)
+            self.assertEqual(weather2['temp'], 20)
+            self.assertEqual(mock_urlopen.call_count, 1)
+            self.assertEqual(weather1['last_updated'], weather2['last_updated'])
 
 
 class DestinationAdminTests(TestCase):
