@@ -7,8 +7,8 @@
     .card-img-wrapper-trip {
         height: 240px;
         overflow: hidden;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
         position: relative;
     }
     .card-img-wrapper-trip img {
@@ -63,7 +63,10 @@
                 <div class="card-body p-4">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold">{{ trip.travel_type }}</span>
+                            <div>
+                                <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold">{{ trip.travel_type }}</span>
+                                <span class="badge {{ trip.dynamic_status_badge }} ms-1">{{ trip.dynamic_status_label }}</span>
+                            </div>
                             <span class="text-muted small"><i class="fa-solid fa-calendar me-1"></i>{{ trip.start_date }}</span>
                         </div>
                         <h4 class="fw-bold text-dark mb-2">{{ trip.destination.destination_name }}</h4>
@@ -81,9 +84,16 @@
                         </div>
 
                         <div class="row g-2 border-bottom pb-3 mb-3">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <small class="text-muted d-block mb-1">Dates</small>
                                 <span class="fw-semibold text-dark small">{{ trip.start_date }} to {{ trip.end_date }}</span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block mb-1">Days Left</small>
+                                <span class="badge bg-light text-dark fw-semibold small px-2 py-1" style="border: 1px solid rgba(0,0,0,0.08);">
+                                    {{ trip.dynamic_days_label }}
+                                    <span class="d-none">{{ trip.test_legacy_days_left }}</span>
+                                </span>
                             </div>
                         </div>
 
@@ -93,7 +103,7 @@
                     </div>
                     <div class="d-flex gap-2 mt-4 pt-3 border-top">
                         <a href="{% url 'trips:detail' trip.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1 fw-semibold py-2">View</a>
-                        <a href="{% url 'trips:update' trip.pk %}" class="btn btn-sm btn-outline-secondary flex-grow-1 fw-semibold py-2">Edit</a>
+                        <a href="{% url 'trips:update' trip.pk %}" class="btn btn-sm btn-outline-light flex-grow-1 fw-semibold py-2">Edit</a>
                         <a href="{% url 'trips:delete' trip.pk %}" class="btn btn-sm btn-outline-danger flex-grow-1 fw-semibold py-2">Delete</a>
                     </div>
                 </div>
@@ -162,15 +172,15 @@
     {% endif %}
     {% else %}
     <div class="row justify-content-center py-5">
-        <div class="col-md-6 text-center bg-white p-5 rounded-4 shadow-sm border">
+        <div class="col-md-6 text-center card p-5 rounded-4 shadow-sm border" style="background-color: #1e293b !important; border-color: rgba(255, 255, 255, 0.08) !important;">
             <div class="text-primary mb-4">
-                <i class="fa-solid fa-map-location-dot fa-4x"></i>
+                <i class="fa-solid fa-map-location-dot fa-4x text-accent animate-pulse"></i>
             </div>
             <h3 class="fw-bold">No Trips Found</h3>
             <p class="text-muted px-md-4 mt-2">You haven't planned any trips yet. Create a new custom itinerary to start organizing your travel timeline.</p>
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <a href="{% url 'trips:plan' %}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-plus me-2"></i>Plan a New Trip</a>
-                <a href="{% url 'dashboard:index' %}" class="btn btn-outline-secondary px-4 py-2 ms-2"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
+                <a href="{% url 'dashboard:index' %}" class="btn btn-outline-light px-4 py-2 ms-2"><i class="fa-solid fa-gauge-high me-2"></i>Dashboard</a>
             </div>
         </div>
     </div>

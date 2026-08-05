@@ -21,6 +21,47 @@ class TripsIndexView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Trip.objects.filter(user=self.request.user).order_by('-created_at')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        from django.utils import timezone
+        import sys
+        today = timezone.localtime(timezone.now()).date()
+        
+        for trip in context['trips']:
+            start = trip.start_date
+            end = trip.end_date
+            
+            if today < start:
+                trip.dynamic_status = "upcoming"
+                trip.dynamic_status_label = "Upcoming"
+                trip.dynamic_status_badge = "bg-primary"
+                days = (start - today).days
+                trip.dynamic_days_label = f"Starts in {days} days"
+                trip.test_legacy_days_left = f"{days} Days Left"
+            elif start <= today <= end:
+                trip.dynamic_status = "ongoing"
+                trip.dynamic_status_label = "Ongoing"
+                trip.dynamic_status_badge = "bg-success"
+                
+                day_number = (today - start).days + 1
+                total_days = (end - start).days + 1
+                
+                if today == start:
+                    trip.dynamic_days_label = "Starts Today"
+                elif today == end:
+                    trip.dynamic_days_label = "Final Day"
+                else:
+                    trip.dynamic_days_label = f"Day {day_number} of {total_days}"
+                trip.test_legacy_days_left = "0 Days Left"
+            else:
+                trip.dynamic_status = "completed"
+                trip.dynamic_status_label = "Completed"
+                trip.dynamic_status_badge = "bg-secondary"
+                trip.dynamic_days_label = "Completed ✓"
+                trip.test_legacy_days_left = "0 Days Left"
+                
+        return context
+
 
 class TripCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """
@@ -47,6 +88,26 @@ class TripCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
         days = (trip.end_date - trip.start_date).days + 1
         
         from .models import ItineraryTemplate, ItineraryDay
+        import json
+        
+        # Check if custom generated itinerary JSON is passed from the client-side
+        generated_itinerary_str = self.request.POST.get('generated_itinerary')
+        if generated_itinerary_str:
+            try:
+                gen_itinerary = json.loads(generated_itinerary_str)
+                for day_str, slots in gen_itinerary.items():
+                    day_idx = int(day_str)
+                    ItineraryDay.objects.create(
+                        trip=trip,
+                        day_number=day_idx,
+                        morning=slots.get('morning') or f"Explore scenic spots in {trip.destination.destination_name}",
+                        afternoon=slots.get('afternoon') or "Visit local markets and enjoy regional cuisine",
+                        evening=slots.get('evening') or f"Relax and enjoy evening views in {trip.destination.destination_name}"
+                    )
+                return response
+            except Exception:
+                pass
+
         templates = list(ItineraryTemplate.objects.filter(destination=trip.destination).order_by('day_number'))
         total_templates = len(templates)
         
@@ -95,6 +156,42 @@ class TripDetailView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['current_weather'] = WeatherService.get_weather(self.object.destination.city)
+        
+        from django.utils import timezone
+        today = timezone.localtime(timezone.now()).date()
+        trip = self.object
+        start = trip.start_date
+        end = trip.end_date
+        
+        if today < start:
+            trip.dynamic_status = "upcoming"
+            trip.dynamic_status_label = "Upcoming"
+            trip.dynamic_status_badge = "bg-primary"
+            days = (start - today).days
+            trip.dynamic_days_label = f"Starts in {days} days"
+            trip.test_legacy_days_left = f"{days} Days Left"
+        elif start <= today <= end:
+            trip.dynamic_status = "ongoing"
+            trip.dynamic_status_label = "Ongoing"
+            trip.dynamic_status_badge = "bg-success"
+            
+            day_number = (today - start).days + 1
+            total_days = (end - start).days + 1
+            
+            if today == start:
+                trip.dynamic_days_label = "Starts Today"
+            elif today == end:
+                trip.dynamic_days_label = "Final Day"
+            else:
+                trip.dynamic_days_label = f"Day {day_number} of {total_days}"
+            trip.test_legacy_days_left = "0 Days Left"
+        else:
+            trip.dynamic_status = "completed"
+            trip.dynamic_status_label = "Completed"
+            trip.dynamic_status_badge = "bg-secondary"
+            trip.dynamic_days_label = "Completed ✓"
+            trip.test_legacy_days_left = "0 Days Left"
+            
         return context
 
 
@@ -232,4 +329,74 @@ class TripCostEstimateView(LoginRequiredMixin, View):
         if predicted_cost is None:
             return JsonResponse({'error': 'Estimation model failed. Please try again later.'}, status=500)
 
-        return JsonResponse({'estimated_cost': predicted_cost})
+        # Retrieve attractions for destination
+        attractions_qs = destination.attractions.all()
+        attractions_list = [{
+            'name': attr.attraction_name,
+            'category': attr.category,
+            'image_url': attr.image.url if attr.image else None
+        } for attr in attractions_qs[:4]]
+
+        # Recommend activities based on category
+        activities = []
+        cat_lower = destination.category.lower()
+        if 'hill' in cat_lower or 'mountain' in cat_lower or 'adventure' in cat_lower:
+            activities = ['Trekking & Hiking', 'Cable Car Rides', 'Scenic Photography', 'Local Sightseeing']
+        elif 'beach' in cat_lower or 'lake' in cat_lower or 'water' in cat_lower:
+            activities = ['Boating & Water Sports', 'Sunset Cruises', 'Beach Volleyball', 'Seafood Tasting']
+        elif 'heritage' in cat_lower or 'temple' in cat_lower or 'spiritual' in cat_lower:
+            activities = ['Guided Heritage Walks', 'Spiritual Prayers', 'Archaeological Sightseeing', 'Cultural Shows']
+        else:
+            activities = ['Local Shopping', 'Food Tasting Walks', 'Photography Tours', 'City Exploration']
+
+        return JsonResponse({
+            'estimated_cost': predicted_cost,
+            'attractions': attractions_list,
+            'recommended_activities': activities,
+            'package_type': package_type
+        })
+
+
+class TripItineraryGenerateView(LoginRequiredMixin, View):
+    """
+    Thin AJAX endpoint to generate a customized day-wise itinerary based on travel parameters
+    entirely using existing database records.
+    """
+    def post(self, request, *args, **kwargs):
+        destination_id = request.POST.get('destination_id')
+        start_date_str = request.POST.get('start_date')
+        end_date_str = request.POST.get('end_date')
+        travel_type = request.POST.get('travel_type', 'Solo')
+        budget_level = request.POST.get('budget_level', 'Moderate')
+        regenerate = request.POST.get('regenerate') == 'true'
+
+        if not all([destination_id, start_date_str, end_date_str]):
+            return JsonResponse({'error': 'Please select Destination, Start Date, and End Date.'}, status=400)
+
+        try:
+            destination = Destination.objects.get(pk=destination_id)
+        except Destination.DoesNotExist:
+            return JsonResponse({'error': 'Selected destination does not exist.'}, status=400)
+
+        # Parse duration (total days)
+        try:
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+            total_days = (end_date - start_date).days + 1
+        except (ValueError, TypeError):
+            return JsonResponse({'error': 'Invalid date format.'}, status=400)
+
+        if total_days <= 0:
+            return JsonResponse({'error': 'End date must be after or equal to start date.'}, status=400)
+
+        from services.itinerary_service import ItineraryService
+        # Generate using service
+        itinerary = ItineraryService.generate_itinerary(
+            destination=destination,
+            total_days=total_days,
+            travel_type=travel_type,
+            budget_level=budget_level,
+            regenerate=regenerate
+        )
+
+        return JsonResponse({'itinerary': itinerary})

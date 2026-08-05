@@ -6,19 +6,12 @@
 {% block extra_css %}
 <style>
     .hover-zoom-img {
-        transition: transform 0.4s ease;
-        height: 220px;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 240px;
         object-fit: cover;
     }
     .card:hover .hover-zoom-img {
-        transform: scale(1.05);
-    }
-    .card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        transform: scale(1.06);
     }
 </style>
 {% endblock %}
@@ -30,82 +23,102 @@
             <h1 class="fw-bold text-dark m-0"><i class="fa-solid fa-earth-americas text-primary me-2"></i>Destinations</h1>
             <p class="text-muted mb-0">Browse global getaways and plan your next journey.</p>
         </div>
-        {% if user.is_authenticated %}
+        {% if user.is_staff %}
         <a href="{% url 'destinations:create' %}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-plus me-2"></i>Add Destination</a>
         {% endif %}
     </div>
     <hr class="mb-4">
 
-    <!-- Search & Filter Form -->
-    <form method="get" class="mb-5 bg-white p-4 rounded-4 shadow-sm border">
-        <!-- Search Input Row -->
-        <div class="input-group mb-4 border rounded-3 overflow-hidden">
-            <span class="input-group-text bg-white border-0 ps-3"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
-            <input type="text" name="q" class="form-control border-0 py-2.5 ps-2" placeholder="Search destinations..." value="{{ q }}">
-            {% if q %}
-                <a href="{% url 'destinations:list' %}" class="btn btn-link text-secondary bg-white border-0 d-flex align-items-center" style="text-decoration:none;"><i class="fa-solid fa-xmark fs-5"></i></a>
-            {% endif %}
-        </div>
-
-        <!-- Filters & Sorting Selection Grid -->
-        <div class="row g-3">
-            <div class="col-sm-6 col-md-4">
-                <label class="form-label fw-semibold text-secondary small mb-1">State</label>
-                <select name="state" class="form-select border rounded-3 py-2 text-muted small">
-                    <option value="">All States</option>
-                    {% for st in states %}
-                        <option value="{{ st }}" {% if request.GET.state == st %}selected{% endif %}>{{ st }}</option>
-                    {% endfor %}
-                </select>
+    <!-- Search & Filter Form (Airbnb Style) -->
+    <form method="get" class="mb-5 glass-morphic p-4 rounded-5 shadow border" style="background: rgba(30, 41, 59, 0.6) !important; border-color: var(--border-color) !important;">
+        <div class="row g-3 align-items-end">
+            <!-- Search Field -->
+            <div class="col-md-12 col-lg-4">
+                <label for="searchDest" class="form-label text-uppercase fw-semibold" style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 8px;">
+                    <i class="fa-solid fa-magnifying-glass me-1 text-primary"></i> Search Destinations
+                </label>
+                <div class="position-relative">
+                    <input type="text" name="q" id="searchDest" class="form-control text-white" placeholder="Search destinations..." value="{{ q }}" 
+                           style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 48px !important; padding-right: 15px !important; font-size: 0.95rem;">
+                    <i class="fa-solid fa-magnifying-glass position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: var(--bs-secondary-color) !important; pointer-events: none; z-index: 2;"></i>
+                </div>
             </div>
             
-            <div class="col-sm-6 col-md-4">
-                <label class="form-label fw-semibold text-secondary small mb-1">Category</label>
-                <select name="category" class="form-select border rounded-3 py-2 text-muted small">
-                    <option value="">All Categories</option>
-                    {% for cat in categories %}
-                        <option value="{{ cat }}" {% if request.GET.category == cat %}selected{% endif %}>{{ cat }}</option>
-                    {% endfor %}
-                </select>
+            <!-- State Filter -->
+            <div class="col-sm-6 col-md-3 col-lg-2">
+                <label for="stateFilter" class="form-label text-uppercase fw-semibold" style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 8px;">
+                    <i class="fa-solid fa-map me-1 text-accent"></i> State
+                </label>
+                <div class="position-relative">
+                    <select name="state" id="stateFilter" class="form-select text-white" 
+                            style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 48px !important; padding-right: 35px !important; padding-top: 0; padding-bottom: 0; font-size: 0.95rem;">
+                        <option value="">All States</option>
+                        {% for st in states %}
+                            <option value="{{ st }}" {% if request.GET.state == st %}selected{% endif %}>{{ st }}</option>
+                        {% endfor %}
+                    </select>
+                    <i class="fa-solid fa-map position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: var(--bs-secondary-color) !important; pointer-events: none; z-index: 2;"></i>
+                </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
-                <label class="form-label fw-semibold text-secondary small mb-1">Budget Level</label>
-                <select name="budget_level" class="form-select border rounded-3 py-2 text-muted small">
-                    <option value="">All Budgets</option>
-                    {% for bl in budget_levels %}
-                        <option value="{{ bl }}" {% if request.GET.budget_level == bl %}selected{% endif %}>{{ bl }}</option>
-                    {% endfor %}
-                </select>
+            <!-- Category Filter -->
+            <div class="col-sm-6 col-md-3 col-lg-2">
+                <label for="catFilter" class="form-label text-uppercase fw-semibold" style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 8px;">
+                    <i class="fa-solid fa-tags me-1 text-success"></i> Category
+                </label>
+                <div class="position-relative">
+                    <select name="category" id="catFilter" class="form-select text-white" 
+                            style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 48px !important; padding-right: 35px !important; padding-top: 0; padding-bottom: 0; font-size: 0.95rem;">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat }}" {% if request.GET.category == cat %}selected{% endif %}>{{ cat }}</option>
+                        {% endfor %}
+                    </select>
+                    <i class="fa-solid fa-tags position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: var(--bs-secondary-color) !important; pointer-events: none; z-index: 2;"></i>
+                </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
-                <label class="form-label fw-semibold text-secondary small mb-1">Best Season</label>
-                <select name="best_season" class="form-select border rounded-3 py-2 text-muted small">
-                    <option value="">All Seasons</option>
-                    {% for bs in best_seasons %}
-                        <option value="{{ bs }}" {% if request.GET.best_season == bs %}selected{% endif %}>{{ bs }}</option>
-                    {% endfor %}
-                </select>
+            <!-- Budget Level -->
+            <div class="col-sm-6 col-md-3 col-lg-2">
+                <label for="budgetFilter" class="form-label text-uppercase fw-semibold" style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 8px;">
+                    <i class="fa-solid fa-wallet me-1 text-warning"></i> Budget
+                </label>
+                <div class="position-relative">
+                    <select name="budget_level" id="budgetFilter" class="form-select text-white" 
+                            style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 48px !important; padding-right: 35px !important; padding-top: 0; padding-bottom: 0; font-size: 0.95rem;">
+                        <option value="">All Budgets</option>
+                        {% for bl in budget_levels %}
+                            <option value="{{ bl }}" {% if request.GET.budget_level == bl %}selected{% endif %}>{{ bl }}</option>
+                        {% endfor %}
+                    </select>
+                    <i class="fa-solid fa-wallet position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: var(--bs-secondary-color) !important; pointer-events: none; z-index: 2;"></i>
+                </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
-                <label class="form-label fw-semibold text-secondary small mb-1">Sort By</label>
-                <select name="sort_by" class="form-select border rounded-3 py-2 text-muted small">
-                    <option value="name" {% if request.GET.sort_by == 'name' or not request.GET.sort_by %}selected{% endif %}>Name (A-Z)</option>
-                    <option value="rating" {% if request.GET.sort_by == 'rating' %}selected{% endif %}>Rating (High to Low)</option>
-                    <option value="budget" {% if request.GET.sort_by == 'budget' %}selected{% endif %}>Budget (Low to High)</option>
-                    <option value="cost" {% if request.GET.sort_by == 'cost' %}selected{% endif %}>Avg Cost (Low to High)</option>
-                </select>
+            <!-- Sort By -->
+            <div class="col-sm-6 col-md-3 col-lg-2">
+                <label for="sortFilter" class="form-label text-uppercase fw-semibold" style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 8px;">
+                    <i class="fa-solid fa-arrow-down-wide-short me-1 text-info"></i> Sort By
+                </label>
+                <div class="position-relative">
+                    <select name="sort_by" id="sortFilter" class="form-select text-white" 
+                            style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 48px !important; padding-right: 35px !important; padding-top: 0; padding-bottom: 0; font-size: 0.95rem;">
+                        <option value="name" {% if request.GET.sort_by == 'name' or not request.GET.sort_by %}selected{% endif %}>Name (A-Z)</option>
+                        <option value="rating" {% if request.GET.sort_by == 'rating' %}selected{% endif %}>Rating (High-Low)</option>
+                        <option value="budget" {% if request.GET.sort_by == 'budget' %}selected{% endif %}>Budget (Low-High)</option>
+                        <option value="cost" {% if request.GET.sort_by == 'cost' %}selected{% endif %}>Avg Cost (Low-High)</option>
+                    </select>
+                    <i class="fa-solid fa-arrow-down-wide-short position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); color: var(--bs-secondary-color) !important; pointer-events: none; z-index: 2;"></i>
+                </div>
             </div>
         </div>
 
         <!-- Actions Row -->
-        <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+        <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top border-secondary-subtle" style="border-color: var(--border-color) !important;">
             {% if q or request.GET.state or request.GET.category or request.GET.budget_level or request.GET.best_season or request.GET.sort_by %}
-                <a href="{% url 'destinations:list' %}" class="btn btn-outline-secondary px-4 py-2 small fw-semibold"><i class="fa-solid fa-rotate-left me-2"></i>Clear Filters</a>
+                <a href="{% url 'destinations:list' %}" class="btn btn-outline-secondary px-4 py-2.5 small fw-semibold" style="border-radius: 25px !important;"><i class="fa-solid fa-rotate-left me-2"></i>Clear Filters</a>
             {% endif %}
-            <button type="submit" class="btn btn-primary px-4 py-2 small fw-semibold"><i class="fa-solid fa-filter me-2"></i>Apply Filters</button>
+            <button type="submit" class="btn btn-primary px-5 py-2.5 small fw-bold" style="border-radius: 25px !important;"><i class="fa-solid fa-filter me-2"></i>Apply Filters</button>
         </div>
     </form>
 
@@ -113,16 +126,30 @@
     <div class="row g-4">
         {% for dest in destinations %}
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 card-hover">
-                <div class="card-img-wrapper position-relative">
+            <div class="card h-100 card-hover">
+                <div class="card-img-wrapper position-relative" style="height: 240px; overflow: hidden;">
                     {% if dest.image %}
-                        <img src="{{ dest.image.url }}" class="hover-zoom-img" alt="{{ dest.destination_name }}">
+                        <img src="{{ dest.image.url }}" class="hover-zoom-img w-100 h-100" alt="{{ dest.destination_name }}">
                     {% else %}
-                        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100" style="min-height: 220px;">
+                        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100">
                             <i class="fa-regular fa-image fa-3x"></i>
                         </div>
                     {% endif %}
-                    <span class="badge bg-warning text-dark border-0 shadow-sm position-absolute top-0 end-0 m-3 px-3 py-1.5 rounded-pill fw-bold"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
+                    <!-- Gradient Overlay -->
+                    <div class="position-absolute bottom-0 start-0 w-100 h-50" style="background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0) 100%); z-index: 1;"></div>
+                    
+                    <!-- Badges -->
+                    {% if dest.weather %}
+                        <span class="badge bg-info text-dark border-0 shadow-sm position-absolute top-0 start-0 m-3 px-3 py-1.5 rounded-pill fw-bold" style="z-index: 2;"><i class="fa-solid fa-temperature-half me-1"></i>{{ dest.weather.temp }}°C</span>
+                    {% endif %}
+                    <span class="badge bg-warning text-dark border-0 shadow-sm position-absolute top-0 end-0 m-3 px-3 py-1.5 rounded-pill fw-bold" style="z-index: 2;"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
+                    <!-- Wishlist button overlay -->
+                    <button type="button" class="btn btn-dark btn-sm rounded-circle position-absolute m-3 d-flex align-items-center justify-content-center btn-wishlist-card" 
+                            style="top: 45px; right: 0; z-index: 2; width: 34px; height: 34px; padding: 0; border: 0 !important; background-color: rgba(15,23,42,0.7) !important;"
+                            data-dest-id="{{ dest.pk }}" onclick="toggleCatalogWishlist(this, event)">
+                        <i class="fa-regular fa-heart text-white" style="font-size: 14px;"></i>
+                    </button>
+                    <span class="badge bg-primary position-absolute bottom-0 start-0 m-3 px-3 py-1.5 rounded-pill fw-bold" style="z-index: 2; font-size: 0.75rem;">{{ dest.category }}</span>
                 </div>
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
@@ -130,15 +157,24 @@
                             <i class="fa-solid fa-location-dot me-1"></i> 
                             {{ dest.city }}{% if dest.state %}, {{ dest.state }}{% endif %}
                         </span>
-                        <h4 class="fw-bold text-dark mt-2 mb-2">{{ dest.destination_name }}</h4>
+                        <h4 class="fw-bold mt-2 mb-2" style="color: #ffffff !important;">{{ dest.destination_name }}</h4>
                         <div class="d-flex flex-wrap gap-2 mb-3">
-                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill fw-bold">{{ dest.category }}</span>
                             <span class="badge bg-success bg-opacity-10 text-success rounded-pill fw-bold">{{ dest.budget_level }}</span>
                             <span class="badge bg-info bg-opacity-10 text-info rounded-pill fw-bold"><i class="fa-regular fa-sun me-1"></i>{{ dest.best_season }}</span>
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill fw-bold">
+                                {% if dest.solo_friendly %}Solo{% elif dest.couple_friendly %}Couple{% else %}Family{% endif %} Friendly
+                            </span>
                         </div>
-                        <p class="text-muted small mb-0">{{ dest.description|truncatewords:20 }}</p>
+                        <p class="text-secondary small mb-0">{{ dest.description|truncatewords:20 }}</p>
                     </div>
-                    <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary w-100 mt-4 py-2 fw-semibold">View Details</a>
+                    <div class="row g-2 mt-4">
+                        <div class="col-6">
+                            <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary w-100 py-2 fw-semibold">View Details</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'trips:index' %}?destination={{ dest.pk }}" class="btn btn-primary w-100 py-2 fw-semibold">Quick Plan</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,16 +241,16 @@
     {% endif %}
     {% else %}
     <div class="row justify-content-center py-5">
-        <div class="col-md-6 text-center bg-white p-5 rounded-4 shadow-sm border">
+        <div class="col-md-6 text-center p-5 rounded-4 shadow-sm border" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
             {% if q %}
-                <i class="fa-solid fa-magnifying-glass-minus fa-4x text-muted opacity-50 mb-3"></i>
-                <h4 class="fw-bold">No Destinations Found</h4>
-                <p class="text-muted mt-2 mb-4">No results matched your search query: <strong>"{{ q }}"</strong>.</p>
-                <a href="{% url 'destinations:list' %}" class="btn btn-outline-secondary px-4 py-2"><i class="fa-solid fa-rotate-left me-2"></i>Clear Search</a>
+                <i class="fa-solid fa-magnifying-glass-minus fa-4x text-muted opacity-40 mb-3 animate-pulse"></i>
+                <h4 class="fw-bold text-white">No Destinations Found</h4>
+                <p class="text-secondary mt-2 mb-4">No results matched your search query: <strong>"{{ q }}"</strong>.</p>
+                <a href="{% url 'destinations:list' %}" class="btn btn-outline-primary px-4 py-2"><i class="fa-solid fa-rotate-left me-2"></i>Clear Search</a>
             {% else %}
-                <i class="fa-solid fa-map fa-4x text-muted opacity-50 mb-3"></i>
-                <h4 class="fw-bold">No Destinations Available</h4>
-                <p class="text-muted mt-2 m-0">There are currently no travel spots registered in our catalog.</p>
+                <i class="fa-solid fa-map fa-4x text-muted opacity-40 mb-3 animate-pulse"></i>
+                <h4 class="fw-bold text-white">No Destinations Available</h4>
+                <p class="text-secondary mt-2 m-0">There are currently no travel spots registered in our catalog.</p>
                 {% if user.is_authenticated %}
                 <a href="{% url 'destinations:create' %}" class="btn btn-primary mt-4"><i class="fa-solid fa-plus me-2"></i>Add First Destination</a>
                 {% endif %}
@@ -223,4 +259,37 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update all wishlist buttons on the page from localStorage
+    document.querySelectorAll('.btn-wishlist-card').forEach(btn => {
+        const destId = btn.getAttribute('data-dest-id');
+        const isSaved = localStorage.getItem('wishlist_dest_' + destId) === 'true';
+        updateCardWishlistUI(btn, isSaved);
+    });
+});
+
+function toggleCatalogWishlist(btn, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    const destId = btn.getAttribute('data-dest-id');
+    const key = 'wishlist_dest_' + destId;
+    const currentlySaved = localStorage.getItem(key) === 'true';
+    const nextSaved = !currentlySaved;
+    localStorage.setItem(key, nextSaved ? 'true' : 'false');
+    updateCardWishlistUI(btn, nextSaved);
+}
+
+function updateCardWishlistUI(btn, saved) {
+    const icon = btn.querySelector('i');
+    if (saved) {
+        icon.className = 'fa-solid fa-heart text-danger';
+    } else {
+        icon.className = 'fa-regular fa-heart text-white';
+    }
+}
+</script>
 {% endblock %}

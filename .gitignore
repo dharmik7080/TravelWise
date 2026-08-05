@@ -19,3 +19,8 @@ db.sqlite3
 
 # Large datasets
 *.csv
+data/
+
+# ML Models and Pickles
+*.pkl
+*.pkl.gz

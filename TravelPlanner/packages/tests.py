@@ -308,3 +308,51 @@ class PackageModelValidationTests(TestCase):
         )
         with self.assertRaises(ValidationError):
             package.clean()
+
+
+class PackageDetailItineraryTests(TestCase):
+    def setUp(self):
+        self.destination = Destination.objects.create(
+            destination_name="Yosemite National Park Detail",
+            city="Yosemite",
+            state="California",
+            category="Nature",
+            description="Park",
+            best_season="Summer",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=200.00,
+            average_rating=4.9
+        )
+        self.package = Package.objects.create(
+            package_name="Yosemite Hiking Tour Detail",
+            destination=self.destination,
+            duration=3,
+            package_type="Adventure",
+            price=300.00,
+            description="3 days hiking tour."
+        )
+
+    def test_package_detail_view_itinerary_context(self):
+        response = self.client.get(f'/packages/{self.package.pk}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('itinerary', response.context)
+        self.assertIn('daily_budget', response.context)
+        self.assertIn('travel_tips', response.context)
+        
+        # Verify daily budget calculations: total cost is 300, duration is 3 days
+        # Daily total is 100
+        budget = response.context['daily_budget']
+        self.assertEqual(budget['accommodation'], 45)
+        self.assertEqual(budget['food'], 20)
+        self.assertEqual(budget['transportation'], 15)
+        self.assertEqual(budget['sightseeing'], 10)
+        self.assertEqual(budget['miscellaneous'], 10)
+        self.assertEqual(budget['total'], 100)
+        
+        # Verify travel tips and dynamic itinerary display
+        self.assertContains(response, "Estimated Daily Budget")
+        self.assertContains(response, "Travel Tips")
+        self.assertContains(response, "Start early to avoid crowds.")
+        self.assertContains(response, "Day-wise Itinerary")
+

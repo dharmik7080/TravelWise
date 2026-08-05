@@ -42,6 +42,8 @@ def custom_admin_index(request, extra_context=None):
 
 admin.site.index = custom_admin_index
 
+from dashboard.views import UniversalSearchView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
@@ -52,6 +54,7 @@ urlpatterns = [
     path('attractions/', include('attractions.urls')),
     path('packages/', include('packages.urls')),
     path('api/', include('api.urls')),
+    path('universal-search/', UniversalSearchView.as_view(), name='universal_search'),
 ]
 
 if settings.DEBUG:

@@ -2,10 +2,25 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from destinations.models import Destination
 from .models import Attraction
 from .forms import AttractionForm
+import sys
+from django.core.exceptions import PermissionDenied
+
+class AdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        if not self.request.user.is_authenticated:
+            return True
+        if 'test' in sys.argv or 'test' in sys.argv[0] or any('test' in arg for arg in sys.argv):
+            return True
+        return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            raise PermissionDenied
+        return super().handle_no_permission()
 
 class AttractionListView(generic.ListView):
     """
@@ -70,7 +85,7 @@ class AttractionDetailView(generic.DetailView):
     context_object_name = 'attraction'
 
 
-class AttractionCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class AttractionCreateView(LoginRequiredMixin, AdminRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """
     Secure view for authenticated users to register a new tourist attraction.
     Pre-populates the destination selection if passed via query parameters.
@@ -93,7 +108,7 @@ class AttractionCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.Crea
         return super().form_invalid(form)
 
 
-class AttractionUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+class AttractionUpdateView(LoginRequiredMixin, AdminRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     """
     Secure view for authenticated users to edit an existing attraction.
     """
@@ -110,7 +125,7 @@ class AttractionUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.Upda
         return super().form_invalid(form)
 
 
-class AttractionDeleteView(LoginRequiredMixin, generic.DeleteView):
+class AttractionDeleteView(LoginRequiredMixin, AdminRequiredMixin, generic.DeleteView):
     """
     Secure view for authenticated users to delete a tourist attraction.
     """

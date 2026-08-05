@@ -643,4 +643,167 @@ class TripModelValidationTests(TestCase):
             template.clean()
 
 
+class TripItineraryGeneratorTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        self.user = User.objects.create_user(username="traveller", password="password123")
+        
+        from destinations.models import Destination
+        self.destination = Destination.objects.create(
+            destination_name="Adventure Valley",
+            city="Rishikesh",
+            state="Uttarakhand",
+            category="Adventure",
+            description="Lush green valley with extreme sports.",
+            best_season="Summer",
+            ideal_days=3,
+            budget_level="Moderate",
+            average_cost_per_day=150.00,
+            average_rating=4.7
+        )
+        
+        from attractions.models import Attraction
+        # Create attractions with differing categories and fees to test sorting
+        self.attr_trek = Attraction.objects.create(
+            attraction_name="Valley Trekking Peak",
+            destination=self.destination,
+            category="Adventure / Trekking",
+            description="Challenging high altitude trekking trail.",
+            entry_fee=0.00,  # Free
+            opening_time="06:00:00",
+            closing_time="18:00:00",
+            average_visit_time=180
+        )
+        self.attr_museum = Attraction.objects.create(
+            attraction_name="Valley Heritage Museum",
+            destination=self.destination,
+            category="Family / Heritage / Museum",
+            description="Historic museum showing region evolution.",
+            entry_fee=50.00,  # Moderate cost
+            opening_time="09:00:00",
+            closing_time="17:00:00",
+            average_visit_time=120
+        )
+        self.attr_rafting = Attraction.objects.create(
+            attraction_name="White Water River Rafting",
+            destination=self.destination,
+            category="Adventure / Water Sports",
+            description="Premium river rafting package.",
+            entry_fee=1500.00,  # Luxury cost
+            opening_time="08:00:00",
+            closing_time="16:00:00",
+            average_visit_time=150
+        )
+        
+        from packages.models import Package
+        Package.objects.create(
+            package_name="Standard Package",
+            destination=self.destination,
+            package_type="Standard",
+            price=2000.00,
+            duration=3,
+            description="Standard test package."
+        )
+
+    def test_itinerary_service_adventure_budget(self):
+        from services.itinerary_service import ItineraryService
+        # Budget adventure: should prioritize Adventure, and sort budget ascending (trekking first, rafting last)
+        itinerary = ItineraryService.generate_itinerary(
+            destination=self.destination,
+            total_days=1,
+            travel_type="Adventure",
+            budget_level="Budget"
+        )
+        day1 = itinerary[1]
+        # Trekking is Adventure + Free, Rafting is Adventure + Expensive, Museum is Family
+        self.assertEqual(day1['morning'], "Valley Trekking Peak")
+        self.assertEqual(day1['afternoon'], "White Water River Rafting")
+        self.assertEqual(day1['evening'], "Valley Heritage Museum")
+
+    def test_itinerary_service_adventure_luxury(self):
+        from services.itinerary_service import ItineraryService
+        # Luxury adventure: should prioritize Adventure, and sort budget descending (rafting first, trekking last)
+        itinerary = ItineraryService.generate_itinerary(
+            destination=self.destination,
+            total_days=1,
+            travel_type="Adventure",
+            budget_level="Luxury"
+        )
+        day1 = itinerary[1]
+        self.assertEqual(day1['morning'], "White Water River Rafting")
+        self.assertEqual(day1['afternoon'], "Valley Trekking Peak")
+        self.assertEqual(day1['evening'], "Valley Heritage Museum")
+
+    def test_itinerary_service_family_moderate(self):
+        from services.itinerary_service import ItineraryService
+        # Family travel type: should prioritize museum first
+        itinerary = ItineraryService.generate_itinerary(
+            destination=self.destination,
+            total_days=1,
+            travel_type="Family",
+            budget_level="Moderate"
+        )
+        day1 = itinerary[1]
+        self.assertEqual(day1['morning'], "Valley Heritage Museum")
+
+    def test_generate_itinerary_api_view(self):
+        from django.urls import reverse
+        self.client.login(username="traveller", password="password123")
+        post_data = {
+            'destination_id': self.destination.pk,
+            'start_date': '2026-07-10',
+            'end_date': '2026-07-12',
+            'travel_type': 'Adventure',
+            'budget_level': 'Budget',
+            'regenerate': 'false'
+        }
+        response = self.client.post(reverse('trips:generate_itinerary'), post_data)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn('itinerary', data)
+        self.assertIn('1', data['itinerary'])
+        self.assertIn('2', data['itinerary'])
+        self.assertIn('3', data['itinerary'])
+
+    def test_save_generated_itinerary_custom_json(self):
+        from django.urls import reverse
+        from trips.models import Trip, ItineraryDay
+        import json
+        
+        self.client.login(username="traveller", password="password123")
+        custom_itinerary = {
+            "1": {
+                "morning": "Custom morning sightseeing",
+                "afternoon": "Custom afternoon adventure",
+                "evening": "Custom relaxing evening"
+            },
+            "2": {
+                "morning": "Custom morning day 2",
+                "afternoon": "Custom afternoon day 2",
+                "evening": "Custom relaxing day 2"
+            }
+        }
+        post_data = {
+            'destination': self.destination.pk,
+            'start_date': '2026-07-10',
+            'end_date': '2026-07-11',
+            'number_of_travelers': 2,
+            'budget': 5000.00,
+            'travel_type': 'Solo',
+            'package_type': 'Standard',
+            'generated_itinerary': json.dumps(custom_itinerary)
+        }
+        response = self.client.post(reverse('trips:plan'), post_data)
+        self.assertEqual(response.status_code, 302)  # Redirect on success
+        
+        trip = Trip.objects.filter(user__username="traveller").latest('created_at')
+        self.assertEqual(trip.itinerary_days.count(), 2)
+        day1 = trip.itinerary_days.get(day_number=1)
+        self.assertEqual(day1.morning, "Custom morning sightseeing")
+        self.assertEqual(day1.afternoon, "Custom afternoon adventure")
+        self.assertEqual(day1.evening, "Custom relaxing evening")
+
+
+
 

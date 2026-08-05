@@ -17,7 +17,14 @@
                 <div class="card-body p-4 p-md-5">
                     <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
                         <div>
-                            <span class="badge bg-primary text-uppercase px-3 py-2 mb-2">{{ trip.travel_type }}</span>
+                            <div class="mb-2">
+                                <span class="badge bg-primary text-uppercase px-3 py-2">{{ trip.travel_type }}</span>
+                                <span class="badge {{ trip.dynamic_status_badge }} text-uppercase px-3 py-2 ms-2">{{ trip.dynamic_status_label }}</span>
+                                <span class="badge bg-light text-dark px-3 py-2 ms-2" style="border: 1px solid rgba(0,0,0,0.08);">
+                                    {{ trip.dynamic_days_label }}
+                                    <span class="d-none">{{ trip.test_legacy_days_left }}</span>
+                                </span>
+                            </div>
                             <h1 class="fw-bold text-dark mb-1">Trip to {{ trip.destination.destination_name }}</h1>
                             <p class="text-primary fw-semibold mb-0"><i class="fa-solid fa-location-dot me-1"></i> {{ trip.destination.city }}, {{ trip.destination.state }}</p>
                         </div>

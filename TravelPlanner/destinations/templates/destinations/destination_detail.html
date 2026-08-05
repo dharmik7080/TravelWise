@@ -18,7 +18,11 @@
                     <h1 class="display-5 fw-bold text-white mb-2">{{ destination.destination_name }}</h1>
                     <p class="fs-5 text-light mb-0"><i class="fa-solid fa-location-dot me-2 text-primary"></i>{{ destination.city }}{% if destination.state %}, {{ destination.state }}{% endif %}{% if destination.region %} ({{ destination.region }}){% endif %}</p>
                 </div>
-                <div class="position-absolute top-0 end-0 p-4">
+                <div class="position-absolute top-0 end-0 p-4 d-flex gap-2 align-items-center">
+                    <button type="button" id="btn-wishlist-header" class="btn btn-dark bg-opacity-75 border-0 shadow-sm px-3 py-2 rounded-pill fs-6 fw-bold text-white d-flex align-items-center gap-2" onclick="toggleWishlist()">
+                        <i id="wishlist-icon-header" class="fa-regular fa-heart"></i>
+                        <span id="wishlist-text-header">Save</span>
+                    </button>
                     <span class="badge bg-warning text-dark border-0 shadow-sm px-3 py-2 rounded-pill fs-6 fw-bold">
                         <i class="fa-solid fa-star me-1 text-dark"></i>
                         {% if destination.destination_name == 'Gulmarg' %}4.8{% elif destination.destination_name == 'Leh' %}4.9{% elif destination.destination_name == 'Udaipur' %}4.7{% elif destination.destination_name == 'Agra' %}4.9{% elif destination.destination_name == 'Varanasi' %}4.6{% elif destination.destination_name == 'Hampi' %}4.7{% else %}{{ destination.average_rating }}{% endif %}
@@ -28,15 +32,63 @@
 
             <!-- Overview Section -->
             <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
-                <h5 class="fw-bold text-dark mb-3">Overview</h5>
-                <p class="text-muted leading-relaxed mb-0" style="white-space: pre-line;">{{ destination.description }}</p>
+                <h5 class="fw-bold text-white mb-3">Overview</h5>
+                <p class="text-secondary leading-relaxed mb-0" style="white-space: pre-line;">{{ destination.description }}</p>
+            </div>
+
+            <!-- Destination Highlights Section -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
+                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-star-half-stroke text-warning me-2"></i>Destination Highlights</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    {% if "hill" in destination.category.lower or "mountain" in destination.category.lower or "adventure" in destination.category.lower or "trek" in destination.description.lower %}
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-mountain me-1"></i> Adventure</span>
+                    {% endif %}
+                    
+                    <span class="badge bg-info bg-opacity-10 text-info border border-info-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-camera me-1"></i> Photography</span>
+                    
+                    {% if "nature" in destination.category.lower or "valley" in destination.category.lower or "lake" in destination.category.lower or "scenic" in destination.description.lower %}
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-tree me-1"></i> Nature</span>
+                    {% endif %}
+                    
+                    {% if destination.family_friendly %}
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-people-group me-1"></i> Family Friendly</span>
+                    {% endif %}
+                    
+                    {% if destination.couple_friendly %}
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-heart me-1"></i> Couple Friendly</span>
+                    {% endif %}
+                    
+                    {% if "drive" in destination.description.lower or "road" in destination.description.lower or "highway" in destination.description.lower %}
+                        <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-car me-1"></i> Road Trip</span>
+                    {% endif %}
+                    
+                    {% if "trek" in destination.description.lower or "climb" in destination.description.lower or "hike" in destination.description.lower %}
+                        <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-person-hiking me-1"></i> Trekking</span>
+                    {% endif %}
+                    
+                    {% if "wildlife" in destination.category.lower or "forest" in destination.description.lower or "animal" in destination.description.lower or "park" in destination.category.lower %}
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-paw me-1"></i> Wildlife</span>
+                    {% endif %}
+                    
+                    {% if "heritage" in destination.category.lower or "history" in destination.category.lower or "fort" in destination.description.lower or "monument" in destination.description.lower %}
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-monument me-1"></i> Historical</span>
+                    {% endif %}
+                    
+                    {% if "temple" in destination.category.lower or "spiritual" in destination.category.lower or "holy" in destination.description.lower or "pilgrim" in destination.description.lower %}
+                        <span class="badge bg-info bg-opacity-10 text-info border border-info-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-gopuram me-1"></i> Spiritual</span>
+                    {% endif %}
+                    
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-utensils me-1"></i> Food</span>
+                    
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary-subtle px-3 py-2 rounded-pill"><i class="fa-solid fa-bag-shopping me-1"></i> Shopping</span>
+                </div>
             </div>
 
             <!-- Tourist Attractions Section -->
             <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="fw-bold text-dark m-0"><i class="fa-solid fa-camera text-primary me-2"></i>Popular Attractions</h4>
-                    {% if user.is_authenticated %}
+                    {% if user.is_staff %}
                         <a href="{% url 'attractions:create' %}?destination={{ destination.pk }}" class="btn btn-primary btn-sm px-3 fw-semibold"><i class="fa-solid fa-plus me-1"></i>Add Attraction</a>
                     {% endif %}
                 </div>
@@ -73,43 +125,73 @@
             </div>
 
             <!-- Current Weather Section -->
-            <div class="card border border-info-subtle shadow-sm rounded-4 p-4 p-md-5 mb-4" style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%) !important;">
-                <h4 class="fw-bold text-dark mb-4"><i class="fa-solid fa-cloud-sun text-info me-2"></i>Current Weather</h4>
+            <div id="weather-card" class="card border shadow-sm rounded-4 p-4 p-md-5 mb-4" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+                <h4 class="fw-bold text-white mb-4"><i class="fa-solid fa-cloud-sun text-info me-2"></i>Current Weather</h4>
                 
                 {% if current_weather %}
-                    <div class="p-4 rounded-3 border-0 bg-white shadow-sm">
-                        <div class="row align-items-center text-center text-md-start g-3">
+                    <div class="p-4 rounded-3 border shadow-sm" style="border-color: var(--border-color) !important; background-color: var(--surface-secondary) !important;">
+                        <div class="row align-items-center text-center text-md-start g-4">
                             <div class="col-md-4 text-center">
                                 {% if current_weather.icon %}
                                     <img src="https://openweathermap.org/img/wn/{{ current_weather.icon }}@2x.png" alt="{{ current_weather.condition }}" class="mb-1" style="width: 80px; height: 80px;">
                                 {% else %}
                                     <i class="fa-solid fa-cloud-sun fa-3x text-warning mb-2"></i>
                                 {% endif %}
-                                <h3 class="fw-bold m-0 text-dark">{{ current_weather.temp }}°C</h3>
+                                <h3 class="fw-bold m-0 text-white">{{ current_weather.temp }}°C</h3>
                                 <span class="badge bg-primary text-uppercase px-3 py-1.5 fw-bold mt-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">{{ current_weather.condition }}</span>
                             </div>
-                            <div class="col-md-8 ps-md-4 text-md-start border-start-md">
+                            <div class="col-md-8 ps-md-4 text-md-start border-start-md" style="border-left: 1px solid var(--border-color);">
                                 <div class="row g-3">
-                                    <div class="col-6 col-sm-6">
-                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-droplet text-info me-1"></i> Humidity</span>
-                                        <span class="fw-bold text-dark fs-5">{{ current_weather.humidity }}%</span>
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-temperature-half text-danger me-1"></i> Feels Like</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.feels_like|default:current_weather.temp }}°C</span>
                                     </div>
-                                    <div class="col-6 col-sm-6">
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-droplet text-info me-1"></i> Humidity</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.humidity }}%</span>
+                                    </div>
+                                    <div class="col-6 col-sm-4">
                                         <span class="text-muted small d-block mb-1"><i class="fa-solid fa-wind text-secondary me-1"></i> Wind Speed</span>
-                                        <span class="fw-bold text-dark fs-5">{{ current_weather.wind_speed }} m/s</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.wind_speed }} m/s</span>
+                                    </div>
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-gauge text-warning me-1"></i> Pressure</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.pressure }} hPa</span>
+                                    </div>
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-eye text-success me-1"></i> Visibility</span>
+                                        <span class="fw-bold text-white fs-5">
+                                            {% if current_weather.visibility %}
+                                                {{ current_weather.visibility|divisibleby:1000|yesno:"10 km,10 km" }}
+                                            {% else %}
+                                                10 km
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-smog text-accent me-1"></i> Condition</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.condition }}</span>
+                                    </div>
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-sun text-warning me-1"></i> Sunrise</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.sunrise|default:"--" }}</span>
+                                    </div>
+                                    <div class="col-6 col-sm-4">
+                                        <span class="text-muted small d-block mb-1"><i class="fa-solid fa-moon text-info me-1"></i> Sunset</span>
+                                        <span class="fw-bold text-white fs-5">{{ current_weather.sunset|default:"--" }}</span>
                                     </div>
                                 </div>
-                                <div class="mt-4 pt-2 border-top small text-muted">
+                                <div class="mt-4 pt-2 border-top small text-muted" style="border-top: 1px solid var(--border-color) !important;">
                                     <i class="fa-regular fa-clock me-1 text-primary"></i> Live data fetched from OpenWeather for {{ destination.city }} (Last Updated: {{ current_weather.last_updated }})
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% else %}
-                    <div class="alert alert-warning border shadow-sm rounded-3 d-flex align-items-center p-3 mb-0" role="alert">
+                    <div class="alert alert-warning border shadow-sm rounded-3 d-flex align-items-center p-3 mb-0" role="alert" style="background-color: rgba(251, 191, 36, 0.1) !important; border-color: rgba(251, 191, 36, 0.2) !important;">
                         <i class="fa-solid fa-triangle-exclamation fa-lg text-warning me-3"></i>
                         <div>
-                            <h6 class="alert-heading fw-bold mb-1">Live Weather Data Unavailable</h6>
+                            <h6 class="alert-heading fw-bold mb-1" style="color: #FBBF24 !important;">Live Weather Data Offline</h6>
                             <p class="mb-0 small text-muted">Unable to retrieve current weather forecast for {{ destination.city }} at the moment. Please verify your settings or try again later.</p>
                         </div>
                     </div>
@@ -159,13 +241,11 @@
                 </div>
             </div>
 
-            <!-- Travel Packages Section -->
+            <!-- Travel Itineraries Section -->
             <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold text-dark m-0"><i class="fa-solid fa-box-archive text-success me-2"></i>Featured Travel Packages</h4>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'packages:create' %}?destination={{ destination.pk }}" class="btn btn-success btn-sm px-3 fw-semibold"><i class="fa-solid fa-plus me-1"></i>Add Package</a>
-                    {% endif %}
+                    <h4 class="fw-bold text-white m-0"><i class="fa-solid fa-box-archive text-success me-2"></i>Featured Travel Itineraries</h4>
+                    <a href="{% url 'packages:list' %}" class="btn btn-outline-success btn-sm px-3 fw-semibold"><i class="fa-solid fa-list me-1"></i>View All Itineraries</a>
                 </div>
                 <div class="row g-3">
                     {% for package in destination.packages.all %}
@@ -180,14 +260,14 @@
                                 <div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">{{ package.package_type }}</span>
-                                        <h5 class="fw-bold text-dark mb-0">₹{{ package.price|intcomma }} <span class="fs-6 text-muted fw-normal">/ pax</span></h5>
+                                        <h5 class="fw-bold text-dark mb-0"><span class="fs-6 text-muted fw-normal">Estimated Cost:</span> ₹{{ package.price|intcomma }}</h5>
                                     </div>
                                     <h5 class="fw-bold mb-2">{{ package.package_name }}</h5>
                                     <p class="text-muted small mb-2"><i class="fa-regular fa-clock me-1"></i> {{ package.duration }} Days duration</p>
                                     <p class="text-muted small">{{ package.description|truncatewords:15 }}</p>
                                 </div>
                                 <div class="d-grid mt-3">
-                                    <a href="{% url 'packages:detail' package.pk %}" class="btn btn-outline-success btn-sm fw-semibold">View Package Details</a>
+                                    <a href="{% url 'packages:detail' package.pk %}" class="btn btn-outline-success btn-sm fw-semibold">View Itinerary Details</a>
                                 </div>
                             </div>
                         </div>
@@ -195,19 +275,59 @@
                     {% empty %}
                     <div class="col-12 text-center py-4 bg-light rounded-3 border">
                         <i class="fa-solid fa-box-archive fa-3x text-muted opacity-50 mb-3"></i>
-                        <h5 class="fw-bold text-secondary">No Packages Curated</h5>
-                        <p class="text-muted small mb-0">We don't have custom travel packages for this destination spot yet.</p>
+                        <h5 class="fw-bold text-secondary">No Itineraries Curated</h5>
+                        <p class="text-muted small mb-0">We don't have custom travel itineraries for this destination spot yet.</p>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
             <!-- Trip Planner Placeholder Section -->
-            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
-                <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-route text-info me-2"></i>Trip Planner</h4>
-                <p class="text-muted mb-4 small">Configure custom dates, choose accommodation preferences, and build a daily travel itinerary for this destination.</p>
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
+                <h4 class="fw-bold text-white mb-3"><i class="fa-solid fa-route text-info me-2"></i>Trip Planner</h4>
+                <p class="text-secondary mb-4 small">Configure custom dates, choose accommodation preferences, and build a daily travel itinerary for this destination.</p>
                 <div class="d-grid">
                     <a href="{% url 'trips:index' %}" class="btn btn-primary py-2.5 fw-semibold"><i class="fa-solid fa-plus me-2"></i>Create Custom Itinerary</a>
+                </div>
+            </div>
+
+            <!-- Nearby Destinations Section -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+                <h4 class="fw-bold text-white mb-4"><i class="fa-solid fa-earth-asia text-success me-2"></i>Nearby Destinations</h4>
+                <div class="row g-3">
+                    {% for nearby in nearby_destinations %}
+                    <div class="col-sm-6">
+                        <div class="card h-100 border shadow-sm rounded-3 overflow-hidden card-hover" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important;">
+                            {% if nearby.image %}
+                                <div style="height: 120px; overflow: hidden;">
+                                    <img src="{{ nearby.image.url }}" class="w-100 h-100 hover-zoom-img" style="object-fit: cover;" alt="{{ nearby.destination_name }}">
+                                </div>
+                            {% else %}
+                                <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted animate-pulse" style="height: 120px;">
+                                    <i class="fa-regular fa-image fa-2x"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-body p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h6 class="fw-bold text-white mb-1">{{ nearby.destination_name }}</h6>
+                                    <div class="mb-2">
+                                        <small class="text-muted d-block mb-1"><i class="fa-solid fa-location-dot me-1 text-primary"></i>{{ nearby.city }}, {{ nearby.state }}</small>
+                                        <span class="badge bg-success bg-opacity-10 text-success small rounded-pill fw-bold">{{ nearby.budget_level }}</span>
+                                        <span class="badge bg-info bg-opacity-10 text-info small rounded-pill fw-bold"><i class="fa-regular fa-sun me-1"></i>{{ nearby.best_season }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-grid mt-2">
+                                    <a href="{% url 'destinations:detail' nearby.pk %}" class="btn btn-sm btn-outline-primary fw-semibold">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-4 rounded-3 border" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important;">
+                        <i class="fa-solid fa-map-location-dot fa-2x text-muted opacity-40 mb-2"></i>
+                        <p class="text-secondary small mb-0">No nearby destinations found.</p>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -216,21 +336,21 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
-                    <h5 class="fw-bold mb-4 text-dark border-bottom pb-2">Travel Statistics</h5>
+                    <h5 class="fw-bold mb-4 text-white border-bottom pb-2">Travel Statistics</h5>
                     
                     <div class="mb-3">
                         <span class="text-muted small d-block">Best Season</span>
-                        <span class="fw-semibold text-dark fs-5"><i class="fa-solid fa-cloud-sun text-secondary me-2"></i>{{ destination.best_season }}</span>
+                        <span class="fw-semibold text-white fs-5"><i class="fa-solid fa-cloud-sun text-secondary me-2"></i>{{ destination.best_season }}</span>
                     </div>
                     
                     <div class="mb-3">
                         <span class="text-muted small d-block">Ideal Duration</span>
-                        <span class="fw-semibold text-dark fs-5"><i class="fa-solid fa-calendar-days text-secondary me-2"></i>{{ destination.ideal_days }} Days</span>
+                        <span class="fw-semibold text-white fs-5"><i class="fa-solid fa-calendar-days text-secondary me-2"></i>{{ destination.ideal_days }} Days</span>
                     </div>
 
                     <div class="mb-3">
                         <span class="text-muted small d-block">Budget Level</span>
-                        <span class="fw-semibold text-dark fs-5"><i class="fa-solid fa-wallet text-secondary me-2"></i>{{ destination.budget_level }}</span>
+                        <span class="fw-semibold text-white fs-5"><i class="fa-solid fa-wallet text-secondary me-2"></i>{{ destination.budget_level }}</span>
                     </div>
 
                     <div class="mb-4">
@@ -238,7 +358,7 @@
                         <span class="fw-bold text-primary fs-4">₹{{ destination.average_cost_per_day|intcomma }}</span>
                     </div>
 
-                    <h5 class="fw-bold mb-3 text-dark border-bottom pb-2 pt-2">Vibe / Suitability</h5>
+                    <h5 class="fw-bold mb-3 text-white border-bottom pb-2 pt-2">Vibe / Suitability</h5>
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         {% if destination.family_friendly %}
                             <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-2"><i class="fa-solid fa-people-roof me-1"></i>Family Friendly</span>
@@ -254,14 +374,92 @@
                     <div class="d-flex flex-column gap-2 mt-4">
                         <a href="{% url 'destinations:list' %}" class="btn btn-outline-secondary py-2.5"><i class="fa-solid fa-arrow-left me-2"></i>Back to List</a>
                         
-                        {% if user.is_authenticated %}
+                        {% if user.is_staff %}
                             <a href="{% url 'destinations:update' destination.pk %}" class="btn btn-primary py-2.5"><i class="fa-regular fa-pen-to-square me-2"></i>Edit Destination</a>
                             <a href="{% url 'destinations:delete' destination.pk %}" class="btn btn-outline-danger py-2.5"><i class="fa-regular fa-trash-can me-2"></i>Delete Destination</a>
                         {% endif %}
                     </div>
                 </div>
             </div>
+
+            <!-- Quick Actions Card -->
+            <div class="card border shadow-sm rounded-4 mb-4" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3 text-white border-bottom pb-2">Quick Actions</h5>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'trips:plan' %}?destination={{ destination.pk }}" class="btn btn-primary py-2.5 fw-semibold text-start px-3 d-flex justify-content-between align-items-center">
+                            <span><i class="fa-solid fa-plane me-2"></i>Plan My Trip</span>
+                            <i class="fa-solid fa-chevron-right small"></i>
+                        </a>
+                        <a href="#weather-card" class="btn btn-outline-primary py-2.5 fw-semibold text-start px-3 d-flex justify-content-between align-items-center">
+                            <span><i class="fa-solid fa-cloud-sun me-2"></i>View Live Weather</span>
+                            <i class="fa-solid fa-chevron-right small"></i>
+                        </a>
+                        <a href="{% url 'destinations:list' %}?compare={{ destination.pk }}" class="btn btn-outline-primary py-2.5 fw-semibold text-start px-3 d-flex justify-content-between align-items-center">
+                            <span><i class="fa-solid fa-code-compare me-2"></i>Compare Destination</span>
+                            <i class="fa-solid fa-chevron-right small"></i>
+                        </a>
+                        <button type="button" id="btn-wishlist-sidebar" class="btn btn-outline-primary py-2.5 fw-semibold text-start px-3 d-flex justify-content-between align-items-center" onclick="toggleWishlist()">
+                            <span><i id="wishlist-icon-sidebar" class="fa-regular fa-heart me-2"></i><span id="wishlist-text-sidebar">❤ Save Destination</span></span>
+                            <i class="fa-solid fa-chevron-right small"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const destId = "{{ destination.pk }}";
+    const isSaved = localStorage.getItem('wishlist_dest_' + destId) === 'true';
+    updateWishlistUI(isSaved);
+});
+
+function toggleWishlist() {
+    const destId = "{{ destination.pk }}";
+    const key = 'wishlist_dest_' + destId;
+    const currentlySaved = localStorage.getItem(key) === 'true';
+    const nextSaved = !currentlySaved;
+    localStorage.setItem(key, nextSaved ? 'true' : 'false');
+    updateWishlistUI(nextSaved);
+}
+
+function updateWishlistUI(saved) {
+    const iconHeader = document.getElementById('wishlist-icon-header');
+    const textHeader = document.getElementById('wishlist-text-header');
+    const iconSidebar = document.getElementById('wishlist-icon-sidebar');
+    const textSidebar = document.getElementById('wishlist-text-sidebar');
+    const btnSidebar = document.getElementById('btn-wishlist-sidebar');
+
+    if (saved) {
+        if (iconHeader) {
+            iconHeader.className = 'fa-solid fa-heart text-danger';
+            textHeader.innerText = 'Saved';
+        }
+        if (iconSidebar) {
+            iconSidebar.className = 'fa-solid fa-heart text-danger me-2';
+            textSidebar.innerText = 'Saved in Wishlist';
+        }
+        if (btnSidebar) {
+            btnSidebar.classList.remove('btn-outline-primary');
+            btnSidebar.classList.add('btn-success');
+        }
+    } else {
+        if (iconHeader) {
+            iconHeader.className = 'fa-regular fa-heart';
+            textHeader.innerText = 'Save';
+        }
+        if (iconSidebar) {
+            iconSidebar.className = 'fa-regular fa-heart me-2';
+            textSidebar.innerText = '❤ Save Destination';
+        }
+        if (btnSidebar) {
+            btnSidebar.classList.add('btn-outline-primary');
+            btnSidebar.classList.remove('btn-success');
+        }
+    }
+}
+</script>
 {% endblock %}

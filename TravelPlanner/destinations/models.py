@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Destination(models.Model):
     """
@@ -39,3 +40,28 @@ class Destination(models.Model):
 
     def __str__(self):
         return f"{self.destination_name} ({self.city})"
+
+
+class AIRecommendation(models.Model):
+    """
+    Model storing recommendation form parameters and scoring outcomes
+    for logged-in and anonymous users.
+    """
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    # Inputs
+    budget = models.CharField(max_length=20)
+    season = models.CharField(max_length=50)
+    travel_type = models.CharField(max_length=20)
+    duration = models.PositiveIntegerField()
+    num_travellers = models.PositiveIntegerField()
+    state = models.CharField(max_length=100, blank=True)
+    
+    # Outputs
+    # Stores list of dicts: [{'destination_id': X, 'score': Y}, ...]
+    results = models.JSONField(default=list)
+
+    def __str__(self):
+        return f"Recommendation for {self.user or 'Anonymous'} at {self.created_at}"
+

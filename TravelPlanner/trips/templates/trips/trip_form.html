@@ -43,6 +43,26 @@
                         <div class="card-body p-4 text-center">
                             <span class="text-muted small d-block mb-1 text-uppercase fw-semibold">Estimated Trip Cost</span>
                             <h3 id="cost-estimate-value" class="fw-bold text-success mb-3">₹0</h3>
+                            
+                            <!-- Suggestions and Activities block -->
+                            <div id="cost-estimate-suggestions" class="text-start border-top pt-3 mt-3 d-none">
+                                <h6 class="fw-bold text-white mb-2"><i class="fa-solid fa-wand-magic-sparkles text-warning me-2"></i>Trip Customizations Suggestion</h6>
+                                
+                                <div class="mb-3">
+                                    <small class="text-muted d-block mb-1">Recommended for your <strong id="suggest-pkg-type" class="text-primary">Standard</strong> Trip:</small>
+                                    <div id="suggest-activities-list" class="d-flex flex-wrap gap-1">
+                                        <!-- Javascript filled activity badges -->
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <small class="text-muted d-block mb-2">Must-visit Popular Attractions:</small>
+                                    <div id="suggest-attractions-list" class="row g-2">
+                                        <!-- Javascript filled attractions -->
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="text-start border-top pt-3 mx-auto" style="max-width: 280px;">
                                 <small class="text-muted d-block mb-2">Estimated using:</small>
                                 <ul class="list-unstyled mb-0 text-muted small">
@@ -54,6 +74,12 @@
                                 </ul>
                                 <small class="text-muted d-block mt-3 text-center font-monospace" style="font-size: 10px;">Actual expenses may vary.</small>
                             </div>
+
+                            <div class="d-grid gap-2 mt-4 pt-3 border-top">
+                                <button type="button" id="btn-generate-itinerary" class="btn btn-primary py-2.5 fw-semibold text-white">
+                                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generate Itinerary
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -62,7 +88,22 @@
                         <span id="cost-estimate-error-msg">Please correct the errors above.</span>
                     </div>
 
-                    <div class="d-grid gap-2 mt-3">
+                    <!-- Suggested Itinerary Section -->
+                    <div id="suggested-itinerary-section" class="card border border-primary bg-primary bg-opacity-5 rounded-4 mt-4 p-4 d-none">
+                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                            <h5 class="fw-bold text-white m-0"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Suggested Itinerary</h5>
+                            <button type="button" id="btn-regenerate-itinerary" class="btn btn-outline-primary btn-sm fw-semibold">
+                                <i class="fa-solid fa-rotate me-1"></i>Generate Again
+                            </button>
+                        </div>
+                        <div id="itinerary-days-container" class="d-flex flex-column gap-3">
+                            <!-- JS filled day items -->
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="generated_itinerary" id="id_generated_itinerary" value="">
+
+                    <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-primary py-2.5 fw-semibold">
                             <i class="fa-solid fa-route me-2"></i>Save Itinerary
                         </button>
@@ -100,6 +141,8 @@
                     function clearPrediction() {
                         costCard.classList.add('d-none');
                         errorContainer.classList.add('d-none');
+                        document.getElementById('suggested-itinerary-section').classList.add('d-none');
+                        document.getElementById('id_generated_itinerary').value = '';
                         inputs.forEach(input => {
                             if (input) {
                                 input.classList.remove('is-invalid');
@@ -188,6 +231,44 @@
                                     maximumFractionDigits: 0
                                 }).format(data.estimated_cost);
                                 costValue.innerText = costFormatted;
+
+                                // Suggest package type, attractions and activities
+                                if (data.attractions && data.attractions.length > 0) {
+                                    const attractionsList = document.getElementById('suggest-attractions-list');
+                                    attractionsList.innerHTML = '';
+                                    data.attractions.forEach(attr => {
+                                        const col = document.createElement('div');
+                                        col.className = 'col-6';
+                                        col.innerHTML = `
+                                            <div class="p-2 rounded-2 border d-flex align-items-center gap-2" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+                                                <i class="fa-solid fa-camera text-primary small"></i>
+                                                <div class="text-truncate">
+                                                    <span class="fw-semibold text-white small d-block text-truncate" title="${attr.name}">${attr.name}</span>
+                                                    <small class="text-muted" style="font-size: 9px;">${attr.category}</small>
+                                                </div>
+                                            </div>
+                                        `;
+                                        attractionsList.appendChild(col);
+                                    });
+                                } else {
+                                    document.getElementById('suggest-attractions-list').innerHTML = `
+                                        <div class="col-12"><small class="text-muted">No specific attractions registered for this destination yet.</small></div>
+                                    `;
+                                }
+
+                                if (data.recommended_activities && data.recommended_activities.length > 0) {
+                                    const activitiesList = document.getElementById('suggest-activities-list');
+                                    activitiesList.innerHTML = '';
+                                    data.recommended_activities.forEach(act => {
+                                        const badge = document.createElement('span');
+                                        badge.className = 'badge bg-primary bg-opacity-10 text-primary border border-primary-subtle px-2 py-1 rounded-pill mb-1 small';
+                                        badge.innerHTML = `<i class="fa-solid fa-circle-dot me-1"></i>${act}`;
+                                        activitiesList.appendChild(badge);
+                                    });
+                                }
+
+                                document.getElementById('suggest-pkg-type').innerText = data.package_type;
+                                document.getElementById('cost-estimate-suggestions').classList.remove('d-none');
                             } else {
                                 errorContainer.classList.remove('d-none');
                                 errorMsg.innerText = "Unable to estimate trip cost. Please try again.";
@@ -200,6 +281,116 @@
                             errorMsg.innerText = "Unable to estimate trip cost. Please try again.";
                         });
                     });
+
+                    // Generate Itinerary Logic
+                    const btnGenerate = document.getElementById('btn-generate-itinerary');
+                    const btnRegenerate = document.getElementById('btn-regenerate-itinerary');
+
+                    if (btnGenerate) btnGenerate.addEventListener('click', () => callItineraryAPI(false));
+                    if (btnRegenerate) btnRegenerate.addEventListener('click', () => callItineraryAPI(true));
+
+                    function callItineraryAPI(isRegenerate) {
+                        const destination = document.getElementById('id_destination').value;
+                        const startDate = document.getElementById('id_start_date').value;
+                        const endDate = document.getElementById('id_end_date').value;
+                        const travelTypeSelect = document.getElementById('id_travel_type');
+                        const travelType = travelTypeSelect ? travelTypeSelect.value : 'Solo';
+                        const packageType = document.getElementById('id_package_type').value;
+
+                        // Map packageType to budget_level
+                        let budgetLevel = 'Moderate';
+                        if (packageType === 'Budget') {
+                            budgetLevel = 'Budget';
+                        } else if (packageType === 'Luxury') {
+                            budgetLevel = 'Luxury';
+                        }
+
+                        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                        const formData = new FormData();
+                        formData.append('destination_id', destination);
+                        formData.append('start_date', startDate);
+                        formData.append('end_date', endDate);
+                        formData.append('travel_type', travelType);
+                        formData.append('budget_level', budgetLevel);
+                        formData.append('regenerate', isRegenerate ? 'true' : 'false');
+
+                        // Set loading state
+                        let originalBtnHtml = '';
+                        let targetBtn = isRegenerate ? btnRegenerate : btnGenerate;
+                        if (targetBtn) {
+                            targetBtn.disabled = true;
+                            originalBtnHtml = targetBtn.innerHTML;
+                            targetBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Generating...';
+                        }
+
+                        fetch("{% url 'trips:generate_itinerary' %}", {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': csrfToken
+                            },
+                            body: formData
+                        })
+                        .then(response => {
+                            if (targetBtn) {
+                                targetBtn.disabled = false;
+                                targetBtn.innerHTML = originalBtnHtml;
+                            }
+                            if (!response.ok) {
+                                throw new Error("Itinerary API failed");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.itinerary) {
+                                // Save to hidden input
+                                document.getElementById('id_generated_itinerary').value = JSON.stringify(data.itinerary);
+
+                                // Display suggested itinerary card
+                                const section = document.getElementById('suggested-itinerary-section');
+                                section.classList.remove('d-none');
+
+                                // Render Itinerary Days
+                                const container = document.getElementById('itinerary-days-container');
+                                container.innerHTML = '';
+
+                                Object.keys(data.itinerary).forEach(day => {
+                                    const slots = data.itinerary[day];
+                                    const dayCard = document.createElement('div');
+                                    dayCard.className = 'card border rounded-3 p-3 mb-2';
+                                    dayCard.style = 'background-color: var(--surface) !important; border-color: var(--border-color) !important;';
+                                    dayCard.innerHTML = `
+                                        <h6 class="fw-bold text-white mb-2">Day ${day}</h6>
+                                        <div class="row g-2">
+                                            <div class="col-md-4">
+                                                <span class="text-muted small d-block mb-1"><i class="fa-solid fa-sun text-warning me-1"></i> Morning</span>
+                                                <p class="text-white small mb-0">${slots.morning || 'Explore scenic spots'}</p>
+                                            </div>
+                                            <div class="col-md-4 border-start-md">
+                                                <span class="text-muted small d-block mb-1"><i class="fa-solid fa-cloud-sun text-primary me-1"></i> Afternoon</span>
+                                                <p class="text-white small mb-0">${slots.afternoon || 'Visit local markets'}</p>
+                                            </div>
+                                            <div class="col-md-4 border-start-md">
+                                                <span class="text-muted small d-block mb-1"><i class="fa-solid fa-moon text-secondary me-1"></i> Evening</span>
+                                                <p class="text-white small mb-0">${slots.evening || 'Relax & enjoy views'}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                    container.appendChild(dayCard);
+                                });
+
+                                // Smooth scroll to suggested itinerary
+                                section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        })
+                        .catch(err => {
+                            if (targetBtn) {
+                                targetBtn.disabled = false;
+                                targetBtn.innerHTML = originalBtnHtml;
+                            }
+                            console.error(err);
+                        });
+                    }
                 });
                 </script>
             </div>

@@ -50,11 +50,30 @@ class WeatherService:
                 if response.status == 200:
                     data = json.loads(response.read().decode('utf-8'))
                     
+                    import datetime
+                    sunrise_epoch = data.get('sys', {}).get('sunrise')
+                    sunset_epoch = data.get('sys', {}).get('sunset')
+                    timezone_offset = data.get('timezone', 0)
+                    
+                    sunrise_time = ""
+                    sunset_time = ""
+                    if sunrise_epoch:
+                        sunrise_dt = datetime.datetime.fromtimestamp(sunrise_epoch, datetime.timezone.utc) + datetime.timedelta(seconds=timezone_offset)
+                        sunrise_time = sunrise_dt.strftime('%I:%M %p')
+                    if sunset_epoch:
+                        sunset_dt = datetime.datetime.fromtimestamp(sunset_epoch, datetime.timezone.utc) + datetime.timedelta(seconds=timezone_offset)
+                        sunset_time = sunset_dt.strftime('%I:%M %p')
+
                     weather_data = {
                         'temp': round(data['main']['temp']),
+                        'feels_like': round(data['main'].get('feels_like', data['main']['temp'])),
+                        'pressure': data['main'].get('pressure', 1013),
                         'condition': data['weather'][0]['main'],
                         'humidity': data['main']['humidity'],
                         'wind_speed': data['wind']['speed'],
+                        'visibility': data.get('visibility', 10000),
+                        'sunrise': sunrise_time,
+                        'sunset': sunset_time,
                         'icon': data['weather'][0]['icon'],
                         'last_updated': timezone.localtime(timezone.now()).strftime('%Y-%m-%d %H:%M:%S')
                     }

@@ -15,7 +15,7 @@
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2"><a href="{% url 'home' %}" class="footer-link">Home</a></li>
                     <li class="mb-2"><a href="{% url 'destinations:list' %}" class="footer-link">Destinations</a></li>
-                    <li class="mb-2"><a href="{% url 'packages:list' %}" class="footer-link">Packages</a></li>
+                    <li class="mb-2"><a href="{% url 'packages:list' %}" class="footer-link">Itineraries</a></li>
                     {% if user.is_authenticated %}
                         <li class="mb-2"><a href="{% url 'trips:index' %}" class="footer-link">My Trips</a></li>
                         <li class="mb-2"><a href="{% url 'dashboard:index' %}" class="footer-link">Dashboard</a></li>
@@ -42,7 +42,7 @@
                     <li class="mb-2"><i class="fa-solid fa-envelope me-2"></i>support@travelwise.com</li>
                     <li class="mb-2"><i class="fa-solid fa-location-dot me-2"></i>New Delhi, India</li>
                 </ul>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-dark px-3 py-1.5 fw-bold font-monospace">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light px-3 py-1.5 fw-bold font-monospace">
                     <i class="fa-brands fa-github me-1.5"></i>GitHub Repository
                 </a>
             </div>

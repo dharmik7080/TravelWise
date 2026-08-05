@@ -172,3 +172,36 @@ class AdminHomepageTests(TestCase):
         self.assertContains(response, "Manage Destinations")
         self.assertContains(response, "Manage Trips")
 
+
+class UniversalSearchTests(TestCase):
+    def test_universal_search_empty_query(self):
+        from django.urls import reverse
+        response = self.client.get(reverse('universal_search'))
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['movies'], [])
+        self.assertEqual(data['tv_shows'], [])
+        self.assertEqual(data['people'], [])
+
+    def test_universal_search_star_wars_mock(self):
+        from django.urls import reverse
+        response = self.client.get(reverse('universal_search'), {'q': 'star'})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertTrue(len(data['movies']) > 0)
+        self.assertTrue(len(data['tv_shows']) > 0)
+        self.assertTrue(len(data['people']) > 0)
+        self.assertEqual(data['movies'][0]['title'], 'Star Wars: A New Hope')
+        self.assertEqual(data['tv_shows'][0]['name'], 'The Mandalorian')
+        self.assertEqual(data['people'][0]['name'], 'George Lucas')
+
+    def test_universal_search_avengers_mock(self):
+        from django.urls import reverse
+        response = self.client.get(reverse('universal_search'), {'q': 'marvel'})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['movies'][0]['title'], 'Avengers: Endgame')
+        self.assertEqual(data['tv_shows'][0]['name'], 'Loki')
+        self.assertEqual(data['people'][0]['name'], 'Robert Downey Jr.')
+
+

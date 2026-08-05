@@ -37,12 +37,12 @@
 
         <!-- Sidebar stats -->
         <div class="col-lg-4">
-            <div class="card border border-primary-subtle shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #ffffff 0%, #f4f7fe 100%) !important;">
+            <div class="card border shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #243447 0%, #1e293b 100%) !important; border-color: rgba(255, 255, 255, 0.08) !important;">
                 <div class="card-body p-4">
                     <h5 class="fw-bold mb-4 text-dark border-bottom pb-2">Attraction Statistics</h5>
                     
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-white p-2.5 rounded-3 me-3 text-primary border shadow-sm">
+                        <div class="p-2.5 rounded-3 me-3 text-primary border shadow-sm" style="background-color: #111827 !important; border-color: rgba(255,255,255,0.08) !important;">
                             <i class="fa-solid fa-wallet text-primary fa-fw"></i>
                         </div>
                         <div>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-white p-2.5 rounded-3 me-3 text-primary border shadow-sm">
+                        <div class="p-2.5 rounded-3 me-3 text-primary border shadow-sm" style="background-color: #111827 !important; border-color: rgba(255,255,255,0.08) !important;">
                             <i class="fa-solid fa-clock text-primary fa-fw"></i>
                         </div>
                         <div>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-4">
-                        <div class="bg-white p-2.5 rounded-3 me-3 text-primary border shadow-sm">
+                        <div class="p-2.5 rounded-3 me-3 text-primary border shadow-sm" style="background-color: #111827 !important; border-color: rgba(255,255,255,0.08) !important;">
                             <i class="fa-solid fa-hourglass-half text-primary fa-fw"></i>
                         </div>
                         <div>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    {% if user.is_authenticated %}
+                    {% if user.is_staff %}
                     <div class="d-grid gap-2 border-top pt-4 mt-4">
                         <a href="{% url 'attractions:update' attraction.pk %}" class="btn btn-outline-primary btn-sm fw-semibold"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Attraction</a>
                         <a href="{% url 'attractions:delete' attraction.pk %}" class="btn btn-outline-danger btn-sm fw-semibold"><i class="fa-solid fa-trash me-2"></i>Delete Attraction</a>

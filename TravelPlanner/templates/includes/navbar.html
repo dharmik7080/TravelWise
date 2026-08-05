@@ -12,7 +12,13 @@
                     <a class="nav-link {% if request.path == '/' or request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/destinations/' in request.path %}active{% endif %}" href="{% url 'destinations:list' %}">Destinations</a>
+                    <a class="nav-link {% if '/destinations/' in request.path and '/recommendations/' not in request.path %}active{% endif %}" href="{% url 'destinations:list' %}">Destinations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/recommendations/' in request.path %}active{% endif %}" href="{% url 'destinations:recommendations' %}">Get AI Suggestions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/packages/' in request.path %}active{% endif %}" href="{% url 'packages:list' %}">Itineraries</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -24,6 +30,12 @@
                 {% endif %}
             </ul>
             <ul class="navbar-nav align-items-lg-center">
+                <li class="nav-item">
+                    <!-- Search Trigger Icon -->
+                    <a href="#" class="nav-link text-white me-3" id="searchTrigger" style="cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass fs-5"></i>
+                    </a>
+                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link {% if '/profile/' in request.path %}active{% endif %}" href="{% url 'accounts:profile' %}"><i class="fa-regular fa-user me-1"></i>Profile</a>

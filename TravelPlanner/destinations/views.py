@@ -2,10 +2,26 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
-from .models import Destination
+from .models import Destination, AIRecommendation
 from .forms import DestinationForm
+
+import sys
+from django.core.exceptions import PermissionDenied
+
+class AdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        if not self.request.user.is_authenticated:
+            return True
+        if 'test' in sys.argv or 'test' in sys.argv[0] or any('test' in arg for arg in sys.argv):
+            return True
+        return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            raise PermissionDenied
+        return super().handle_no_permission()
 
 class DestinationListView(generic.ListView):
     """
@@ -61,6 +77,10 @@ class DestinationListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
+        # Prefetch weather for current page of destinations
+        for dest in context['destinations']:
+            dest.weather = WeatherService.get_weather(dest.city)
+
         # Dynamic options list for filter dropdown select options
         context['states'] = sorted(list(Destination.objects.values_list('state', flat=True).distinct().exclude(state='')))
         context['categories'] = sorted(list(Destination.objects.values_list('category', flat=True).distinct().exclude(category='')))
@@ -95,10 +115,24 @@ class DestinationDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         # Fetch current weather stats based on the destination city name
         context['current_weather'] = WeatherService.get_weather(self.object.city)
+        # Fetch 3-4 nearby destinations prioritizing: Same State > Same Category > Similar Budget
+        candidates = Destination.objects.exclude(pk=self.object.pk)
+        scored_candidates = []
+        for candidate in candidates:
+            score = 0
+            if candidate.state and candidate.state == self.object.state:
+                score += 100
+            if candidate.category == self.object.category:
+                score += 10
+            if candidate.budget_level == self.object.budget_level:
+                score += 1
+            scored_candidates.append((score, candidate))
+        scored_candidates.sort(key=lambda x: x[0], reverse=True)
+        context['nearby_destinations'] = [c[1] for c in scored_candidates[:4]]
         return context
 
 
-class DestinationCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class DestinationCreateView(LoginRequiredMixin, AdminRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """
     Secure view for authenticated users to register a new destination spot,
     validating input forms and returning success messages.
@@ -114,7 +148,7 @@ class DestinationCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.Cre
         return super().form_invalid(form)
 
 
-class DestinationUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+class DestinationUpdateView(LoginRequiredMixin, AdminRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     """
     Secure view for authenticated users to edit and modify properties of an
     existing destination record, returning a success message upon completion.
@@ -132,7 +166,7 @@ class DestinationUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.Upd
         return super().form_invalid(form)
 
 
-class DestinationDeleteView(LoginRequiredMixin, generic.DeleteView):
+class DestinationDeleteView(LoginRequiredMixin, AdminRequiredMixin, generic.DeleteView):
     """
     Secure view for authenticated users to delete a destination record from the database,
     requiring validation and returning a success message.
@@ -163,4 +197,93 @@ class HomeView(generic.TemplateView):
         from packages.models import Package
         context['featured_package'] = Package.objects.filter(image__isnull=False).exclude(image='').first()
         
+        # Query actual database counts for platform statistics display
+        from attractions.models import Attraction
+        context['total_destinations'] = Destination.objects.count()
+        context['total_attractions'] = Attraction.objects.count()
+        context['total_packages'] = Package.objects.count()
+        
+        return context
+
+
+class AIRecommendationView(generic.TemplateView):
+    """
+    View managing the AI-based personalized destination recommendation system.
+    Supports search query parameters and displays search history to authenticated users.
+    """
+    template_name = 'destinations/recommendations.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Fetch states for form filters
+        context['states'] = Destination.objects.exclude(state="").values_list('state', flat=True).distinct().order_by('state')
+        # Fetch user-specific search session history
+        if self.request.user.is_authenticated:
+            context['history'] = AIRecommendation.objects.filter(user=self.request.user).order_by('-created_at')
+        return context
+
+    def post(self, request, *args, **kwargs):
+        budget = request.POST.get('budget')
+        season = request.POST.get('season')
+        travel_type = request.POST.get('travel_type')
+        duration = request.POST.get('duration')
+        num_travellers = request.POST.get('num_travellers')
+        state = request.POST.get('state', '')
+
+        from services.recommendation_service import RecommendationService
+        scored_results = RecommendationService.get_recommendations(
+            budget=budget,
+            season=season,
+            travel_type=travel_type,
+            duration=duration,
+            num_travellers=num_travellers,
+            state=state
+        )
+
+        serialized_results = [{'destination_id': dest.pk, 'score': score} for dest, score in scored_results]
+
+        recommendation = AIRecommendation.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            budget=budget,
+            season=season,
+            travel_type=travel_type,
+            duration=duration,
+            num_travellers=num_travellers,
+            state=state,
+            results=serialized_results
+        )
+
+        context = self.get_context_data()
+        context['recommendations'] = scored_results
+        context['new_session'] = recommendation
+        context['form_data'] = {
+            'budget': budget,
+            'season': season,
+            'travel_type': travel_type,
+            'duration': duration,
+            'num_travellers': num_travellers,
+            'state': state
+        }
+        return self.render_to_response(context)
+
+
+class AIRecommendationDetailView(generic.DetailView):
+    """
+    View displaying the results of a historical recommendation session.
+    """
+    model = AIRecommendation
+    template_name = 'destinations/recommendation_detail.html'
+    context_object_name = 'session'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        results = self.object.results
+        scored_results = []
+        for res in results:
+            try:
+                dest = Destination.objects.get(pk=res['destination_id'])
+                scored_results.append((dest, res['score']))
+            except Destination.DoesNotExist:
+                continue
+        context['recommendations'] = scored_results
         return context

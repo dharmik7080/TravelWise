@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Recommendation History | TravelWise{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row g-5">
+        <!-- Main details -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold text-white m-0"><i class="fa-solid fa-clock-rotate-left text-success me-2"></i>Recommendation Results</h3>
+                    <span class="badge bg-secondary px-3 py-2 rounded-pill small">{{ session.created_at|naturaltime }}</span>
+                </div>
+                
+                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-filter text-muted me-2"></i>Requested Query Parameters</h5>
+                <div class="row g-3 mb-4 p-3 rounded-3 border" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important;">
+                    <div class="col-6 col-sm-4">
+                        <span class="text-muted small d-block">Budget Level</span>
+                        <span class="fw-bold text-white"><i class="fa-solid fa-wallet text-secondary me-1"></i>{{ session.budget }}</span>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <span class="text-muted small d-block">Season</span>
+                        <span class="fw-bold text-white"><i class="fa-solid fa-cloud-sun text-secondary me-1"></i>{{ session.season }}</span>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <span class="text-muted small d-block">Travel Type</span>
+                        <span class="fw-bold text-white"><i class="fa-solid fa-user-group text-secondary me-1"></i>{{ session.travel_type }}</span>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <span class="text-muted small d-block">Duration</span>
+                        <span class="fw-bold text-white"><i class="fa-solid fa-calendar-days text-secondary me-1"></i>{{ session.duration }} Days</span>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <span class="text-muted small d-block">Travellers</span>
+                        <span class="fw-bold text-white"><i class="fa-solid fa-user text-secondary me-1"></i>{{ session.num_travellers }} Guests</span>
+                    </div>
+                    {% if session.state %}
+                    <div class="col-6 col-sm-4">
+                        <span class="text-muted small d-block">Preferred State</span>
+                        <span class="fw-bold text-white"><i class="fa-solid fa-map text-secondary me-1"></i>{{ session.state }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <h4 class="fw-bold text-white mb-4"><i class="fa-solid fa-square-poll-vertical text-success me-2"></i>Recommended Spots</h4>
+                <div class="d-flex flex-column gap-4">
+                    {% for dest, score in recommendations %}
+                    <div class="card border shadow-sm rounded-4 overflow-hidden animate-fade-in" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important;">
+                        <div class="row g-0">
+                            <!-- Image / Match Score Badge -->
+                            <div class="col-md-4 position-relative" style="min-height: 200px;">
+                                {% if dest.image %}
+                                    <div class="w-100 h-100" style="background: url('{{ dest.image.url }}') no-repeat center center/cover;"></div>
+                                {% else %}
+                                    <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100">
+                                        <i class="fa-regular fa-image fa-3x"></i>
+                                    </div>
+                                {% endif %}
+                                <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill fs-6 shadow-sm border border-success-subtle">
+                                    <i class="fa-solid fa-circle-check me-1"></i>{{ score }}% Match
+                                </span>
+                            </div>
+                            <!-- Card Details -->
+                            <div class="col-md-8 p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h4 class="fw-bold text-white mb-1">{{ dest.destination_name }}</h4>
+                                            <small class="text-primary"><i class="fa-solid fa-location-dot me-1"></i>{{ dest.city }}, {{ dest.state }}</small>
+                                        </div>
+                                        <span class="badge bg-primary px-3 py-1 rounded-pill small">{{ dest.category }}</span>
+                                    </div>
+                                    <p class="text-secondary small mb-3">{{ dest.description|truncatewords:25 }}</p>
+                                    <div class="d-flex flex-wrap gap-2 mb-3">
+                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill fw-bold">{{ dest.budget_level }}</span>
+                                        <span class="badge bg-info bg-opacity-10 text-info rounded-pill fw-bold"><i class="fa-regular fa-sun me-1"></i>{{ dest.best_season }}</span>
+                                        <span class="badge bg-warning text-dark rounded-pill fw-bold"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary flex-grow-1 py-2 fw-semibold">View Destination</a>
+                                    <a href="{% url 'trips:plan' %}?destination={{ dest.pk }}" class="btn btn-primary flex-grow-1 py-2 fw-bold">Plan Trip</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center py-4 bg-light rounded-3 border">
+                        <p class="text-secondary small mb-0">No destinations found in this session record.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Navigation buttons -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h5 class="fw-bold text-white mb-3 border-bottom pb-2">Quick Navigation</h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'destinations:recommendations' %}" class="btn btn-primary py-2.5 fw-semibold"><i class="fa-solid fa-plus me-2"></i>New Recommendation</a>
+                    <a href="{% url 'dashboard:index' %}" class="btn btn-outline-light py-2.5 fw-semibold"><i class="fa-solid fa-chart-line me-2"></i>Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

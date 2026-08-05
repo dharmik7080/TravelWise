@@ -548,3 +548,134 @@ class DestinationModelValidationTests(TestCase):
             dest.clean()
 
 
+class AIRecommendationTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        
+        self.dest1 = Destination.objects.create(
+            destination_name="Himalayan Peak",
+            city="Manali",
+            state="Himachal Pradesh",
+            category="Adventure",
+            description="High altitude trekking and adventure sports.",
+            best_season="Summer",
+            ideal_days=5,
+            budget_level="Moderate",
+            average_cost_per_day=120.00,
+            solo_friendly=True,
+            family_friendly=True,
+            average_rating=4.8
+        )
+        self.dest2 = Destination.objects.create(
+            destination_name="Goa Beaches",
+            city="Panaji",
+            state="Goa",
+            category="Beach",
+            description="Sunny beaches and rich nightlife.",
+            best_season="Winter",
+            ideal_days=3,
+            budget_level="Luxury",
+            average_cost_per_day=250.00,
+            couple_friendly=True,
+            average_rating=4.5
+        )
+
+    def test_recommendation_service_matching(self):
+        from services.recommendation_service import RecommendationService
+        results = RecommendationService.get_recommendations(
+            budget="Moderate",
+            season="Summer",
+            travel_type="Solo",
+            duration=5,
+            num_travellers=1,
+            state="Himachal Pradesh"
+        )
+        self.assertTrue(len(results) > 0)
+        top_dest, score = results[0]
+        self.assertEqual(top_dest.pk, self.dest1.pk)
+        # Should score high due to budget, season, travel type, duration, and state matches
+        self.assertTrue(score > 80)
+
+    def test_recommendations_page_anonymous(self):
+        from django.urls import reverse
+        response = self.client.get(reverse('destinations:recommendations'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "AI Destination Recommendations")
+        # History shouldn't show login prompt link to anonymous users
+        self.assertContains(response, "Log in to store your recommendation sessions")
+
+    def test_recommendations_page_authenticated_get(self):
+        from django.urls import reverse
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(reverse('destinations:recommendations'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No past recommendations found.")
+
+    def test_recommendations_page_post(self):
+        from django.urls import reverse
+        from destinations.models import AIRecommendation
+        
+        self.client.login(username="testuser", password="testpassword")
+        post_data = {
+            'budget': 'Moderate',
+            'season': 'Summer',
+            'travel_type': 'Solo',
+            'duration': 5,
+            'num_travellers': 1,
+            'state': 'Himachal Pradesh'
+        }
+        response = self.client.post(reverse('destinations:recommendations'), post_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Himalayan Peak")
+        
+        # Verify recommendation record stored in database
+        self.assertTrue(AIRecommendation.objects.filter(user=self.user).exists())
+        latest = AIRecommendation.objects.filter(user=self.user).first()
+        self.assertEqual(latest.budget, "Moderate")
+        self.assertEqual(latest.travel_type, "Solo")
+        self.assertEqual(len(latest.results), 2)
+
+    def test_recommendation_detail_view(self):
+        from django.urls import reverse
+        from destinations.models import AIRecommendation
+        
+        rec = AIRecommendation.objects.create(
+            user=self.user,
+            budget="Moderate",
+            season="Summer",
+            travel_type="Solo",
+            duration=5,
+            num_travellers=1,
+            results=[{"destination_id": self.dest1.pk, "score": 90}]
+        )
+        response = self.client.get(reverse('destinations:recommendation_detail', kwargs={'pk': rec.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Himalayan Peak")
+        self.assertContains(response, "90% Match")
+
+    def test_dashboard_recommendations_widget(self):
+        from django.urls import reverse
+        from destinations.models import AIRecommendation
+        
+        # Create recommendation session
+        AIRecommendation.objects.create(
+            user=self.user,
+            budget="Moderate",
+            season="Summer",
+            travel_type="Solo",
+            duration=5,
+            num_travellers=1,
+            results=[{"destination_id": self.dest1.pk, "score": 95}]
+        )
+        
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(reverse('dashboard:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Recommended For You")
+        self.assertContains(response, "Himalayan Peak")
+        self.assertContains(response, "95% Match")
+
+
+

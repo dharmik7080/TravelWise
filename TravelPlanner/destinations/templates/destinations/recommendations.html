@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}AI Travel Recommendations | TravelWise{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="row g-5">
+        <!-- Main Form / Results Column -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4" style="background-color: var(--surface) !important; border: 1px solid var(--border-color) !important;">
+                <h2 class="fw-bold text-white mb-2"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>AI Destination Recommendations</h2>
+                <p class="text-secondary mb-4">Input your travel parameters to find the top 5 highly matched destinations across India powered by our match intelligence system.</p>
+
+                <form method="post" action="{% url 'destinations:recommendations' %}" class="row g-3">
+                    {% csrf_token %}
+                    <!-- Budget Level -->
+                    <div class="col-sm-6">
+                        <label for="budget" class="form-label text-uppercase fw-semibold small text-muted">Budget Level</label>
+                        <div class="position-relative">
+                            <select name="budget" id="budget" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                                <option value="" disabled {% if not form_data.budget %}selected{% endif %}>Select Budget</option>
+                                <option value="Budget" {% if form_data.budget == 'Budget' %}selected{% endif %}>Budget (Low cost)</option>
+                                <option value="Moderate" {% if form_data.budget == 'Moderate' %}selected{% endif %}>Moderate (Average cost)</option>
+                                <option value="Luxury" {% if form_data.budget == 'Luxury' %}selected{% endif %}>Luxury (Premium cost)</option>
+                            </select>
+                            <i class="fa-solid fa-wallet text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Season -->
+                    <div class="col-sm-6">
+                        <label for="season" class="form-label text-uppercase fw-semibold small text-muted">Preferred Season</label>
+                        <div class="position-relative">
+                            <select name="season" id="season" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                                <option value="" disabled {% if not form_data.season %}selected{% endif %}>Select Season</option>
+                                <option value="Summer" {% if form_data.season == 'Summer' %}selected{% endif %}>Summer</option>
+                                <option value="Winter" {% if form_data.season == 'Winter' %}selected{% endif %}>Winter</option>
+                                <option value="Monsoon" {% if form_data.season == 'Monsoon' %}selected{% endif %}>Monsoon</option>
+                                <option value="Autumn" {% if form_data.season == 'Autumn' %}selected{% endif %}>Autumn</option>
+                                <option value="Spring" {% if form_data.season == 'Spring' %}selected{% endif %}>Spring</option>
+                            </select>
+                            <i class="fa-solid fa-cloud-sun text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Travel Type -->
+                    <div class="col-sm-6">
+                        <label for="travel_type" class="form-label text-uppercase fw-semibold small text-muted">Travel Group Type</label>
+                        <div class="position-relative">
+                            <select name="travel_type" id="travel_type" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                                <option value="" disabled {% if not form_data.travel_type %}selected{% endif %}>Select Group Type</option>
+                                <option value="Solo" {% if form_data.travel_type == 'Solo' %}selected{% endif %}>Solo Traveller</option>
+                                <option value="Couple" {% if form_data.travel_type == 'Couple' %}selected{% endif %}>Couple / Honeymoon</option>
+                                <option value="Family" {% if form_data.travel_type == 'Family' %}selected{% endif %}>Family Group</option>
+                            </select>
+                            <i class="fa-solid fa-user-group text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="col-sm-3">
+                        <label for="duration" class="form-label text-uppercase fw-semibold small text-muted">Duration (Days)</label>
+                        <div class="position-relative">
+                            <input type="number" name="duration" id="duration" class="form-control text-white" min="1" max="30" value="{{ form_data.duration|default:5 }}" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <i class="fa-solid fa-calendar-days text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Number of Travellers -->
+                    <div class="col-sm-3">
+                        <label for="num_travellers" class="form-label text-uppercase fw-semibold small text-muted">Travellers</label>
+                        <div class="position-relative">
+                            <input type="number" name="num_travellers" id="num_travellers" class="form-control text-white" min="1" max="20" value="{{ form_data.num_travellers|default:2 }}" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <i class="fa-solid fa-user text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <!-- State Filter (Optional) -->
+                    <div class="col-12">
+                        <label for="state" class="form-label text-uppercase fw-semibold small text-muted">Preferred State (Optional)</label>
+                        <div class="position-relative">
+                            <select name="state" id="state" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;">
+                                <option value="" {% if not form_data.state %}selected{% endif %}>Any State / Region</option>
+                                {% for st in states %}
+                                    <option value="{{ st }}" {% if form_data.state == st %}selected{% endif %}>{{ st }}</option>
+                                {% endfor %}
+                            </select>
+                            <i class="fa-solid fa-map text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-grid mt-4">
+                        <button type="submit" class="btn btn-primary py-3 rounded-pill fw-bold hover-scale"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generate Recommendations</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Recommendation Results Grid -->
+            {% if recommendations %}
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h3 class="fw-bold text-white mb-4"><i class="fa-solid fa-square-poll-vertical text-success me-2"></i>Top Recommendations</h3>
+                <div class="d-flex flex-column gap-4">
+                    {% for dest, score in recommendations %}
+                    <div class="card border shadow-sm rounded-4 overflow-hidden" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important;">
+                        <div class="row g-0">
+                            <!-- Image / Match Score Badge -->
+                            <div class="col-md-4 position-relative" style="min-height: 200px;">
+                                {% if dest.image %}
+                                    <div class="w-100 h-100" style="background: url('{{ dest.image.url }}') no-repeat center center/cover;"></div>
+                                {% else %}
+                                    <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100">
+                                        <i class="fa-regular fa-image fa-3x"></i>
+                                    </div>
+                                {% endif %}
+                                <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill fs-6 shadow-sm border border-success-subtle">
+                                    <i class="fa-solid fa-circle-check me-1"></i>{{ score }}% Match
+                                </span>
+                            </div>
+                            <!-- Card Details -->
+                            <div class="col-md-8 p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h4 class="fw-bold text-white mb-1">{{ dest.destination_name }}</h4>
+                                            <small class="text-primary"><i class="fa-solid fa-location-dot me-1"></i>{{ dest.city }}, {{ dest.state }}</small>
+                                        </div>
+                                        <span class="badge bg-primary px-3 py-1 rounded-pill small">{{ dest.category }}</span>
+                                    </div>
+                                    <p class="text-secondary small mb-3">{{ dest.description|truncatewords:25 }}</p>
+                                    <div class="d-flex flex-wrap gap-2 mb-3">
+                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill fw-bold">{{ dest.budget_level }}</span>
+                                        <span class="badge bg-info bg-opacity-10 text-info rounded-pill fw-bold"><i class="fa-regular fa-sun me-1"></i>{{ dest.best_season }}</span>
+                                        <span class="badge bg-warning text-dark rounded-pill fw-bold"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary flex-grow-1 py-2 fw-semibold">View Destination</a>
+                                    <a href="{% url 'trips:plan' %}?destination={{ dest.pk }}" class="btn btn-primary flex-grow-1 py-2 fw-bold">Plan Trip</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar / Recommendation History Column -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4" style="background-color: var(--surface) !important; border: 1px solid var(--border-color) !important;">
+                <h5 class="fw-bold text-white mb-3 border-bottom pb-2"><i class="fa-solid fa-history text-muted me-2"></i>History</h5>
+                {% if user.is_authenticated %}
+                    {% if history %}
+                    <div class="d-flex flex-column gap-3 overflow-auto" style="max-height: 500px;">
+                        {% for hist in history %}
+                        <a href="{% url 'destinations:recommendation_detail' hist.pk %}" class="p-3 rounded-3 border d-block text-decoration-none list-group-item-action hover-scale" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; transition: transform 0.2s;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-white small">{{ hist.created_at|naturaltime }}</span>
+                                <span class="badge bg-success bg-opacity-15 text-success small">{{ hist.results|length }} matches</span>
+                            </div>
+                            <div class="text-secondary small">
+                                <div><i class="fa-solid fa-wallet text-secondary me-1"></i>Budget: {{ hist.budget }}</div>
+                                <div><i class="fa-solid fa-user-group text-secondary me-1"></i>Group: {{ hist.travel_type }}</div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fa-solid fa-clock-rotate-left fa-2x text-muted opacity-30 mb-2"></i>
+                        <p class="text-secondary small mb-0">No past recommendations found.</p>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="text-center py-4 bg-secondary bg-opacity-10 rounded-3">
+                    <i class="fa-solid fa-lock text-muted mb-2"></i>
+                    <p class="text-secondary small mb-0 px-3">Log in to store your recommendation sessions and view history later.</p>
+                    <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-primary btn-sm mt-3 px-4 rounded-pill">Log In</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

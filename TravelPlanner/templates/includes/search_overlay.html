@@ -1,0 +1,484 @@
+<!-- Universal Search Overlay Modal -->
+<div id="universal-search-overlay" class="search-overlay">
+    <div class="search-modal-container">
+        <!-- Close overlay button -->
+        <button id="search-close-btn" class="close-overlay-btn" aria-label="Close Search">&times;</button>
+        
+        <!-- Search input field bar wrapper -->
+        <div class="search-input-wrapper mx-auto">
+            <i class="fa-solid fa-magnifying-glass search-icon-input"></i>
+            <input type="text" id="search-input-field" placeholder="Search movies, TV shows, and people..." autocomplete="off">
+            <span id="search-loading-spinner" class="spinner d-none"></span>
+        </div>
+
+        <!-- Three-Column Dynamic Grid Layout -->
+        <div class="search-results-grid mt-2">
+            <!-- Column 1: Movies -->
+            <div class="results-column">
+                <h3 class="column-title"><i class="fa-solid fa-film text-primary me-2"></i>Movies</h3>
+                <div id="movies-results-list" class="results-list">
+                    <div class="empty-state text-muted small">Type to start searching movies...</div>
+                </div>
+            </div>
+
+            <!-- Column 2: TV Shows -->
+            <div class="results-column">
+                <h3 class="column-title"><i class="fa-solid fa-tv text-success me-2"></i>TV Shows</h3>
+                <div id="tv-results-list" class="results-list">
+                    <div class="empty-state text-muted small">Type to start searching TV shows...</div>
+                </div>
+            </div>
+
+            <!-- Column 3: People -->
+            <div class="results-column">
+                <h3 class="column-title"><i class="fa-solid fa-user-group text-info me-2"></i>People</h3>
+                <div id="people-results-list" class="results-list">
+                    <div class="empty-state text-muted small">Type to start searching people...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Footer View All Action -->
+        <div id="search-footer-action" class="search-footer d-none">
+            <button id="view-all-results-btn" class="btn btn-view-all">View all results</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Sleek CineMatch Glassmorphism Overlay styling */
+    .search-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        z-index: 10000; /* Center modal above all elements */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 6vh;
+        box-sizing: border-box;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .search-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Modal box body wrapper */
+    .search-modal-container {
+        width: 90%;
+        max-width: 1100px;
+        background: rgba(30, 41, 59, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 24px;
+        padding: 30px;
+        position: relative;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Top right close button */
+    .close-overlay-btn {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        background: none;
+        border: none;
+        color: #94a3b8;
+        font-size: 2.2rem;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .close-overlay-btn:hover {
+        color: #ffffff;
+    }
+
+    /* Search input bar controls */
+    .search-input-wrapper {
+        position: relative;
+        margin-bottom: 25px;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .search-icon-input {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        font-size: 1.2rem;
+    }
+
+    #search-input-field {
+        width: 100%;
+        padding: 16px 20px 16px 55px;
+        font-size: 1.15rem;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(15, 23, 42, 0.95);
+        color: #ffffff;
+        outline: none;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    #search-input-field:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Spinner Animation */
+    .spinner {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: #2563eb;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    /* Grid Layout for Columns */
+    .search-results-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        overflow-y: auto;
+        flex-grow: 1;
+        padding-right: 5px;
+    }
+
+    @media (max-width: 850px) {
+        .search-results-grid {
+            grid-template-columns: 1fr;
+            max-height: 60vh;
+        }
+    }
+
+    .results-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .column-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .results-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .empty-state {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Card Item */
+    .search-card {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .search-card:hover {
+        transform: translateY(-2px);
+        background: rgba(30, 41, 59, 0.95);
+        border-color: #2563eb;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .search-card-img {
+        width: 45px;
+        height: 65px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-right: 12px;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .search-card-profile {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 12px;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .search-card-details {
+        overflow: hidden;
+    }
+
+    .search-card-name {
+        font-size: 0.925rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .search-card-meta {
+        font-size: 0.8rem;
+        color: #94a3b8;
+    }
+
+    .search-card-rating {
+        font-size: 0.8rem;
+        color: #fbbf24;
+        margin-left: 5px;
+    }
+
+    /* Sticky view all footer */
+    .search-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-view-all {
+        background: #2563eb;
+        border: none;
+        color: #ffffff;
+        padding: 10px 24px;
+        font-weight: 600;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-view-all:hover {
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+        transform: translateY(-1px);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchTrigger = document.getElementById("searchTrigger") || document.getElementById("search-trigger-btn");
+        const searchOverlay = document.getElementById("universal-search-overlay");
+        const searchClose = document.getElementById("search-close-btn");
+        const searchInput = document.getElementById("search-input-field");
+        const loadingSpinner = document.getElementById("search-loading-spinner");
+        const footerAction = document.getElementById("search-footer-action");
+
+        const moviesList = document.getElementById("movies-results-list");
+        const tvList = document.getElementById("tv-results-list");
+        const peopleList = document.getElementById("people-results-list");
+
+        // Window open close handlers
+        if (searchTrigger) {
+            searchTrigger.addEventListener("click", function(e) {
+                e.preventDefault();
+                openSearchModal();
+            });
+        }
+        if (searchClose) {
+            searchClose.addEventListener("click", closeSearchModal);
+        }
+
+        // Close on overlay outer click
+        searchOverlay.addEventListener("click", function(e) {
+            if (e.target === searchOverlay) {
+                closeSearchModal();
+            }
+        });
+
+        // Close on ESC keypress
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape" && searchOverlay.classList.contains("active")) {
+                closeSearchModal();
+            }
+        });
+
+        function openSearchModal() {
+            searchOverlay.classList.add("active");
+            searchInput.focus();
+            document.body.style.overflow = "hidden"; // Disable scroll
+        }
+
+        function closeSearchModal() {
+            searchOverlay.classList.remove("active");
+            document.body.style.overflow = ""; // Re-enable scroll
+            searchInput.value = "";
+            resetResults();
+        }
+
+        function resetResults() {
+            moviesList.innerHTML = '<div class="empty-state text-muted small">Type to start searching movies...</div>';
+            tvList.innerHTML = '<div class="empty-state text-muted small">Type to start searching TV shows...</div>';
+            peopleList.innerHTML = '<div class="empty-state text-muted small">Type to start searching people...</div>';
+            footerAction.classList.add("d-none");
+        }
+
+        // Debounce: delay request firing by delay (ms)
+        function debounce(func, delay) {
+            let timer;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        // Debounce search input entry
+        searchInput.addEventListener("input", debounce(function(e) {
+            const query = e.target.value.trim();
+            if (query.length < 2) {
+                resetResults();
+                return;
+            }
+            performSearch(query);
+        }, 300));
+
+        function performSearch(query) {
+            loadingSpinner.classList.remove("d-none");
+
+            fetch(`/universal-search/?q=${encodeURIComponent(query)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network query failed");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loadingSpinner.classList.add("d-none");
+                    renderResults(data);
+                })
+                .catch(err => {
+                    loadingSpinner.classList.add("d-none");
+                    console.error("AJAX Search Failed:", err);
+                });
+        }
+
+        function renderResults(data) {
+            moviesList.innerHTML = "";
+            tvList.innerHTML = "";
+            peopleList.innerHTML = "";
+
+            let hasResults = false;
+
+            // Render Movies
+            if (data.movies && data.movies.length > 0) {
+                hasResults = true;
+                data.movies.forEach(movie => {
+                    const img = movie.poster 
+                        ? `<img src="${movie.poster}" class="search-card-img" alt="${movie.title}">`
+                        : `<div class="search-card-img d-flex align-items-center justify-content-center bg-secondary bg-opacity-20 text-muted"><i class="fa-solid fa-film"></i></div>`;
+                    
+                    moviesList.innerHTML += `
+                        <a href="javascript:void(0);" class="search-card">
+                            ${img}
+                            <div class="search-card-details">
+                                <div class="search-card-name" title="${movie.title}">${movie.title}</div>
+                                <div class="search-card-meta">
+                                    <span>${movie.release_date ? movie.release_date.split("-")[0] : "N/A"}</span>
+                                    <span class="search-card-rating"><i class="fa-solid fa-star"></i> ${movie.rating.toFixed(1)}</span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                moviesList.innerHTML = '<div class="empty-state text-muted small">No movies found.</div>';
+            }
+
+            // Render TV Shows
+            if (data.tv_shows && data.tv_shows.length > 0) {
+                hasResults = true;
+                data.tv_shows.forEach(show => {
+                    const img = show.poster 
+                        ? `<img src="${show.poster}" class="search-card-img" alt="${show.name}">`
+                        : `<div class="search-card-img d-flex align-items-center justify-content-center bg-secondary bg-opacity-20 text-muted"><i class="fa-solid fa-tv"></i></div>`;
+                    
+                    tvList.innerHTML += `
+                        <a href="javascript:void(0);" class="search-card">
+                            ${img}
+                            <div class="search-card-details">
+                                <div class="search-card-name" title="${show.name}">${show.name}</div>
+                                <div class="search-card-meta">
+                                    <span>${show.first_air_date ? show.first_air_date.split("-")[0] : "N/A"}</span>
+                                    <span class="search-card-rating"><i class="fa-solid fa-star"></i> ${show.rating.toFixed(1)}</span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                tvList.innerHTML = '<div class="empty-state text-muted small">No TV shows found.</div>';
+            }
+
+            // Render People
+            if (data.people && data.people.length > 0) {
+                hasResults = true;
+                data.people.forEach(person => {
+                    const img = person.profile 
+                        ? `<img src="${person.profile}" class="search-card-profile" alt="${person.name}">`
+                        : `<div class="search-card-profile d-flex align-items-center justify-content-center bg-secondary bg-opacity-20 text-muted"><i class="fa-solid fa-user"></i></div>`;
+                    
+                    peopleList.innerHTML += `
+                        <a href="javascript:void(0);" class="search-card">
+                            ${img}
+                            <div class="search-card-details">
+                                <div class="search-card-name" title="${person.name}">${person.name}</div>
+                                <div class="search-card-meta text-truncate" style="max-width:180px;">${person.known_for || "Actor / Crew"}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                peopleList.innerHTML = '<div class="empty-state text-muted small">No people found.</div>';
+            }
+
+            // Show footer view-all results button
+            if (hasResults) {
+                footerAction.classList.remove("d-none");
+                const viewAllBtn = document.getElementById("view-all-results-btn");
+                viewAllBtn.onclick = function() {
+                    alert(`Search redirect for: "${searchInput.value}"`);
+                };
+            } else {
+                footerAction.classList.add("d-none");
+            }
+        }
+    });
+</script>
