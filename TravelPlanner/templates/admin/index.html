@@ -26,6 +26,35 @@
         </div>
     </div>
 
+    <!-- ML Model Performance Metrics Card (Sprint 5) -->
+    {% if ml_metrics %}
+    <div style="margin-bottom: 25px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #0ea5e9;">
+        <h3 style="margin-top: 0; margin-bottom: 15px; font-weight: bold; color: #333; font-family: 'Poppins', sans-serif;"><i class="fa-solid fa-brain text-info" style="margin-right: 8px;"></i>ML Model Performance Metrics</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">Model Name</span>
+                <span style="font-size: 1.15rem; font-weight: bold; color: #212529;">{{ ml_metrics.model_name }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">R² Score</span>
+                <span style="font-size: 1.6rem; font-weight: bold; color: #198754;">{{ ml_metrics.r2 }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">MAE</span>
+                <span style="font-size: 1.6rem; font-weight: bold; color: #212529;">₹{{ ml_metrics.mae }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">RMSE</span>
+                <span style="font-size: 1.6rem; font-weight: bold; color: #212529;">₹{{ ml_metrics.rmse }}</span>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #dee2e6; text-align: center;">
+                <span style="font-size: 0.85rem; color: #6c757d; font-weight: 500; display: block; margin-bottom: 5px;">Last Trained</span>
+                <span style="font-size: 0.95rem; font-weight: bold; color: #495057;">{{ ml_metrics.last_trained }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Shortcuts to Commonly Managed Models -->
     <div style="margin-bottom: 25px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid #0d6efd;">
         <h3 style="margin-top: 0; margin-bottom: 15px; font-weight: bold; color: #333; font-family: 'Poppins', sans-serif;"><i class="fa-solid fa-link text-primary" style="margin-right: 8px;"></i>Quick Management Shortcuts</h3>

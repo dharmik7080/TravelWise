@@ -38,6 +38,20 @@ def custom_admin_index(request, extra_context=None):
         'total_trips': Trip.objects.count(),
         'total_packages': Package.objects.count(),
     })
+    
+    # Load ML Model Metrics
+    import os
+    import json
+    urls_dir = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(urls_dir)
+    metrics_path = os.path.join(project_dir, 'ml', 'models', 'model_metrics.json')
+    if os.path.exists(metrics_path):
+        try:
+            with open(metrics_path, 'r') as f:
+                extra_context['ml_metrics'] = json.load(f)
+        except Exception:
+            pass
+
     return original_admin_index(request, extra_context)
 
 admin.site.index = custom_admin_index
