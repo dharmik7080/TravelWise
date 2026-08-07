@@ -97,6 +97,28 @@ class DestinationListView(generic.ListView):
                 del params[key]
         context['query_params'] = params.urlencode()
         context['q'] = self.request.GET.get('q', '').strip()
+
+        # Maps Overview payload (Phase 3)
+        from services.maps_data_service import MapsDataService
+        from django.urls import reverse
+        import json
+
+        all_dests = list(Destination.objects.all())
+        destinations_data = []
+        for dest in all_dests:
+            lat, lon = MapsDataService.get_destination_coords(dest)
+            destinations_data.append({
+                'name': dest.destination_name,
+                'city': dest.city,
+                'state': dest.state,
+                'category': dest.category,
+                'detail_url': reverse('destinations:detail', args=[dest.pk]),
+                'lat': lat,
+                'lon': lon
+            })
+
+        context['overview_map_payload'] = json.dumps(destinations_data)
+
         return context
 
 
@@ -129,6 +151,51 @@ class DestinationDetailView(generic.DetailView):
             scored_candidates.append((score, candidate))
         scored_candidates.sort(key=lambda x: x[0], reverse=True)
         context['nearby_destinations'] = [c[1] for c in scored_candidates[:4]]
+
+        # Maps Integration (Phase 3)
+        from services.maps_data_service import MapsDataService
+        from django.urls import reverse
+        import json
+
+        dest = self.object
+        lat, lon = MapsDataService.get_destination_coords(dest)
+
+        attractions_data = []
+        for attr in dest.attractions.all():
+            a_lat, a_lon = MapsDataService.get_attraction_coords(lat, lon, attr.attraction_name)
+            attractions_data.append({
+                'name': attr.attraction_name,
+                'category': attr.category,
+                'entry_fee': float(attr.entry_fee),
+                'duration': attr.average_visit_time,
+                'detail_url': reverse('attractions:detail', args=[attr.pk]),
+                'lat': a_lat,
+                'lon': a_lon
+            })
+
+        similar_data = []
+        for sim in context['nearby_destinations']:
+            s_lat, s_lon = MapsDataService.get_destination_coords(sim)
+            similar_data.append({
+                'name': sim.destination_name,
+                'state': sim.state,
+                'detail_url': reverse('destinations:detail', args=[sim.pk]),
+                'lat': s_lat,
+                'lon': s_lon
+            })
+
+        context['map_payload'] = json.dumps({
+            'destination': {
+                'name': dest.destination_name,
+                'city': dest.city,
+                'state': dest.state,
+                'lat': lat,
+                'lon': lon
+            },
+            'attractions': attractions_data,
+            'similar_destinations': similar_data
+        })
+
         return context
 
 

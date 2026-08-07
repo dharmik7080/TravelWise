@@ -191,6 +191,49 @@ class TripDetailView(LoginRequiredMixin, generic.DetailView):
             trip.dynamic_status_badge = "bg-secondary"
             trip.dynamic_days_label = "Completed ✓"
             trip.test_legacy_days_left = "0 Days Left"
+
+        # Maps Integration (Phase 3)
+        from services.maps_data_service import MapsDataService
+        import json
+
+        dest = trip.destination
+        d_lat, d_lon = MapsDataService.get_destination_coords(dest)
+
+        def get_slot_data(slot_text):
+            if not slot_text:
+                return None
+            target_attr = None
+            for attr in dest.attractions.all():
+                if attr.attraction_name.lower() in slot_text.lower():
+                    target_attr = attr
+                    break
+            
+            if target_attr:
+                a_lat, a_lon = MapsDataService.get_attraction_coords(d_lat, d_lon, target_attr.attraction_name)
+                return {
+                    'name': target_attr.attraction_name,
+                    'category': target_attr.category,
+                    'lat': a_lat,
+                    'lon': a_lon
+                }
+            return None
+
+        itinerary_data = {}
+        for day_row in trip.itinerary_days.all():
+            itinerary_data[str(day_row.day_number)] = {
+                'morning': get_slot_data(day_row.morning),
+                'afternoon': get_slot_data(day_row.afternoon),
+                'evening': get_slot_data(day_row.evening)
+            }
+
+        context['itinerary_map_payload'] = json.dumps({
+            'destination': {
+                'name': dest.destination_name,
+                'lat': d_lat,
+                'lon': d_lon
+            },
+            'itinerary': itinerary_data
+        })
             
         return context
 

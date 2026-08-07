@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 {% block title %}{{ trip.destination.destination_name }} Trip Details | TravelWise{% endblock %}
 
@@ -126,9 +127,102 @@
                         </div>
                     </div>
 
+                    <!-- Interactive Itinerary Map (Phase 3) -->
+                    <div id="itinerary-map-section" class="card border shadow-sm rounded-4 p-4 p-md-5 mb-4" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+                        <h4 class="fw-bold text-white mb-4"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Itinerary Route Map</h4>
+                        
+                        <!-- Day selector buttons -->
+                        <div class="d-flex flex-wrap gap-2 mb-3" id="map-day-selector">
+                            <button class="btn btn-primary btn-sm active" data-day="all">All Days</button>
+                            {% for day in trip.itinerary_days.all %}
+                                <button class="btn btn-outline-light btn-sm" data-day="{{ day.day_number }}">Day {{ day.day_number }}</button>
+                            {% endfor %}
+                        </div>
+
+                        <div id="itinerary-map-container" style="position: relative;">
+                            <div id="itinerary-map" class="rounded-3 border" style="height: 450px; z-index: 1; border-color: var(--border-color) !important; background-color: var(--surface-secondary) !important;"></div>
+                            <div id="itinerary-map-fallback" class="d-none alert alert-info rounded-3 p-4 text-center mb-0" style="background-color: rgba(13, 202, 240, 0.1) !important; border-color: rgba(13, 202, 240, 0.2) !important;">
+                                <i class="fa-solid fa-location-crosshairs fa-3x text-info mb-3"></i>
+                                <h5 class="fw-bold text-info">Itinerary Route Map</h5>
+                                <p class="text-secondary small mb-0">Geographic coordinates for this destination or its scheduled attractions are missing. Routing visualization is unavailable.</p>
+                            </div>
+                        </div>
+
+                        <!-- Distance calculation & travel time display (Step 7) -->
+                        <div id="distance-summary-container" class="mt-3 p-3 rounded bg-dark bg-opacity-20 border" style="border-color: rgba(255,255,255,0.05) !important;">
+                            <h6 class="text-white fw-bold mb-2 small"><i class="fa-solid fa-route text-success me-2"></i>Distance & Route Estimates</h6>
+                            <div id="distance-details" class="text-secondary small">
+                                Loading route stats...
+                            </div>
+                        </div>
+                    </div>
+
+                    <script id="itinerary-map-payload" type="application/json">{{ itinerary_map_payload|safe }}</script>
+                    <script type="module">
+                        import { LeafletLoader } from "{% static 'js/maps/leaflet.js' %}";
+                        import { getDarkTileLayer } from "{% static 'js/maps/map_utils.js' %}";
+                        import { createCustomIcon } from "{% static 'js/maps/marker_manager.js' %}";
+                        import { RouteRenderer } from "{% static 'js/maps/route_renderer.js' %}";
+
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const payloadElement = document.getElementById('itinerary-map-payload');
+                            if (!payloadElement) return;
+
+                            let data;
+                            try {
+                                data = JSON.parse(payloadElement.textContent);
+                            } catch (e) {
+                                console.error("Failed to parse itinerary map payload", e);
+                                return;
+                            }
+
+                            const dest = data.destination;
+                            if (!dest || !dest.lat || !dest.lon) {
+                                document.getElementById('itinerary-map').classList.add('d-none');
+                                document.getElementById('itinerary-map-fallback').classList.remove('d-none');
+                                document.getElementById('distance-summary-container').classList.add('d-none');
+                                return;
+                            }
+
+                            LeafletLoader.load().then(() => {
+                                const map = L.map('itinerary-map', {
+                                    center: [dest.lat, dest.lon],
+                                    zoom: 13,
+                                    zoomControl: true
+                                });
+
+                                getDarkTileLayer().addTo(map);
+
+                                // Render routes (Step 5 & 7)
+                                const markerManager = { createCustomIcon };
+                                const renderer = new RouteRenderer(map);
+                                renderer.renderRoutes(data.itinerary, markerManager);
+
+                                // Day selector toggle handlers
+                                const buttons = document.querySelectorAll('#map-day-selector button');
+                                buttons.forEach(btn => {
+                                    btn.addEventListener('click', () => {
+                                        buttons.forEach(b => {
+                                            b.classList.remove('btn-primary', 'active');
+                                            b.classList.add('btn-outline-light');
+                                        });
+
+                                        btn.classList.remove('btn-outline-light');
+                                        btn.classList.add('btn-primary', 'active');
+
+                                        const day = btn.getAttribute('data-day');
+                                        renderer.filterDay(day);
+                                    });
+                                });
+                            }).catch(err => {
+                                console.error("Error loading Leaflet itinerary map", err);
+                            });
+                        });
+                    </script>
+
                     <!-- Daily Itinerary Timeline -->
-                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-                        <h5 class="fw-bold text-dark m-0"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Daily Itinerary</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2" style="border-color: var(--border-color) !important;">
+                        <h5 class="fw-bold text-white m-0"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Daily Itinerary</h5>
                         <a href="{% url 'trips:edit_itinerary' trip.pk %}" class="btn btn-outline-primary btn-sm fw-semibold">
                             <i class="fa-regular fa-pen-to-square me-1"></i>Edit Itinerary
                         </a>

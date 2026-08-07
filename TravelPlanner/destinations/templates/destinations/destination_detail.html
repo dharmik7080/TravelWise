@@ -198,6 +198,125 @@
                 {% endif %}
             </div>
 
+            <!-- Interactive Map Section (Phase 3) -->
+            <div id="map-section" class="card border shadow-sm rounded-4 p-4 p-md-5 mb-4" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+                <h4 class="fw-bold text-white mb-4"><i class="fa-solid fa-map-location-dot text-primary me-2"></i>Interactive Map Explorer</h4>
+                
+                <div id="destination-map-container" style="position: relative;">
+                    <div id="destination-map" class="rounded-3 border" style="height: 450px; z-index: 1; border-color: var(--border-color) !important; background-color: var(--surface-secondary) !important;"></div>
+                    <div id="map-fallback" class="d-none alert alert-info rounded-3 p-4 text-center mb-0" style="background-color: rgba(13, 202, 240, 0.1) !important; border-color: rgba(13, 202, 240, 0.2) !important;">
+                        <i class="fa-solid fa-location-crosshairs fa-3x text-info mb-3"></i>
+                        <h5 class="fw-bold text-info">Coordinates Missing</h5>
+                        <p class="text-secondary small mb-0">Geographic coordinates for this destination could not be resolved. Dynamic mapping features are unavailable.</p>
+                    </div>
+                </div>
+            </div>
+
+            <script id="map-payload" type="application/json">{{ map_payload|safe }}</script>
+            <script type="module">
+                import { LeafletLoader } from "{% static 'js/maps/leaflet.js' %}";
+                import { getDarkTileLayer } from "{% static 'js/maps/map_utils.js' %}";
+                import { createCustomIcon, registerNearbyHighlighting } from "{% static 'js/maps/marker_manager.js' %}";
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    const payloadElement = document.getElementById('map-payload');
+                    if (!payloadElement) return;
+
+                    let data;
+                    try {
+                        data = JSON.parse(payloadElement.textContent);
+                    } catch (e) {
+                        console.error("Failed to parse map payload", e);
+                        return;
+                    }
+
+                    const dest = data.destination;
+                    if (!dest || !dest.lat || !dest.lon) {
+                        document.getElementById('destination-map').classList.add('d-none');
+                        document.getElementById('map-fallback').classList.remove('d-none');
+                        return;
+                    }
+
+                    // Lazy-load Leaflet and render
+                    LeafletLoader.load().then(() => {
+                        const map = L.map('destination-map', {
+                            center: [dest.lat, dest.lon],
+                            zoom: 12,
+                            zoomControl: true
+                        });
+
+                        // Set Dark Style Layer
+                        getDarkTileLayer().addTo(map);
+
+                        const allMarkers = [];
+
+                        // 1. Destination Marker (Blue)
+                        const destIcon = createCustomIcon('destination');
+                        const destMarker = L.marker([dest.lat, dest.lon], { icon: destIcon }).addTo(map);
+                        destMarker.bindPopup(`
+                            <div style="font-family: 'Poppins', sans-serif;">
+                                <strong class="text-primary d-block">${dest.name}</strong>
+                                <span class="small text-muted">${dest.city}, ${dest.state}</span>
+                            </div>
+                        `).openPopup();
+                        allMarkers.push([dest.lat, dest.lon]);
+
+                        // 2. Attraction Markers (Yellow)
+                        const attractionMarkers = [];
+                        data.attractions.forEach(attr => {
+                            if (attr.lat && attr.lon) {
+                                const attrIcon = createCustomIcon('morning');
+                                const attrMarker = L.marker([attr.lat, attr.lon], { 
+                                    icon: attrIcon,
+                                    lat: attr.lat,
+                                    lon: attr.lon
+                                }).addTo(map);
+
+                                attrMarker.bindPopup(`
+                                    <div style="font-family: 'Poppins', sans-serif; min-width: 150px;">
+                                        <strong class="text-primary d-block">${attr.name}</strong>
+                                        <span class="badge bg-secondary mb-1">${attr.category}</span><br>
+                                        <span class="small text-muted">Entry Fee: ₹${attr.entry_fee}</span><br>
+                                        <span class="small text-muted">Duration: ${attr.duration} mins</span><br>
+                                        <div class="mt-2 text-center">
+                                            <a href="${attr.detail_url}" class="btn btn-primary btn-sm px-3 py-1 rounded text-white" style="font-size: 11px;">View Attraction</a>
+                                        </div>
+                                    </div>
+                                `);
+
+                                attractionMarkers.push(attrMarker);
+                                allMarkers.push([attr.lat, attr.lon]);
+
+                                // Bind dynamic 5km highlighting click (Step 10)
+                                registerNearbyHighlighting(map, attrMarker, attr, attractionMarkers);
+                            }
+                        });
+
+                        // 3. Similar Destination Markers (Cyan)
+                        data.similar_destinations.forEach(sim => {
+                            if (sim.lat && sim.lon) {
+                                const simIcon = createCustomIcon('similar');
+                                const simMarker = L.marker([sim.lat, sim.lon], { icon: simIcon }).addTo(map);
+                                simMarker.bindPopup(`
+                                    <div style="font-family: 'Poppins', sans-serif;">
+                                        <strong class="text-info d-block">${sim.name}</strong>
+                                        <span class="small text-muted">Similar Spot in ${sim.state}</span><br>
+                                        <a href="${sim.detail_url}" class="small text-primary fw-semibold">View Destination</a>
+                                    </div>
+                                `);
+                            }
+                        });
+
+                        // Fit map bounds to show Destination + Attractions (Step 4)
+                        if (allMarkers.length > 0) {
+                            map.fitBounds(allMarkers, { padding: [50, 50] });
+                        }
+                    }).catch(err => {
+                        console.error("Error loading Leaflet map", err);
+                    });
+                });
+            </script>
+
             <!-- Best Seasons Section -->
             <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
                 <h4 class="fw-bold text-dark mb-4"><i class="fa-solid fa-umbrella-beach text-primary me-2"></i>Best Seasons & Climate</h4>

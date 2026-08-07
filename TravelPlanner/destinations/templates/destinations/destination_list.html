@@ -20,14 +20,87 @@
 <div class="container py-5 flex-grow-1">
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
         <div>
-            <h1 class="fw-bold text-dark m-0"><i class="fa-solid fa-earth-americas text-primary me-2"></i>Destinations</h1>
-            <p class="text-muted mb-0">Browse global getaways and plan your next journey.</p>
+            <h1 class="fw-bold text-white m-0"><i class="fa-solid fa-earth-americas text-primary me-2"></i>Destinations</h1>
+            <p class="text-secondary mb-0">Browse global getaways and plan your next journey.</p>
         </div>
         {% if user.is_staff %}
         <a href="{% url 'destinations:create' %}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-plus me-2"></i>Add Destination</a>
         {% endif %}
     </div>
-    <hr class="mb-4">
+    <hr class="mb-4" style="border-color: var(--border-color) !important; opacity: 1;">
+
+    <!-- Explore India Overview Map (Phase 3) -->
+    <div class="card border shadow-sm rounded-4 p-4 mb-4" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+        <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-earth-asia text-primary me-2"></i>Explore India Interactive Map</h5>
+        <div id="overview-map" class="rounded-3 border" style="height: 400px; z-index: 1; border-color: var(--border-color) !important; background-color: var(--surface-secondary) !important;"></div>
+    </div>
+
+    <script id="overview-map-payload" type="application/json">{{ overview_map_payload|safe }}</script>
+    <script type="module">
+        import { LeafletLoader } from "{% static 'js/maps/leaflet.js' %}";
+        import { getDarkTileLayer } from "{% static 'js/maps/map_utils.js' %}";
+        import { createCustomIcon } from "{% static 'js/maps/marker_manager.js' %}";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const payloadElement = document.getElementById('overview-map-payload');
+            if (!payloadElement) return;
+
+            let destinations;
+            try {
+                destinations = JSON.parse(payloadElement.textContent);
+            } catch (e) {
+                console.error("Failed to parse overview map payload", e);
+                return;
+            }
+
+            LeafletLoader.load().then(() => {
+                const map = L.map('overview-map', {
+                    center: [20.5937, 78.9629], // Center of India
+                    zoom: 5,
+                    zoomControl: true
+                });
+
+                getDarkTileLayer().addTo(map);
+
+                // Initialize Leaflet Marker Cluster group (Step 8)
+                const markersGroup = L.markerClusterGroup({
+                    showCoverageOnHover: false,
+                    maxClusterRadius: 40
+                });
+
+                const allLatLngs = [];
+
+                destinations.forEach(dest => {
+                    if (dest.lat && dest.lon) {
+                        const icon = createCustomIcon('destination');
+                        const marker = L.marker([dest.lat, dest.lon], { icon: icon });
+                        
+                        marker.bindPopup(`
+                            <div style="font-family: 'Poppins', sans-serif;">
+                                <strong class="text-primary d-block">${dest.name}</strong>
+                                <span class="small text-muted">${dest.city}, ${dest.state} (${dest.category})</span><br>
+                                <div class="mt-2 text-center">
+                                    <a href="${dest.detail_url}" class="btn btn-primary btn-sm px-3 py-1 rounded text-white" style="font-size: 11px;">View Details</a>
+                                </div>
+                            </div>
+                        `);
+                        
+                        markersGroup.addLayer(marker);
+                        allLatLngs.push([dest.lat, dest.lon]);
+                    }
+                });
+
+                map.addLayer(markersGroup);
+
+                // Auto-fit bounds if we have markers
+                if (allLatLngs.length > 0) {
+                    map.fitBounds(allLatLngs, { padding: [40, 40] });
+                }
+            }).catch(err => {
+                console.error("Error loading Leaflet overview map", err);
+            });
+        });
+    </script>
 
     <!-- Search & Filter Form (Airbnb Style) -->
     <form method="get" class="mb-5 glass-morphic p-4 rounded-5 shadow border" style="background: rgba(30, 41, 59, 0.6) !important; border-color: var(--border-color) !important;">
