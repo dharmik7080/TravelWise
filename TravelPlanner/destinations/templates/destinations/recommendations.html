@@ -19,7 +19,7 @@
                     <div class="col-sm-6">
                         <label for="budget" class="form-label text-uppercase fw-semibold small text-muted">Budget Level</label>
                         <div class="position-relative">
-                            <select name="budget" id="budget" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <select name="budget" id="budget" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px !important; font-size: 0.95rem;" required>
                                 <option value="" disabled {% if not form_data.budget %}selected{% endif %}>Select Budget</option>
                                 <option value="Budget" {% if form_data.budget == 'Budget' %}selected{% endif %}>Budget (Low cost)</option>
                                 <option value="Moderate" {% if form_data.budget == 'Moderate' %}selected{% endif %}>Moderate (Average cost)</option>
@@ -33,7 +33,7 @@
                     <div class="col-sm-6">
                         <label for="season" class="form-label text-uppercase fw-semibold small text-muted">Preferred Season</label>
                         <div class="position-relative">
-                            <select name="season" id="season" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <select name="season" id="season" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px !important; font-size: 0.95rem;" required>
                                 <option value="" disabled {% if not form_data.season %}selected{% endif %}>Select Season</option>
                                 <option value="Summer" {% if form_data.season == 'Summer' %}selected{% endif %}>Summer</option>
                                 <option value="Winter" {% if form_data.season == 'Winter' %}selected{% endif %}>Winter</option>
@@ -49,7 +49,7 @@
                     <div class="col-sm-6">
                         <label for="travel_type" class="form-label text-uppercase fw-semibold small text-muted">Travel Group Type</label>
                         <div class="position-relative">
-                            <select name="travel_type" id="travel_type" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <select name="travel_type" id="travel_type" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px !important; font-size: 0.95rem;" required>
                                 <option value="" disabled {% if not form_data.travel_type %}selected{% endif %}>Select Group Type</option>
                                 <option value="Solo" {% if form_data.travel_type == 'Solo' %}selected{% endif %}>Solo Traveller</option>
                                 <option value="Couple" {% if form_data.travel_type == 'Couple' %}selected{% endif %}>Couple / Honeymoon</option>
@@ -63,7 +63,7 @@
                     <div class="col-sm-3">
                         <label for="duration" class="form-label text-uppercase fw-semibold small text-muted">Duration (Days)</label>
                         <div class="position-relative">
-                            <input type="number" name="duration" id="duration" class="form-control text-white" min="1" max="30" value="{{ form_data.duration|default:5 }}" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <input type="number" name="duration" id="duration" class="form-control text-white" min="1" max="30" value="{{ form_data.duration|default:5 }}" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px !important; font-size: 0.95rem;" required>
                             <i class="fa-solid fa-calendar-days text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     <div class="col-sm-3">
                         <label for="num_travellers" class="form-label text-uppercase fw-semibold small text-muted">Travellers</label>
                         <div class="position-relative">
-                            <input type="number" name="num_travellers" id="num_travellers" class="form-control text-white" min="1" max="20" value="{{ form_data.num_travellers|default:2 }}" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;" required>
+                            <input type="number" name="num_travellers" id="num_travellers" class="form-control text-white" min="1" max="20" value="{{ form_data.num_travellers|default:2 }}" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px !important; font-size: 0.95rem;" required>
                             <i class="fa-solid fa-user text-muted position-absolute" style="left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                     <div class="col-12">
                         <label for="state" class="form-label text-uppercase fw-semibold small text-muted">Preferred State (Optional)</label>
                         <div class="position-relative">
-                            <select name="state" id="state" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px; font-size: 0.95rem;">
+                            <select name="state" id="state" class="form-select text-white" style="height: 52px; border-radius: 16px !important; background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important; padding-left: 45px !important; font-size: 0.95rem;">
                                 <option value="" {% if not form_data.state %}selected{% endif %}>Any State / Region</option>
                                 {% for st in states %}
                                     <option value="{{ st }}" {% if form_data.state == st %}selected{% endif %}>{{ st }}</option>
