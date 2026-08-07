@@ -240,7 +240,14 @@ class AIRecommendationView(generic.TemplateView):
             state=state
         )
 
-        serialized_results = [{'destination_id': dest.pk, 'score': score} for dest, score in scored_results]
+        serialized_results = [{
+            'destination_id': dest.pk,
+            'score': score,
+            'ml_score': getattr(dest, 'ml_similarity', score),
+            'pref_score': getattr(dest, 'preference_match', score),
+            'confidence': getattr(dest, 'confidence_badge', 'Good Match'),
+            'reasons': getattr(dest, 'reasons', [])
+        } for dest, score in scored_results]
 
         recommendation = AIRecommendation.objects.create(
             user=request.user if request.user.is_authenticated else None,
@@ -282,6 +289,12 @@ class AIRecommendationDetailView(generic.DetailView):
         for res in results:
             try:
                 dest = Destination.objects.get(pk=res['destination_id'])
+                # Re-inject matching parameters to Destination object for template rendering
+                dest.overall_match = res.get('score')
+                dest.ml_similarity = res.get('ml_score', res.get('score'))
+                dest.preference_match = res.get('pref_score', res.get('score'))
+                dest.confidence_badge = res.get('confidence', 'Good Match')
+                dest.reasons = res.get('reasons', [])
                 scored_results.append((dest, res['score']))
             except Destination.DoesNotExist:
                 continue

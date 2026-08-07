@@ -71,7 +71,32 @@
                                             <h4 class="fw-bold text-white mb-1">{{ dest.destination_name }}</h4>
                                             <small class="text-primary"><i class="fa-solid fa-location-dot me-1"></i>{{ dest.city }}, {{ dest.state }}</small>
                                         </div>
-                                        <span class="badge bg-primary px-3 py-1 rounded-pill small">{{ dest.category }}</span>
+                                        <div class="d-flex flex-column align-items-end gap-1">
+                                            <span class="badge bg-primary px-3 py-1 rounded-pill small">{{ dest.category }}</span>
+                                            {% if dest.confidence_badge %}
+                                                {% if dest.confidence_badge == 'Excellent Match' %}
+                                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-30 rounded-pill px-2.5 py-1 fw-bold" style="font-size: 0.72rem;">
+                                                        <i class="fa-solid fa-award me-1"></i>Excellent Match
+                                                    </span>
+                                                {% elif dest.confidence_badge == 'Highly Recommended' %}
+                                                    <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-30 rounded-pill px-2.5 py-1 fw-bold" style="font-size: 0.72rem;">
+                                                        <i class="fa-solid fa-thumbs-up me-1"></i>Highly Recommended
+                                                    </span>
+                                                {% elif dest.confidence_badge == 'Good Match' %}
+                                                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-30 rounded-pill px-2.5 py-1 fw-bold" style="font-size: 0.72rem;">
+                                                        <i class="fa-solid fa-circle-check me-1"></i>Good Match
+                                                    </span>
+                                                {% elif dest.confidence_badge == 'Possible Match' %}
+                                                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-30 rounded-pill px-2.5 py-1 fw-bold" style="font-size: 0.72rem;">
+                                                        <i class="fa-solid fa-circle-question me-1"></i>Possible Match
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-30 rounded-pill px-2.5 py-1 fw-bold" style="font-size: 0.72rem;">
+                                                        <i class="fa-solid fa-circle-exclamation me-1"></i>Low Match
+                                                    </span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
                                     </div>
                                     <p class="text-secondary small mb-3">{{ dest.description|truncatewords:25 }}</p>
                                     <div class="d-flex flex-wrap gap-2 mb-3">
@@ -79,8 +104,36 @@
                                         <span class="badge bg-info bg-opacity-10 text-info rounded-pill fw-bold"><i class="fa-regular fa-sun me-1"></i>{{ dest.best_season }}</span>
                                         <span class="badge bg-warning text-dark rounded-pill fw-bold"><i class="fa-solid fa-star me-1 text-dark"></i>{{ dest.average_rating }}</span>
                                     </div>
+
+                                    <!-- Advanced ML & Preference Breakdown Grid (Task 9) -->
+                                    <div class="row g-2 mb-3 mt-1">
+                                        <div class="col-4 text-center p-2 rounded bg-dark bg-opacity-20 border" style="border-color: rgba(255,255,255,0.05) !important;">
+                                            <span class="d-block text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Overall Match</span>
+                                            <span class="fw-extrabold text-success fs-5">{{ score }}%</span>
+                                        </div>
+                                        <div class="col-4 text-center p-2 rounded bg-dark bg-opacity-20 border" style="border-color: rgba(255,255,255,0.05) !important;">
+                                            <span class="d-block text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">ML Similarity</span>
+                                            <span class="fw-extrabold text-info fs-5">{% if dest.ml_similarity %}{{ dest.ml_similarity }}{% else %}{{ score }}{% endif %}%</span>
+                                        </div>
+                                        <div class="col-4 text-center p-2 rounded bg-dark bg-opacity-20 border" style="border-color: rgba(255,255,255,0.05) !important;">
+                                            <span class="d-block text-muted small text-uppercase fw-semibold" style="font-size: 0.65rem;">Preference Match</span>
+                                            <span class="fw-extrabold text-accent fs-5">{% if dest.preference_match %}{{ dest.preference_match }}{% else %}{{ score }}{% endif %}%</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Explainable AI Reasons List (Task 9) -->
+                                    {% if dest.reasons %}
+                                    <div class="mt-3 p-3 rounded-4" style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color);">
+                                        <h6 class="text-white fw-bold mb-2" style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;"><i class="fa-solid fa-lightbulb text-warning me-1"></i> Match Reasoning</h6>
+                                        <ul class="list-unstyled mb-0 small text-secondary d-flex flex-column gap-1">
+                                            {% for reason in dest.reasons %}
+                                                <li class="d-flex align-items-center"><i class="fa-solid fa-circle-check text-success me-2" style="font-size: 0.65rem;"></i>{{ reason }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endif %}
                                 </div>
-                                <div class="d-flex gap-2">
+                                <div class="d-flex gap-2 mt-4">
                                     <a href="{% url 'destinations:detail' dest.pk %}" class="btn btn-outline-primary flex-grow-1 py-2 fw-semibold">View Destination</a>
                                     <a href="{% url 'trips:plan' %}?destination={{ dest.pk }}" class="btn btn-primary flex-grow-1 py-2 fw-bold">Plan Trip</a>
                                 </div>
