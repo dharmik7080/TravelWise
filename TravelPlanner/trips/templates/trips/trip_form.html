@@ -354,8 +354,58 @@
                                 const container = document.getElementById('itinerary-days-container');
                                 container.innerHTML = '';
 
+                                function formatItineraryText(text) {
+                                    if (!text) return { description: '', stats: null, why: null };
+                                    let description = text;
+                                    let stats = null;
+                                    let why = null;
+                                    
+                                    const paceMatch = text.match(/\[Pace:\s*([^\]]+)\]/);
+                                    if (paceMatch) {
+                                        description = description.replace(paceMatch[0], '');
+                                        const statsStr = paceMatch[1];
+                                        stats = statsStr.split('•').map(s => s.trim());
+                                    }
+                                    
+                                    const whyMatch = text.match(/\[Why:\s*([^\]]+)\]/);
+                                    if (whyMatch) {
+                                        description = description.replace(whyMatch[0], '');
+                                        const whyStr = whyMatch[1];
+                                        why = whyStr.split('•').map(w => w.trim()).filter(w => w.length > 0);
+                                    }
+                                    
+                                    return {
+                                        description: description.trim(),
+                                        stats: stats,
+                                        why: why
+                                    };
+                                }
+
                                 Object.keys(data.itinerary).forEach(day => {
                                     const slots = data.itinerary[day];
+                                    
+                                    // Format evening slot content
+                                    const eveningParsed = formatItineraryText(slots.evening);
+                                    let eveningHtml = `<p class="text-white small mb-0">${eveningParsed.description || 'Relax & enjoy views'}</p>`;
+                                    
+                                    if (eveningParsed.stats) {
+                                        eveningHtml += `
+                                            <div class="mt-2 pt-2 border-top border-secondary border-opacity-30 d-flex flex-wrap gap-1">
+                                                ${eveningParsed.stats.map(s => `<span class="badge bg-primary bg-opacity-10 text-primary small fw-semibold" style="font-size: 10px;">${s}</span>`).join('')}
+                                            </div>
+                                        `;
+                                    }
+                                    if (eveningParsed.why && eveningParsed.why.length > 0) {
+                                        eveningHtml += `
+                                            <div class="mt-2 border-top border-secondary border-opacity-10 pt-2">
+                                                <small class="text-muted d-block fw-bold mb-1" style="font-size: 10px;">Plan Insights:</small>
+                                                <ul class="list-unstyled mb-0" style="padding-left: 0;">
+                                                    ${eveningParsed.why.map(w => `<li class="text-secondary small mb-0.5" style="font-size: 11px;"><i class="fa-solid fa-circle-info text-info me-1" style="font-size: 9px;"></i>${w.replace(/^✔\s*/, '')}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                        `;
+                                    }
+
                                     const dayCard = document.createElement('div');
                                     dayCard.className = 'card border rounded-3 p-3 mb-2';
                                     dayCard.style = 'background-color: var(--surface) !important; border-color: var(--border-color) !important;';
@@ -366,13 +416,13 @@
                                                 <span class="text-muted small d-block mb-1"><i class="fa-solid fa-sun text-warning me-1"></i> Morning</span>
                                                 <p class="text-white small mb-0">${slots.morning || 'Explore scenic spots'}</p>
                                             </div>
-                                            <div class="col-md-4 border-start-md">
+                                            <div class="col-md-4 border-start-md" style="border-left-color: var(--border-color) !important;">
                                                 <span class="text-muted small d-block mb-1"><i class="fa-solid fa-cloud-sun text-primary me-1"></i> Afternoon</span>
                                                 <p class="text-white small mb-0">${slots.afternoon || 'Visit local markets'}</p>
                                             </div>
-                                            <div class="col-md-4 border-start-md">
+                                            <div class="col-md-4 border-start-md" style="border-left-color: var(--border-color) !important;">
                                                 <span class="text-muted small d-block mb-1"><i class="fa-solid fa-moon text-secondary me-1"></i> Evening</span>
-                                                <p class="text-white small mb-0">${slots.evening || 'Relax & enjoy views'}</p>
+                                                ${eveningHtml}
                                             </div>
                                         </div>
                                     `;

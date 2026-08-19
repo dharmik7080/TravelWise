@@ -231,40 +231,99 @@
                     <div class="row g-3 mb-4">
                         {% for day in trip.itinerary_days.all %}
                         <div class="col-12">
-                            <div class="card border shadow-sm rounded-3 overflow-hidden">
-                                <div class="card-header bg-light py-2.5 px-3 border-bottom">
-                                    <h6 class="fw-bold text-dark m-0">Day {{ day.day_number }}</h6>
+                            <div class="card border shadow-sm rounded-4 overflow-hidden" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
+                                <div class="card-header py-3 px-4 border-bottom" style="background-color: var(--surface-secondary) !important; border-color: var(--border-color) !important;">
+                                    <h6 class="fw-bold text-white m-0">Day {{ day.day_number }}</h6>
                                 </div>
-                                <div class="card-body p-3">
-                                    <div class="row g-2">
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
                                         <div class="col-md-4">
-                                            <span class="text-muted small d-block mb-1"><i class="fa-solid fa-sun text-warning me-1"></i> Morning</span>
-                                            <p class="text-dark small mb-0">{{ day.morning|default:"Relaxing morning" }}</p>
+                                            <span class="text-muted small d-block mb-1.5"><i class="fa-solid fa-sun text-warning me-1"></i> Morning</span>
+                                            <p class="text-white small mb-0">{{ day.morning|default:"Relaxing morning" }}</p>
                                         </div>
-                                        <div class="col-md-4 border-start-md">
-                                            <span class="text-muted small d-block mb-1"><i class="fa-solid fa-cloud-sun text-primary me-1"></i> Afternoon</span>
-                                            <p class="text-dark small mb-0">{{ day.afternoon|default:"Lunch & local sightseeing" }}</p>
+                                        <div class="col-md-4 border-start-md" style="border-left-color: var(--border-color) !important;">
+                                            <span class="text-muted small d-block mb-1.5"><i class="fa-solid fa-cloud-sun text-primary me-1"></i> Afternoon</span>
+                                            <p class="text-white small mb-0">{{ day.afternoon|default:"Lunch & local sightseeing" }}</p>
                                         </div>
-                                        <div class="col-md-4 border-start-md">
-                                            <span class="text-muted small d-block mb-1"><i class="fa-solid fa-moon text-secondary me-1"></i> Evening</span>
-                                            <p class="text-dark small mb-0">{{ day.evening|default:"Dinner & leisure" }}</p>
+                                        <div class="col-md-4 border-start-md itinerary-evening-slot" style="border-left-color: var(--border-color) !important;">
+                                            <span class="text-muted small d-block mb-1.5"><i class="fa-solid fa-moon text-secondary me-1"></i> Evening</span>
+                                            <p class="text-white small mb-0 raw-evening-text">{{ day.evening|default:"Dinner & leisure" }}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {% empty %}
-                        <div class="col-12 text-center py-4 bg-light rounded-3 border">
+                        <div class="col-12 text-center py-4 bg-dark bg-opacity-20 rounded-3 border" style="border-color: var(--border-color) !important;">
                             <i class="fa-solid fa-route fa-2x text-muted opacity-50 mb-2"></i>
-                            <p class="text-muted small mb-0">No daily itinerary generated for this trip yet.</p>
+                            <p class="text-secondary small mb-0">No daily itinerary generated for this trip yet.</p>
                         </div>
                         {% endfor %}
                     </div>
 
                     {% if trip.notes %}
-                    <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">Planner Notes</h5>
-                    <p class="text-muted leading-relaxed" style="white-space: pre-line;">{{ trip.notes }}</p>
+                    <h5 class="fw-bold text-white mb-3 border-bottom pb-2" style="border-color: var(--border-color) !important;">Planner Notes</h5>
+                    <p class="text-secondary leading-relaxed small" style="white-space: pre-line;">{{ trip.notes }}</p>
                     {% endif %}
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            function formatItineraryText(text) {
+                                if (!text) return { description: '', stats: null, why: null };
+                                let description = text;
+                                let stats = null;
+                                let why = null;
+                                
+                                const paceMatch = text.match(/\[Pace:\s*([^\]]+)\]/);
+                                if (paceMatch) {
+                                    description = description.replace(paceMatch[0], '');
+                                    const statsStr = paceMatch[1];
+                                    stats = statsStr.split('•').map(s => s.trim());
+                                }
+                                
+                                const whyMatch = text.match(/\[Why:\s*([^\]]+)\]/);
+                                if (whyMatch) {
+                                    description = description.replace(whyMatch[0], '');
+                                    const whyStr = whyMatch[1];
+                                    why = whyStr.split('•').map(w => w.trim()).filter(w => w.length > 0);
+                                }
+                                
+                                return {
+                                    description: description.trim(),
+                                    stats: stats,
+                                    why: why
+                                };
+                            }
+
+                            document.querySelectorAll('.itinerary-evening-slot').forEach(slot => {
+                                const rawEl = slot.querySelector('.raw-evening-text');
+                                if (!rawEl) return;
+                                
+                                const parsed = formatItineraryText(rawEl.textContent);
+                                let html = `<p class="text-white small mb-0">${parsed.description || 'Dinner & leisure'}</p>`;
+                                
+                                if (parsed.stats) {
+                                    html += `
+                                        <div class="mt-2 pt-2 border-top border-secondary border-opacity-30 d-flex flex-wrap gap-1">
+                                            ${parsed.stats.map(s => `<span class="badge bg-primary bg-opacity-10 text-primary small fw-semibold" style="font-size: 10px;">${s}</span>`).join('')}
+                                        </div>
+                                    `;
+                                }
+                                if (parsed.why && parsed.why.length > 0) {
+                                    html += `
+                                        <div class="mt-2 border-top border-secondary border-opacity-10 pt-2">
+                                            <small class="text-muted d-block fw-bold mb-1" style="font-size: 10px;">Plan Insights:</small>
+                                            <ul class="list-unstyled mb-0" style="padding-left: 0;">
+                                                ${parsed.why.map(w => `<li class="text-secondary small mb-0.5" style="font-size: 11px;"><i class="fa-solid fa-circle-info text-info me-1" style="font-size: 9px;"></i>${w.replace(/^✔\s*/, '')}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    `;
+                                }
+                                
+                                rawEl.outerHTML = html;
+                            });
+                        });
+                    </script>
 
                     <div class="d-flex flex-wrap gap-2 mt-5 pt-3 border-top justify-content-between">
                         <a href="{% url 'trips:index' %}" class="btn btn-outline-secondary px-4 py-2"><i class="fa-solid fa-arrow-left me-2"></i>Back to My Trips</a>
