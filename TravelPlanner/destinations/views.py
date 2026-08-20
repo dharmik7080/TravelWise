@@ -257,8 +257,8 @@ class HomeView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Query top 6 highest-rated featured destinations dynamically
-        context['featured_destinations'] = Destination.objects.all().order_by('-average_rating')[:6]
+        # Query top 3 highest-rated featured destinations dynamically
+        context['featured_destinations'] = Destination.objects.all().order_by('-average_rating')[:3]
         
         # Query first package with an image for the homepage featured package card
         from packages.models import Package

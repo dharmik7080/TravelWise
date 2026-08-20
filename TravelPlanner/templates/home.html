@@ -325,6 +325,20 @@
                 </div>
             </div>
         </div>
+
+        <!-- Subtle Technology Showcase Badges (Phase 3 consolidation) -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-8 text-center">
+                <small class="text-secondary text-uppercase tracking-wider fw-bold d-block mb-3" style="font-size: 0.72rem; opacity: 0.65; letter-spacing: 0.05em;">Powered By Production-Grade Technologies</small>
+                <div class="d-flex flex-wrap justify-content-center gap-3 align-items-center opacity-75">
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-brands fa-python text-primary me-2"></i>Python</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-cubes text-info me-2"></i>Django</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-brain text-success me-2"></i>Scikit-Learn</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-brands fa-bootstrap me-2" style="color: #7952b3;"></i>Bootstrap 5</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-cloud-sun text-warning me-2"></i>OpenWeather API</span>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -336,7 +350,6 @@
         <p class="section-subtitle col-md-6 mx-auto">Get your customized Indian holiday planning scheduled in just four quick steps.</p>
         
         <div class="process-wrapper mt-5">
-            <!-- Connecting line for desktop screens -->
             <div class="process-line d-none d-lg-block"></div>
             
             <div class="row g-4 justify-content-center">
@@ -359,7 +372,7 @@
                             <i class="fa-solid fa-wand-magic-sparkles fa-2x"></i>
                         </div>
                         <h5 class="fw-bold text-white mb-2">Get AI Suggestions</h5>
-                        <p class="text-secondary small mb-0">Fill your preferences and let our AI score matching destinations instantly.</p>
+                        <p class="text-secondary small mb-0">Fill your preferences and let our AI recommend matching destinations.</p>
                     </div>
                 </div>
                 <!-- Step 3 -->
@@ -389,306 +402,80 @@
     </div>
 </section>
 
-<!-- TASK 2: WHY CHOOSE TRAVELWISE FEATURE SECTION -->
+<!-- CONSOLIDATED VALUE PROPOSITION & COMPARISON -->
 <section class="py-80 bg-sec-3 border-bottom">
-    <div class="container text-center">
-        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">Value Proposition</span>
-        <h2 class="section-title">Why Choose TravelWise</h2>
-        <p class="section-subtitle col-md-6 mx-auto">Equipped with state-of-the-art tools to build, manage, and predict your travel plans.</p>
-
-        <div class="row g-4 mt-2">
-            <!-- Feature 1 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="feature-icon-wrapper-premium bg-primary bg-opacity-10 text-primary">
-                            <i class="fa-solid fa-wand-magic-sparkles fa-2x"></i>
-                        </div>
-                        <h5 class="fw-bold text-white mb-2">AI Destination Matching</h5>
-                        <p class="text-secondary small mb-4">Our scoring algorithm evaluates states, season matches, and budgets to recommend your ideal getaway locations.</p>
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <!-- Left Column: Traditional vs Intelligent Comparison -->
+            <div class="col-lg-6 text-start">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">The TravelWise Edge</span>
+                <h2 class="section-title text-white mb-3">Intelligent vs. Traditional Planning</h2>
+                <p class="text-secondary small mb-4">See how TravelWise uses modern algorithms to automate and optimize your travel logs compared to manual planning.</p>
+                
+                <div class="d-flex flex-column gap-3">
+                    <div class="p-3 rounded-3 compare-card-wise border border-opacity-10">
+                        <h6 class="fw-bold text-success mb-2"><i class="fa-solid fa-circle-check me-2"></i>The TravelWise Way</h6>
+                        <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small text-secondary">
+                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>AI Recommendations</strong> score spots based on semantic matches.</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Budget Predictors</strong> forecast package cost metrics instantly.</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Smart Itinerary</strong> schedules sights, avoiding monsoon & peak heat.</li>
+                        </ul>
                     </div>
-                    <a href="{% url 'destinations:recommendations' %}" class="btn btn-sm btn-outline-primary align-self-start py-2">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                </div>
-            </div>
-            <!-- Feature 2 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="feature-icon-wrapper-premium bg-success bg-opacity-10 text-success">
-                            <i class="fa-solid fa-chart-line fa-2x"></i>
-                        </div>
-                        <h5 class="fw-bold text-white mb-2">Budget Prediction</h5>
-                        <p class="text-secondary small mb-4">Utilizes linear regression machine learning models to forecast lodging, food, and transport costs based on travelers and packages.</p>
+                    
+                    <div class="p-3 rounded-3 compare-card-traditional border border-opacity-10">
+                        <h6 class="fw-bold text-danger mb-2"><i class="fa-solid fa-circle-xmark me-2"></i>Traditional Planning</h6>
+                        <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small text-secondary">
+                            <li><i class="fa-solid fa-xmark text-danger me-2"></i>Scouring multiple travel blogs manually.</li>
+                            <li><i class="fa-solid fa-xmark text-danger me-2"></i>Writing complex budget spreadsheets.</li>
+                            <li><i class="fa-solid fa-xmark text-danger me-2"></i>Drafting manual paper schedules.</li>
+                        </ul>
                     </div>
-                    <a href="{% url 'trips:plan' %}" class="btn btn-sm btn-outline-primary align-self-start py-2">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
-            <!-- Feature 3 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="feature-icon-wrapper-premium bg-warning bg-opacity-10 text-warning">
-                            <i class="fa-solid fa-route fa-2x"></i>
+
+            <!-- Right Column: Interactive SaaS Value Propositions Cards -->
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="card p-3 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="fa-solid fa-wand-magic-sparkles text-primary mb-2 fs-5"></i>
+                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">AI Suggestions</h6>
+                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Matches target filters and state logs to recommend locations.</p>
+                            </div>
+                            <a href="{% url 'destinations:recommendations' %}" class="small text-primary fw-bold text-decoration-none">Try AI Suggestions <i class="fa-solid fa-arrow-right ms-1"></i></a>
                         </div>
-                        <h5 class="fw-bold text-white mb-2">Smart Itinerary Generator</h5>
-                        <p class="text-secondary small mb-4">Creates fully customized multi-day itineraries, distributing local sightseeing activities evenly using round-robin logic.</p>
                     </div>
-                    <a href="{% url 'packages:list' %}" class="btn btn-sm btn-outline-primary align-self-start py-2">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                </div>
-            </div>
-            <!-- Feature 4 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="feature-icon-wrapper-premium bg-info bg-opacity-10 text-info">
-                            <i class="fa-solid fa-cloud-sun fa-2x"></i>
+                    <div class="col-sm-6">
+                        <div class="card p-3 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="fa-solid fa-chart-line text-success mb-2 fs-5"></i>
+                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">Budget Predictor</h6>
+                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Estimates travel package rates using linear regression algorithms.</p>
+                            </div>
+                            <a href="{% url 'trips:plan' %}" class="small text-primary fw-bold text-decoration-none">Predict Budget <i class="fa-solid fa-arrow-right ms-1"></i></a>
                         </div>
-                        <h5 class="fw-bold text-white mb-2">Live Weather</h5>
-                        <p class="text-secondary small mb-4">Fetches real-time temperature, humidity, wind conditions, and visibility forecasts directly from open-source weather interfaces.</p>
                     </div>
-                    <a href="{% url 'destinations:list' %}" class="btn btn-sm btn-outline-primary align-self-start py-2">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                </div>
-            </div>
-            <!-- Feature 5 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="feature-icon-wrapper-premium bg-danger bg-opacity-10 text-danger">
-                            <i class="fa-solid fa-table-columns fa-2x"></i>
+                    <div class="col-sm-6">
+                        <div class="card p-3 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="fa-solid fa-route text-warning mb-2 fs-5"></i>
+                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">Smart Itineraries</h6>
+                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Creates time-aware schedules clustered by category and geography.</p>
+                            </div>
+                            <a href="{% url 'packages:list' %}" class="small text-primary fw-bold text-decoration-none">Explore Packages <i class="fa-solid fa-arrow-right ms-1"></i></a>
                         </div>
-                        <h5 class="fw-bold text-white mb-2">Personal Dashboard</h5>
-                        <p class="text-secondary small mb-4">Your command center to track upcoming trip statuses, review past journals, inspect spending analytics, and read AI suggestions.</p>
                     </div>
-                    <a href="{% url 'dashboard:index' %}" class="btn btn-sm btn-outline-primary align-self-start py-2">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                </div>
-            </div>
-            <!-- Feature 6 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card p-4 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="feature-icon-wrapper-premium bg-secondary bg-opacity-10 text-secondary" style="color: #ec4899 !important; background: rgba(236,72,153,0.1) !important;">
-                            <i class="fa-solid fa-heart fa-2x"></i>
+                    <div class="col-sm-6">
+                        <div class="card p-3 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="fa-solid fa-cloud-sun text-info mb-2 fs-5"></i>
+                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">Live Weather</h6>
+                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Fetches real-time temperature and climate parameters instantly.</p>
+                            </div>
+                            <a href="{% url 'destinations:list' %}" class="small text-primary fw-bold text-decoration-none">View Catalog <i class="fa-solid fa-arrow-right ms-1"></i></a>
                         </div>
-                        <h5 class="fw-bold text-white mb-2">Wishlist</h5>
-                        <p class="text-secondary small mb-4">Bookmark destinations you wish to explore and save them to your profile with one-click toggles.</p>
                     </div>
-                    <a href="{% url 'destinations:list' %}" class="btn btn-sm btn-outline-primary align-self-start py-2">Learn More <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TASK 3: HOW OUR AI WORKS PIPELINE -->
-<section class="py-80 bg-sec-1 border-bottom">
-    <div class="container text-center">
-        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">Technology Showcase</span>
-        <h2 class="section-title">How Our AI Works</h2>
-        <p class="section-subtitle col-md-6 mx-auto mb-5">Visualizing the logic engine running behind personalized destination scoring.</p>
-        
-        <div class="row g-3 justify-content-center align-items-center">
-            <!-- Block 1 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card">
-                    <i class="fa-solid fa-wallet fa-xl text-primary mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">1. Budget</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Sets cost brackets</small>
-                </div>
-            </div>
-            <div class="col-1 d-none d-lg-block text-muted"><i class="fa-solid fa-arrow-right"></i></div>
-            
-            <!-- Block 2 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card">
-                    <i class="fa-solid fa-cloud-sun fa-xl text-info mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">2. Season</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Validates seasonal weather</small>
-                </div>
-            </div>
-            <div class="col-1 d-none d-lg-block text-muted"><i class="fa-solid fa-arrow-right"></i></div>
-
-            <!-- Block 3 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card">
-                    <i class="fa-solid fa-user-group fa-xl text-success mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">3. Travel Type</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Aligns user persona</small>
-                </div>
-            </div>
-            <div class="col-1 d-none d-lg-block text-muted"><i class="fa-solid fa-arrow-right"></i></div>
-
-            <!-- Block 4 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card">
-                    <i class="fa-solid fa-hourglass-half fa-xl text-warning mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">4. Trip Duration</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Optimizes target days</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-2 justify-content-center align-items-center mt-3 d-none d-lg-flex">
-            <div class="col-1 text-muted"><i class="fa-solid fa-arrow-down"></i></div>
-        </div>
-
-        <div class="row g-3 justify-content-center align-items-center mt-2">
-            <!-- Block 5 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card">
-                    <i class="fa-solid fa-tags fa-xl text-danger mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">5. Features</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Matches catalog tags</small>
-                </div>
-            </div>
-            <div class="col-1 d-none d-lg-block text-muted"><i class="fa-solid fa-arrow-right"></i></div>
-
-            <!-- Block 6 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card">
-                    <i class="fa-solid fa-square-poll-vertical fa-xl text-primary mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">6. Scoring</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Weighted percentage scoring</small>
-                </div>
-            </div>
-            <div class="col-1 d-none d-lg-block text-muted"><i class="fa-solid fa-arrow-right"></i></div>
-
-            <!-- Block 7 -->
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="p-3 ai-step-card" style="border-color: rgba(56, 189, 248, 0.4) !important;">
-                    <i class="fa-solid fa-wand-magic-sparkles fa-xl text-accent mb-2"></i>
-                    <h6 class="fw-bold text-white mb-1" style="font-size: 0.85rem;">7. Top Matches</h6>
-                    <small class="text-secondary" style="font-size: 0.72rem;">Renders personalized lists</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TASK 5: WHY TRAVELWISE COMPARISON SECTION -->
-<section class="py-80 bg-sec-3 border-bottom">
-    <div class="container text-center">
-        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">SaaS Comparison</span>
-        <h2 class="section-title">Traditional vs. Intelligent Planning</h2>
-        <p class="section-subtitle col-md-6 mx-auto mb-5">See how TravelWise saves you days of manual logistics aggregation.</p>
-        
-        <div class="row g-4 justify-content-center text-start">
-            <div class="col-md-5">
-                <div class="card p-4 h-100 compare-card-traditional">
-                    <h5 class="fw-bold text-danger mb-4"><i class="fa-solid fa-circle-xmark me-2"></i>Traditional Planning</h5>
-                    <ul class="list-unstyled mb-0 d-flex flex-column gap-3 small">
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-xmark text-danger me-2 mt-1"></i>
-                            <span>Scouring <strong>multiple websites</strong> for transport, hotel prices, and sightseeing reviews.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-xmark text-danger me-2 mt-1"></i>
-                            <span>Writing <strong>manual spreadsheets</strong> to calculate budget estimations.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-xmark text-danger me-2 mt-1"></i>
-                            <span>Opening <strong>separate weather web applications</strong> to cross-check season compatibility.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-xmark text-danger me-2 mt-1"></i>
-                            <span>Assembling <strong>manual paper lists</strong> to keep track of target attractions.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="col-md-5">
-                <div class="card p-4 h-100 compare-card-wise">
-                    <h5 class="fw-bold text-success mb-4"><i class="fa-solid fa-circle-check me-2"></i>The TravelWise Way</h5>
-                    <ul class="list-unstyled mb-0 d-flex flex-column gap-3 small">
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                            <span><strong>AI Recommendations</strong> score spots mapping your target filters.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                            <span><strong>Budget Prediction</strong> algorithms estimate package cost variables instantly.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                            <span><strong>Live Weather Forecasts</strong> displayed directly inside destination spot widgets.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-check text-success me-2 mt-1"></i>
-                            <span><strong>Smart Itinerary Timelines</strong> created automatically.</span>
-                        </li>
-                        <li class="d-flex align-items-start text-secondary">
-                            <i class="fa-solid fa-check text-success me-2 mt-1 text-primary"></i>
-                            <span><strong>Everything synchronized</strong> inside one centralized, beautiful dashboard.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TASK 4: TECHNOLOGY SHOWCASE SECTION -->
-<section class="py-80 bg-sec-1 border-bottom">
-    <div class="container text-center">
-        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">Architecture</span>
-        <h2 class="section-title">Built With Modern Technologies</h2>
-        <p class="section-subtitle col-md-6 mx-auto mb-5">TravelWise runs on a robust, scalable stack combining python architectures and machine learning models.</p>
-        
-        <div class="row g-4 mt-2 justify-content-center">
-            <!-- Django -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-solid fa-cubes fa-2x"></i></div>
-                    <h6 class="fw-bold text-white mb-1">Django Framework</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Powering routes, relational models, user sessions, and templates architecture.</p>
-                </div>
-            </div>
-            <!-- Python -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-brands fa-python fa-2x"></i></div>
-                    <h6 class="fw-bold text-white mb-1">Python Language</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Providing modular structures, processing logic, and mathematical algorithms.</p>
-                </div>
-            </div>
-            <!-- Scikit-learn -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-solid fa-brain fa-2x"></i></div>
-                    <h6 class="fw-bold text-white mb-1">Scikit-learn Model</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Training Linear Regression predictors to forecast destination pricing cards.</p>
-                </div>
-            </div>
-            <!-- Bootstrap 5 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-brands fa-bootstrap fa-2x" style="color: #563d7c;"></i></div>
-                    <h6 class="fw-bold text-white mb-1">Bootstrap 5</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Enforcing responsive layouts, premium button styling, and layout flows.</p>
-                </div>
-            </div>
-            <!-- OpenWeather -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-solid fa-cloud-sun fa-2x"></i></div>
-                    <h6 class="fw-bold text-white mb-1">OpenWeather API</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Synchronizing actual atmospheric indexes, humidity, and weather conditions.</p>
-                </div>
-            </div>
-            <!-- SQLite / PostgreSQL -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-solid fa-database fa-2x"></i></div>
-                    <h6 class="fw-bold text-white mb-1">SQLite Persistence</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Managing user accounts, trip models, and destination tables cleanly.</p>
-                </div>
-            </div>
-            <!-- REST API -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card p-3 tech-card text-start h-100">
-                    <div class="text-primary mb-3"><i class="fa-solid fa-network-wired fa-2x"></i></div>
-                    <h6 class="fw-bold text-white mb-1">REST API Ready</h6>
-                    <p class="text-secondary mb-0" style="font-size: 0.76rem; line-height: 1.45;">Built to support programmatic API queries and endpoint extensions easily.</p>
                 </div>
             </div>
         </div>
@@ -918,83 +705,7 @@
     </div>
 </section>
 
-<!-- TASK 7: TESTIMONIALS SECTION -->
-<section class="py-80 bg-sec-1">
-    <div class="container text-center">
-        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">Testimonials</span>
-        <h2 class="section-title">What Our Travelers Say</h2>
-        <p class="section-subtitle col-md-6 mx-auto mb-5">Hear from people who planned their dream Indian holidays with TravelWise.</p>
-        
-        <div class="row g-4 mt-2 justify-content-center text-start">
-            <!-- Review 1 -->
-            <div class="col-md-4">
-                <div class="card p-4 rounded-4 h-100 testimonial-card d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex text-warning mb-3 gap-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-secondary small leading-relaxed italic mb-4">
-                            "The trip budget prediction was spot-on. It saved me hours of spreadsheets, and the live weather updates let us plan around local rain effortlessly!"
-                        </p>
-                    </div>
-                    <div class="d-flex align-items-center gap-3 border-top border-white border-opacity-10 pt-3">
-                        <div class="rounded-circle bg-primary bg-opacity-20 d-flex align-items-center justify-content-center text-primary" style="width: 42px; height: 42px;">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-white mb-0">Aarav Mehta</h6>
-                            <small class="text-muted">Visited: Manali</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Review 2 -->
-            <div class="col-md-4">
-                <div class="card p-4 rounded-4 h-100 testimonial-card d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex text-warning mb-3 gap-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="text-secondary small leading-relaxed italic mb-4">
-                            "The itinerary generator is pure magic. We got a perfect balance of adventure and scenic sightseeing points mapped for our couple getaway in Kerala."
-                        </p>
-                    </div>
-                    <div class="d-flex align-items-center gap-3 border-top border-white border-opacity-10 pt-3">
-                        <div class="rounded-circle bg-primary bg-opacity-20 d-flex align-items-center justify-content-center text-primary" style="width: 42px; height: 42px;">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-white mb-0">Sneha Iyer</h6>
-                            <small class="text-muted">Visited: Munnar</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Review 3 -->
-            <div class="col-md-4">
-                <div class="card p-4 rounded-4 h-100 testimonial-card d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex text-warning mb-3 gap-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                        </div>
-                        <p class="text-secondary small leading-relaxed italic mb-4">
-                            "TravelWise has completely transformed how I explore India. The AI suggestions scored exactly what my family loved. Highly recommended!"
-                        </p>
-                    </div>
-                    <div class="d-flex align-items-center gap-3 border-top border-white border-opacity-10 pt-3">
-                        <div class="rounded-circle bg-primary bg-opacity-20 d-flex align-items-center justify-content-center text-primary" style="width: 42px; height: 42px;">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold text-white mb-0">Rohan Sharma</h6>
-                            <small class="text-muted">Visited: Udaipur</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 {% block extra_js %}
 <script>
