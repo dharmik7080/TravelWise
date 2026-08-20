@@ -325,20 +325,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Subtle Technology Showcase Badges (Phase 3 consolidation) -->
-        <div class="row justify-content-center mt-5">
-            <div class="col-lg-8 text-center">
-                <small class="text-secondary text-uppercase tracking-wider fw-bold d-block mb-3" style="font-size: 0.72rem; opacity: 0.65; letter-spacing: 0.05em;">Powered By Production-Grade Technologies</small>
-                <div class="d-flex flex-wrap justify-content-center gap-3 align-items-center opacity-75">
-                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-brands fa-python text-primary me-2"></i>Python</span>
-                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-cubes text-info me-2"></i>Django</span>
-                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-brain text-success me-2"></i>Scikit-Learn</span>
-                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-brands fa-bootstrap me-2" style="color: #7952b3;"></i>Bootstrap 5</span>
-                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-cloud-sun text-warning me-2"></i>OpenWeather API</span>
-                </div>
-            </div>
-        </div>
     </div>
 </header>
 
@@ -700,6 +686,19 @@
                     <span class="stat-num d-block mb-1" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Live</span>
                     <span class="text-secondary small fw-semibold">Weather & AI Powered</span>
                 </div>
+        </div>
+
+        <!-- Subtle Technology Showcase Badges -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-8 text-center border-top border-white border-opacity-10 pt-4">
+                <small class="text-secondary text-uppercase tracking-wider fw-bold d-block mb-3" style="font-size: 0.72rem; opacity: 0.65; letter-spacing: 0.05em;">Powered By Production-Grade Technologies</small>
+                <div class="d-flex flex-wrap justify-content-center gap-3 align-items-center opacity-75">
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-brands fa-python text-primary me-2"></i>Python</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-cubes text-info me-2"></i>Django</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-brain text-success me-2"></i>Scikit-Learn</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-brands fa-bootstrap me-2" style="color: #7952b3;"></i>Bootstrap 5</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-white border border-secondary border-opacity-20 px-3 py-2 rounded-pill" style="font-size: 0.75rem;"><i class="fa-solid fa-cloud-sun text-warning me-2"></i>OpenWeather API</span>
+                </div>
             </div>
         </div>
     </div>
@@ -796,7 +795,7 @@
                     observer.unobserve(target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.15 });
 
         document.querySelectorAll('.animate-counter').forEach(counter => {
             observer.observe(counter);
