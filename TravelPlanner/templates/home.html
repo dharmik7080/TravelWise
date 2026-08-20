@@ -73,6 +73,14 @@
         box-shadow: none !important;
     }
 
+    select.search-input-field {
+        padding-right: 20px !important;
+        appearance: none;
+        -webkit-appearance: none;
+        background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23475569' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") no-repeat right center !important;
+        background-size: 12px !important;
+    }
+
     .search-input-field::placeholder {
         color: #94a3b8 !important;
     }
@@ -295,7 +303,7 @@
                 <div class="card search-container-opaque border-0 shadow-lg">
                     <form action="{% url 'destinations:list' %}" method="get" class="row g-2 align-items-center text-start">
                         <!-- Segment 1: Destination -->
-                        <div class="col-md-5 ps-4">
+                        <div class="col-md-4 ps-4">
                             <span class="search-label">Destination</span>
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-location-dot text-primary me-2"></i>
@@ -313,7 +321,7 @@
                         </div>
 
                         <!-- Segment 3: Travelers -->
-                        <div class="col-md-2 border-start border-2 border-slate d-none d-md-block ps-4">
+                        <div class="col-md-3 border-start border-2 border-slate d-none d-md-block ps-4">
                             <span class="search-label">Travellers</span>
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-user-group text-muted me-2"></i>
