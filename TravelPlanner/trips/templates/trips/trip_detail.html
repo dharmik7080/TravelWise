@@ -37,6 +37,21 @@
                         <div class="text-end">
                             <span class="badge bg-success px-3 py-2 rounded-pill fs-6 fw-bold">₹{{ trip.budget|intcomma }}</span>
                             <small class="text-muted d-block mt-1">Total Budget</small>
+                            <div class="mt-2 d-flex flex-column align-items-end gap-1">
+                                <a href="{% url 'trips:budget' trip.pk %}" class="btn btn-sm btn-outline-warning px-3">
+                                    <i class="fa-solid fa-chart-pie me-1"></i>Budget Breakdown
+                                </a>
+                                <button id="share-toggle-btn" onclick="toggleShare({{ trip.pk }})" class="btn btn-sm {% if trip.is_public %}btn-success{% else %}btn-outline-secondary{% endif %} px-3">
+                                    <i class="fa-solid {% if trip.is_public %}fa-globe{% else %}fa-lock{% endif %} me-1"></i>
+                                    <span id="share-label">{% if trip.is_public %}Public{% else %}Private{% endif %}</span>
+                                </button>
+                                <div id="share-link-block" {% if not trip.is_public %}style="display:none;"{% endif %}>
+                                    {% if trip.is_public %}
+                                    <input type="text" id="share-url-input" value="{{ request.scheme }}://{{ request.get_host }}/trips/shared/{{ trip.share_token }}/" class="form-control form-control-sm mt-1" readonly style="font-size:0.72rem;max-width:200px;">
+                                    <button class="btn btn-link btn-sm text-primary p-0" onclick="navigator.clipboard.writeText(document.getElementById('share-url-input').value)"><i class="fa-regular fa-copy me-1"></i>Copy</button>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -480,6 +495,38 @@
             }
         });
     });
+
+    /* ── Share toggle (Screen 11) ── */
+    function toggleShare(tripId) {
+        fetch('/trips/' + tripId + '/share/toggle/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')
+                    ? document.querySelector('[name=csrfmiddlewaretoken]').value
+                    : ''
+            }
+        }).then(r => r.json()).then(data => {
+            const btn = document.getElementById('share-toggle-btn');
+            const label = document.getElementById('share-label');
+            const block = document.getElementById('share-link-block');
+            if (data.is_public) {
+                btn.className = 'btn btn-sm btn-success px-3';
+                btn.querySelector('i').className = 'fa-solid fa-globe me-1';
+                label.textContent = 'Public';
+                block.style.display = 'block';
+                block.innerHTML = '<input type="text" value="' + data.share_url
+                    + '" class="form-control form-control-sm mt-1" readonly style="font-size:0.72rem;max-width:200px;">'
+                    + '<button class="btn btn-link btn-sm text-primary p-0" onclick="navigator.clipboard.writeText(\''
+                    + data.share_url + '\')"><i class="fa-regular fa-copy me-1"></i>Copy</button>';
+            } else {
+                btn.className = 'btn btn-sm btn-outline-secondary px-3';
+                btn.querySelector('i').className = 'fa-solid fa-lock me-1';
+                label.textContent = 'Private';
+                block.style.display = 'none';
+                block.innerHTML = '';
+            }
+        });
+    }
 </script>
 {% endblock %}
 

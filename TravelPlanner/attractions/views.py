@@ -35,16 +35,36 @@ class AttractionListView(generic.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
+
         # 1. Search Query
         query = self.request.GET.get('q', '').strip()
         if query:
             queryset = queryset.filter(attraction_name__icontains=query)
-            
+
         # 2. Dynamic Filtering
         destination_id = self.request.GET.get('destination', '').strip()
         category = self.request.GET.get('category', '').strip()
         entry_type = self.request.GET.get('entry_type', '').strip()
+
+        # 3. Fee range filter (Screen 8)
+        fee = self.request.GET.get('fee', '').strip()
+        if fee == 'free':
+            queryset = queryset.filter(entry_fee=0)
+        elif fee == 'cheap':
+            queryset = queryset.filter(entry_fee__gt=0, entry_fee__lte=200)
+        elif fee == 'moderate':
+            queryset = queryset.filter(entry_fee__gt=200, entry_fee__lte=500)
+        elif fee == 'expensive':
+            queryset = queryset.filter(entry_fee__gt=500)
+
+        # 4. Duration filter (Screen 8)
+        duration = self.request.GET.get('duration', '').strip()
+        if duration == 'short':
+            queryset = queryset.filter(average_visit_time__lt=60)
+        elif duration == 'medium':
+            queryset = queryset.filter(average_visit_time__gte=60, average_visit_time__lte=120)
+        elif duration == 'long':
+            queryset = queryset.filter(average_visit_time__gt=120)
 
         if destination_id:
             queryset = queryset.filter(destination_id=destination_id)
@@ -62,7 +82,7 @@ class AttractionListView(generic.ListView):
         # Dynamic selections lookup options list
         context['destinations_list'] = Destination.objects.all().order_by('destination_name')
         context['categories'] = sorted(list(Attraction.objects.values_list('category', flat=True).distinct().exclude(category='')))
-        
+
         # Build clean query parameters mapping dict
         params = self.request.GET.copy()
         if 'page' in params:
@@ -73,6 +93,9 @@ class AttractionListView(generic.ListView):
                 del params[key]
         context['query_params'] = params.urlencode()
         context['q'] = self.request.GET.get('q', '').strip()
+        # Pass current filter values back for selected state in dropdowns
+        context['fee'] = self.request.GET.get('fee', '').strip()
+        context['duration'] = self.request.GET.get('duration', '').strip()
         return context
 
 

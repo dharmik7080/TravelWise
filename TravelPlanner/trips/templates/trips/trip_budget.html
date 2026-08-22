@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Budget Breakdown — {{ trip.trip_name }} | GlobeTrotter{% endblock %}
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <a href="{% url 'trips:detail' trip.pk %}" class="btn btn-outline-secondary btn-sm mb-2"><i class="fa-solid fa-arrow-left me-1"></i>Back to Trip</a>
+            <h1 class="fw-bold text-white mb-1"><i class="fa-solid fa-chart-pie text-warning me-2"></i>Budget Breakdown</h1>
+            <p class="text-secondary mb-0">{{ trip.trip_name }} &mdash; {{ trip.destination.destination_name }}</p>
+        </div>
+        <div class="text-end">
+            <div class="fs-4 fw-bold text-white">&#8377;{{ trip.budget|intcomma }}</div>
+            <small class="text-muted">Planned Budget</small>
+        </div>
+    </div>
+    {% if is_overbudget %}
+    <div class="alert alert-danger d-flex align-items-center mb-4 rounded-4" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2 fs-5"></i>
+        <div>Estimated cost exceeds your planned budget by <strong>&#8377;{{ overbudget_by|floatformat:0|intcomma }}</strong>. Consider adjusting your plan.</div>
+    </div>
+    {% else %}
+    <div class="alert alert-success d-flex align-items-center mb-4 rounded-4" role="alert">
+        <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+        <div>Your estimated cost is <strong>within budget</strong>. Great planning!</div>
+    </div>
+    {% endif %}
+    <!-- Summary Stats -->
+    <div class="row g-4 mb-5">
+        <div class="col-6 col-md-3"><div class="card border-0 rounded-4 text-center p-3" style="background:rgba(13,110,253,0.12);border:1px solid rgba(13,110,253,0.3)!important;"><div class="fw-bold text-white fs-4">{{ days }}</div><div class="text-secondary small">Total Days</div></div></div>
+        <div class="col-6 col-md-3"><div class="card border-0 rounded-4 text-center p-3" style="background:rgba(25,135,84,0.12);border:1px solid rgba(25,135,84,0.3)!important;"><div class="fw-bold text-white fs-4">&#8377;{{ total_estimated|floatformat:0|intcomma }}</div><div class="text-secondary small">Estimated Cost</div></div></div>
+        <div class="col-6 col-md-3"><div class="card border-0 rounded-4 text-center p-3" style="background:rgba(255,193,7,0.12);border:1px solid rgba(255,193,7,0.3)!important;"><div class="fw-bold text-white fs-4">&#8377;{{ daily_avg|floatformat:0|intcomma }}</div><div class="text-secondary small">Daily Average</div></div></div>
+        <div class="col-6 col-md-3"><div class="card border-0 rounded-4 text-center p-3" style="{% if is_overbudget %}background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3){% else %}background:rgba(25,135,84,0.12);border:1px solid rgba(25,135,84,0.3){% endif %}!important;"><div class="fw-bold {% if is_overbudget %}text-danger{% else %}text-success{% endif %} fs-5">{% if is_overbudget %}-&#8377;{{ overbudget_by|floatformat:0|intcomma }}{% else %}On Budget ✓{% endif %}</div><div class="text-secondary small">Budget Status</div></div></div>
+    </div>
+    <!-- Charts + Table -->
+    <div class="row g-4">
+        <div class="col-lg-4"><div class="card border-0 rounded-4 p-4 h-100" style="background:#1e293b;"><h6 class="fw-bold text-white mb-4"><i class="fa-solid fa-chart-pie text-warning me-2"></i>Cost Distribution</h6><canvas id="pieChart" style="max-height:250px;"></canvas></div></div>
+        <div class="col-lg-4"><div class="card border-0 rounded-4 p-4 h-100" style="background:#1e293b;"><h6 class="fw-bold text-white mb-4"><i class="fa-solid fa-chart-bar text-primary me-2"></i>Category Comparison</h6><canvas id="barChart" style="max-height:250px;"></canvas></div></div>
+        <div class="col-lg-4">
+            <div class="card border-0 rounded-4 p-4 h-100" style="background:#1e293b;">
+                <h6 class="fw-bold text-white mb-4"><i class="fa-solid fa-list text-info me-2"></i>Category Breakdown</h6>
+                {% for cat,amount in breakdown.items %}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-secondary text-capitalize">{{ cat }}</span>
+                    <span class="fw-bold text-white">&#8377;{{ amount|floatformat:0|intcomma }}</span>
+                </div>
+                {% endfor %}
+                <hr style="border-color:#334155;">
+                <div class="d-flex justify-content-between">
+                    <span class="text-white fw-bold">Total Estimated</span>
+                    <span class="fw-bold text-warning">&#8377;{{ total_estimated|floatformat:0|intcomma }}</span>
+                </div>
+                <hr style="border-color:#334155;">
+                <div class="d-flex justify-content-between">
+                    <span class="text-secondary">Planned Budget</span>
+                    <span class="fw-semibold text-white">&#8377;{{ trip.budget|intcomma }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const bd={{ breakdown_json|safe }};
+const labels=Object.keys(bd).map(k=>k.charAt(0).toUpperCase()+k.slice(1));
+const values=Object.values(bd);
+const colors=['rgba(13,110,253,0.8)','rgba(25,135,84,0.8)','rgba(255,193,7,0.8)','rgba(13,202,240,0.8)'];
+new Chart(document.getElementById('pieChart').getContext('2d'),{type:'doughnut',data:{labels,datasets:[{data:values,backgroundColor:colors,borderColor:'#1e293b',borderWidth:2}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',padding:12}}}}});
+new Chart(document.getElementById('barChart').getContext('2d'),{type:'bar',data:{labels,datasets:[{label:'Cost (&#8377;)',data:values,backgroundColor:colors,borderRadius:6}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(255,255,255,0.05)'}},y:{ticks:{color:'#94a3b8'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true}}}});
+</script>
+{% endblock %}

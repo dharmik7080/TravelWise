@@ -84,3 +84,12 @@ class UserSetPasswordForm(SetPasswordForm):
             field.widget.attrs.update({'class': 'form-control'})
 
 
+class UserAvatarForm(forms.ModelForm):
+    """Form to upload or change user profile avatar photo."""
+    class Meta:
+        from accounts.models import UserProfile
+        model = UserProfile
+        fields = ['avatar']
+        widgets = {
+            'avatar': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
+        }

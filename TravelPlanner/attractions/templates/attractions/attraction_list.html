@@ -49,7 +49,7 @@
 
         <!-- Filters Selection Grid -->
         <div class="row g-3">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-3">
                 <label class="form-label fw-semibold text-secondary small mb-1">Destination</label>
                 <select name="destination" class="form-select border rounded-3 py-2 text-muted small">
                     <option value="">All Destinations</option>
@@ -58,8 +58,8 @@
                     {% endfor %}
                 </select>
             </div>
-            
-            <div class="col-sm-6 col-md-4">
+
+            <div class="col-sm-6 col-md-3">
                 <label class="form-label fw-semibold text-secondary small mb-1">Category</label>
                 <select name="category" class="form-select border rounded-3 py-2 text-muted small">
                     <option value="">All Categories</option>
@@ -69,12 +69,24 @@
                 </select>
             </div>
 
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-3">
                 <label class="form-label fw-semibold text-secondary small mb-1">Entry Fee</label>
-                <select name="entry_type" class="form-select border rounded-3 py-2 text-muted small">
-                    <option value="">All Entries</option>
-                    <option value="free" {% if request.GET.entry_type == 'free' %}selected{% endif %}>Free Entry</option>
-                    <option value="paid" {% if request.GET.entry_type == 'paid' %}selected{% endif %}>Paid Entry</option>
+                <select name="fee" class="form-select border rounded-3 py-2 text-muted small">
+                    <option value="" {% if not fee %}selected{% endif %}>All Fees</option>
+                    <option value="free" {% if fee == 'free' %}selected{% endif %}>Free Entry</option>
+                    <option value="cheap" {% if fee == 'cheap' %}selected{% endif %}>Cheap (₹1–₹200)</option>
+                    <option value="moderate" {% if fee == 'moderate' %}selected{% endif %}>Moderate (₹201–₹500)</option>
+                    <option value="expensive" {% if fee == 'expensive' %}selected{% endif %}>Expensive (₹500+)</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <label class="form-label fw-semibold text-secondary small mb-1">Visit Duration</label>
+                <select name="duration" class="form-select border rounded-3 py-2 text-muted small">
+                    <option value="" {% if not duration %}selected{% endif %}>Any Duration</option>
+                    <option value="short" {% if duration == 'short' %}selected{% endif %}>Short (&lt; 1 hr)</option>
+                    <option value="medium" {% if duration == 'medium' %}selected{% endif %}>Medium (1–2 hrs)</option>
+                    <option value="long" {% if duration == 'long' %}selected{% endif %}>Long (2+ hrs)</option>
                 </select>
             </div>
         </div>
@@ -113,7 +125,12 @@
                         </div>
                         <p class="text-muted small mb-0">{{ attraction.description|truncatewords:20 }}</p>
                     </div>
-                    <a href="{% url 'attractions:detail' attraction.pk %}" class="btn btn-outline-primary w-100 mt-4 py-2 fw-semibold">View Details</a>
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="{% url 'attractions:detail' attraction.pk %}" class="btn btn-outline-primary flex-grow-1 py-2 fw-semibold">View Details</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'trips:plan' %}?attraction={{ attraction.pk }}" class="btn btn-primary flex-grow-1 py-2 fw-semibold"><i class="fa-solid fa-plus me-1"></i>Add to Trip</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

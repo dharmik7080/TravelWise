@@ -84,3 +84,58 @@ class UserPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
 class UserPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
+
+from django.http import JsonResponse
+from django.views import View
+
+
+class WishlistToggleView(LoginRequiredMixin, View):
+    """
+    AJAX endpoint to add or remove a destination from the user's saved wishlist.
+    Returns JSON with the updated saved state.
+    """
+    def post(self, request, dest_pk, *args, **kwargs):
+        from destinations.models import Destination
+        from .models import UserProfile
+        try:
+            dest = Destination.objects.get(pk=dest_pk)
+        except Destination.DoesNotExist:
+            return JsonResponse({'error': 'Destination not found.'}, status=404)
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        if dest in profile.saved_destinations.all():
+            profile.saved_destinations.remove(dest)
+            saved = False
+        else:
+            profile.saved_destinations.add(dest)
+            saved = True
+        return JsonResponse({'saved': saved, 'dest_id': dest_pk})
+
+
+class DeleteAccountView(LoginRequiredMixin, View):
+    """
+    Allows users to permanently delete their own account after modal confirmation.
+    """
+    def post(self, request, *args, **kwargs):
+        from django.contrib.auth import logout
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, 'Your account has been permanently deleted.')
+        return redirect('home')
+
+
+class AvatarUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+    """
+    Allows users to upload or change their profile avatar image.
+    """
+    success_url = reverse_lazy('accounts:profile')
+    success_message = 'Profile photo updated successfully.'
+
+    def get_form_class(self):
+        from .forms import UserAvatarForm
+        return UserAvatarForm
+
+    def get_object(self, queryset=None):
+        from .models import UserProfile
+        profile, _ = UserProfile.objects.get_or_create(user=self.request.user)
+        return profile

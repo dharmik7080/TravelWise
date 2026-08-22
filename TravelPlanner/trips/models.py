@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from destinations.models import Destination
+import uuid
 
 class Trip(models.Model):
     """
@@ -33,6 +34,9 @@ class Trip(models.Model):
     description = models.TextField(blank=True, null=True)
     cover_image = models.ImageField(upload_to='trip_covers/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    # Public sharing fields
+    is_public = models.BooleanField(default=False)
+    share_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def clean(self):
         from django.core.exceptions import ValidationError

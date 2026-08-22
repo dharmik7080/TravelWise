@@ -23,7 +23,10 @@
                     <a class="nav-link {% if '/dashboard/' in request.path %}active{% endif %}" href="{% url 'dashboard:index' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/trips/' in request.path %}active{% endif %}" href="{% url 'trips:index' %}">My Trips</a>
+                    <a class="nav-link {% if '/trips/' in request.path and '/calendar/' not in request.path %}active{% endif %}" href="{% url 'trips:index' %}">My Trips</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/calendar/' in request.path %}active{% endif %}" href="{% url 'trips:calendar' %}"><i class="fa-regular fa-calendar-days me-1"></i>Calendar</a>
                 </li>
                 {% if user.is_staff %}
                 <li class="nav-item">

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}{{ trip.trip_name }} — Public Itinerary | GlobeTrotter{% endblock %}
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <!-- Banner -->
+    <div class="card border-0 rounded-4 overflow-hidden mb-4" style="background:#1e293b;">
+        {% if trip.cover_image %}<img src="{{ trip.cover_image.url }}" class="img-fluid w-100" style="max-height:320px;object-fit:cover;" alt="{{ trip.trip_name }}">
+        {% elif trip.destination.image %}<img src="{{ trip.destination.image.url }}" class="img-fluid w-100" style="max-height:320px;object-fit:cover;" alt="{{ trip.destination.destination_name }}">{% endif %}
+        <div class="card-body p-4 p-md-5">
+            <span class="badge bg-success mb-3"><i class="fa-solid fa-globe me-1"></i>Public Itinerary</span>
+            <h1 class="fw-bold text-white mb-1">{{ trip.trip_name|default:trip.destination.destination_name }}</h1>
+            <p class="text-primary fw-semibold mb-2"><i class="fa-solid fa-location-dot me-1"></i>{{ trip.destination.destination_name }}, {{ trip.destination.city }}, {{ trip.destination.state }}</p>
+            {% if trip.description %}<p class="text-secondary">{{ trip.description }}</p>{% endif %}
+            <div class="d-flex flex-wrap gap-3 mt-3">
+                <span class="badge bg-primary px-3 py-2">{{ trip.travel_type }}</span>
+                <span class="text-secondary small"><i class="fa-solid fa-calendar me-1"></i>{{ trip.start_date }} to {{ trip.end_date }}</span>
+                <span class="text-secondary small"><i class="fa-solid fa-moon me-1"></i>{{ trip.itinerary_days.count }} Days</span>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4">
+        <!-- Left: Itinerary -->
+        <div class="col-lg-8">
+            <h5 class="fw-bold text-white mb-4"><i class="fa-solid fa-map text-primary me-2"></i>Day-wise Itinerary</h5>
+            {% for day in trip.itinerary_days.all %}
+            <div class="card border-0 rounded-4 mb-3" style="background:#1e293b;">
+                <div class="px-4 py-3 border-bottom border-secondary border-opacity-25">
+                    <h6 class="fw-bold text-white mb-0"><i class="fa-solid fa-circle-dot text-primary me-2"></i>Day {{ day.day_number }}</h6>
+                </div>
+                <div class="card-body px-4 py-3">
+                    <div class="mb-3"><span class="badge bg-warning text-dark mb-1"><i class="fa-solid fa-sun me-1"></i>Morning</span><p class="text-secondary small mb-0">{{ day.morning }}</p></div>
+                    <div class="mb-3"><span class="badge bg-info text-dark mb-1"><i class="fa-solid fa-cloud-sun me-1"></i>Afternoon</span><p class="text-secondary small mb-0">{{ day.afternoon }}</p></div>
+                    <div><span class="badge bg-primary mb-1"><i class="fa-solid fa-moon me-1"></i>Evening</span><p class="text-secondary small mb-0">{{ day.evening }}</p></div>
+                </div>
+            </div>
+            {% empty %}<p class="text-secondary">No itinerary days added yet.</p>{% endfor %}
+        </div>
+        <!-- Right: Share panel -->
+        <div class="col-lg-4">
+            <div class="card border-0 rounded-4 p-4" style="background:#1e293b;position:sticky;top:80px;">
+                <h6 class="fw-bold text-white mb-4"><i class="fa-solid fa-share-nodes text-info me-2"></i>Share This Trip</h6>
+                <label class="text-secondary small mb-1">Public Link</label>
+                <div class="input-group mb-3">
+                    <input type="text" id="share-link" class="form-control form-control-sm" value="{{ share_url }}" readonly style="background:#0f172a;color:#94a3b8;border-color:#334155;">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="copyShareLink()" title="Copy link"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                <div id="copy-success" class="text-success small mb-3" style="display:none;"><i class="fa-solid fa-check me-1"></i>Link copied!</div>
+                <div class="d-grid gap-2 mb-4">
+                    <a href="https://wa.me/?text=Check+out+this+travel+itinerary:+{{ share_url }}" target="_blank" class="btn btn-success btn-sm"><i class="fa-brands fa-whatsapp me-2"></i>Share on WhatsApp</a>
+                    <a href="https://twitter.com/intent/tweet?text=Check+out+this+travel+itinerary!&url={{ share_url }}" target="_blank" class="btn btn-dark btn-sm border"><i class="fa-brands fa-x-twitter me-2"></i>Share on X</a>
+                </div>
+                <hr style="border-color:#334155;">
+                {% if can_copy %}
+                <form method="post" action="{% url 'trips:copy_trip' trip.share_token %}">{% csrf_token %}
+                    <button type="submit" class="btn btn-primary w-100 fw-semibold"><i class="fa-solid fa-copy me-2"></i>Copy Trip to My Account</button>
+                </form>
+                {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary w-100"><i class="fa-solid fa-right-to-bracket me-2"></i>Log in to Copy This Trip</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function copyShareLink(){
+    document.getElementById('share-link').select();
+    document.execCommand('copy');
+    const m=document.getElementById('copy-success');
+    m.style.display='block';
+    setTimeout(()=>m.style.display='none',2500);
+}
+</script>
+{% endblock %}

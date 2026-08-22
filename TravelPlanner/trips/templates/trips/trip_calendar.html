@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}My Trip Calendar | GlobeTrotter{% endblock %}
+
+{% block extra_css %}
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css' rel='stylesheet' />
+<style>
+    #trip-calendar { background:#1e293b; border-radius:12px; padding:20px; }
+    .fc .fc-toolbar-title { color:#f8fafc; font-size:1.2rem; }
+    .fc .fc-button { background:#0d6efd; border:none; }
+    .fc .fc-button:hover { background:#0b5ed7; }
+    .fc .fc-button-active { background:#0a58ca !important; }
+    .fc-daygrid-day { background:#0f172a; }
+    .fc-day-today { background:rgba(13,110,253,0.15) !important; }
+    .fc-col-header-cell { background:#1e293b; color:#94a3b8; }
+    .fc-scrollgrid { border-color:#334155 !important; }
+    .fc-scrollgrid td, .fc-scrollgrid th { border-color:#334155 !important; }
+    .fc-daygrid-day-number { color:#94a3b8; }
+    #trip-popup { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:9999; width:340px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h1 class="fw-bold text-white mb-1"><i class="fa-regular fa-calendar-days text-primary me-2"></i>Trip Calendar</h1>
+            <p class="text-secondary mb-0">Your journeys plotted on a timeline.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'trips:plan' %}" class="btn btn-primary px-4"><i class="fa-solid fa-plus me-2"></i>Plan New Trip</a>
+            <a href="{% url 'trips:index' %}" class="btn btn-outline-secondary px-4"><i class="fa-solid fa-list me-2"></i>List View</a>
+        </div>
+    </div>
+    <!-- Legend -->
+    <div class="d-flex gap-4 mb-4 flex-wrap small">
+        <span><span class="badge bg-primary me-1">&nbsp;</span>Upcoming</span>
+        <span><span class="badge bg-success me-1">&nbsp;</span>Ongoing</span>
+        <span><span class="badge bg-secondary me-1">&nbsp;</span>Completed</span>
+    </div>
+    <!-- Calendar -->
+    <div id="trip-calendar"></div>
+    <!-- Trip Popup -->
+    <div id="trip-popup" class="card border-0 shadow-lg rounded-4" style="background:#1e293b;">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <h6 class="fw-bold text-white mb-0" id="popup-title">Trip</h6>
+                <button onclick="closePopup()" class="btn btn-sm btn-link text-secondary p-0"><i class="fa-solid fa-xmark fs-5"></i></button>
+            </div>
+            <p class="text-secondary small mb-1"><i class="fa-solid fa-location-dot me-2 text-primary"></i><span id="popup-dest"></span></p>
+            <p class="text-secondary small mb-1"><i class="fa-solid fa-calendar me-2 text-info"></i><span id="popup-dates"></span></p>
+            <p class="text-secondary small mb-1"><i class="fa-solid fa-users me-2 text-warning"></i><span id="popup-type"></span></p>
+            <p class="text-secondary small mb-3"><i class="fa-solid fa-indian-rupee-sign me-2 text-success"></i><span id="popup-budget"></span></p>
+            <span id="popup-status-badge" class="badge mb-3"></span>
+            <div class="d-grid"><a id="popup-link" href="#" class="btn btn-primary btn-sm fw-semibold">View Trip Details <i class="fa-solid fa-arrow-right ms-1"></i></a></div>
+        </div>
+    </div>
+    <div id="popup-overlay" onclick="closePopup()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+<script>
+const events = {{ calendar_events_json|safe }};
+function closePopup(){
+    document.getElementById('trip-popup').style.display='none';
+    document.getElementById('popup-overlay').style.display='none';
+}
+const calendar = new FullCalendar.Calendar(document.getElementById('trip-calendar'),{
+    initialView:'dayGridMonth',
+    initialDate:'{{ today }}',
+    headerToolbar:{left:'prev,next today',center:'title',right:'dayGridMonth,listMonth'},
+    events:events,
+    eventClick:function(info){
+        info.jsEvent.preventDefault();
+        const p=info.event.extendedProps;
+        document.getElementById('popup-title').textContent=info.event.title;
+        document.getElementById('popup-dest').textContent=p.destination;
+        document.getElementById('popup-dates').textContent=info.event.startStr+' to '+info.event.endStr;
+        document.getElementById('popup-type').textContent=p.travel_type;
+        document.getElementById('popup-budget').textContent='Budget: \u20b9'+parseFloat(p.budget).toLocaleString('en-IN');
+        const badge=document.getElementById('popup-status-badge');
+        badge.textContent=p.status;
+        badge.className='badge mb-3 '+(p.status==='Upcoming'?'bg-primary':p.status==='Ongoing'?'bg-success':'bg-secondary');
+        document.getElementById('popup-link').href=info.event.url;
+        document.getElementById('trip-popup').style.display='block';
+        document.getElementById('popup-overlay').style.display='block';
+    },
+    height:650
+});
+calendar.render();
+</script>
+{% endblock %}
