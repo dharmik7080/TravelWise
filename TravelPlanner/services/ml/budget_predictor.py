@@ -23,22 +23,82 @@ class BudgetPredictor:
     @classmethod
     def _load_model(cls):
         """
-        Bypassed model loader.
+        Loads the saved best-performing model, encoder, and scaler.
         """
+        if cls._loaded:
+            return
+
+        models_dir = cls._get_models_dir()
+        model_path = os.path.join(models_dir, 'trained_model.pkl')
+        encoder_path = os.path.join(models_dir, 'encoder.pkl')
+        scaler_path = os.path.join(models_dir, 'scaler.pkl')
+
+        # Fallback to trip_cost_model.pkl if trained_model.pkl is missing
+        if not os.path.exists(model_path):
+            model_path = os.path.join(models_dir, 'trip_cost_model.pkl')
+
+        if not (os.path.exists(model_path) and os.path.exists(encoder_path)):
+            raise FileNotFoundError("Trained budget prediction models and encoders not found. Run model training first.")
+
+        with open(model_path, 'rb') as f:
+            cls._model = pickle.load(f)
+
+        with open(encoder_path, 'rb') as f:
+            cls._encoder = pickle.load(f)
+
+        if os.path.exists(scaler_path):
+            with open(scaler_path, 'rb') as f:
+                cls._scaler = pickle.load(f)
+        else:
+            cls._scaler = None
+
         cls._loaded = True
 
     @classmethod
     def predict_cost(cls, destination, travelers, days, package_type, season):
         """
-        Predicts total trip cost based on inputs deterministically.
+        Predicts total trip cost based on ML model, falling back to deterministic calculations.
         """
         try:
-            breakdown = cls.calculate_breakdown(destination, travelers, days, package_type, season)
-            if not breakdown:
-                return 1000.0
-            return round(sum(breakdown.values()), 2)
+            cls._load_model()
+
+            input_df = pd.DataFrame([{
+                'Destination': destination,
+                'Number of Travelers': travelers,
+                'Number of Days': days,
+                'Package Type': package_type,
+                'Season': season
+            }])
+
+            categorical_cols = ['Destination', 'Package Type', 'Season']
+            numerical_cols = ['Number of Travelers', 'Number of Days']
+
+            # Transform categorical features using saved encoder
+            cat_encoded = cls._encoder.transform(input_df[categorical_cols])
+
+            # Scale numerical features using saved scaler if available
+            if cls._scaler is not None:
+                num_features = cls._scaler.transform(input_df[numerical_cols])
+            else:
+                num_features = input_df[numerical_cols].values
+
+            # Combine numerical and categorical features
+            X_input = np.hstack([num_features, cat_encoded])
+
+            # Predict cost (model trained on log-transformed costs)
+            pred_log = cls._model.predict(X_input)
+            predicted_cost = np.expm1(pred_log)[0]
+
+            return round(float(predicted_cost), 2)
         except Exception:
-            return 1000.0
+            # Fallback to deterministic cost calculation if ML model fails or is not trained
+            try:
+                breakdown = cls.calculate_breakdown(destination, travelers, days, package_type, season)
+                if not breakdown:
+                    return 1000.0
+                return round(sum(breakdown.values()), 2)
+            except Exception:
+                return 1000.0
 
     @classmethod
     def calculate_breakdown(cls, destination, travelers, days, package_type, season):

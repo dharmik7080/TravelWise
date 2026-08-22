@@ -14,5 +14,8 @@ python TravelPlanner/manage.py import_attractions TravelPlanner/attractions.csv
 python TravelPlanner/manage.py import_packages TravelPlanner/packages.csv
 python TravelPlanner/manage.py import_seasons TravelPlanner/best_seasons.csv
 
+# Train the Machine Learning Predictor models
+python TravelPlanner/ml/train_model.py
+
 # Collect static files
 python TravelPlanner/manage.py collectstatic --no-input --clear
