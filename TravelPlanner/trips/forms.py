@@ -77,12 +77,17 @@ class ItineraryDayForm(forms.ModelForm):
     """
     class Meta:
         model = ItineraryDay
-        fields = ['morning', 'afternoon', 'evening']
+        fields = ['day_number', 'morning', 'afternoon', 'evening']
         widgets = {
+            'day_number': forms.HiddenInput(attrs={'class': 'day-number-input'}),
             'morning': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
             'afternoon': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
             'evening': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['day_number'].required = False
 
 # Define an inline formset to allow batch editing itinerary days for a specific trip
 ItineraryDayFormSet = inlineformset_factory(
@@ -90,5 +95,5 @@ ItineraryDayFormSet = inlineformset_factory(
     ItineraryDay,
     form=ItineraryDayForm,
     extra=0,
-    can_delete=False
+    can_delete=True
 )

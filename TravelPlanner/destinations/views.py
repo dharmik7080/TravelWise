@@ -119,6 +119,13 @@ class DestinationListView(generic.ListView):
 
         context['overview_map_payload'] = json.dumps(destinations_data)
 
+        if self.request.user.is_authenticated:
+            from accounts.models import UserProfile
+            profile, _ = UserProfile.objects.get_or_create(user=self.request.user)
+            context['wishlisted_ids'] = list(profile.saved_destinations.values_list('pk', flat=True))
+        else:
+            context['wishlisted_ids'] = []
+
         return context
 
 
@@ -195,6 +202,13 @@ class DestinationDetailView(generic.DetailView):
             'attractions': attractions_data,
             'similar_destinations': similar_data
         })
+
+        if self.request.user.is_authenticated:
+            from accounts.models import UserProfile
+            profile, _ = UserProfile.objects.get_or_create(user=self.request.user)
+            context['is_wishlisted'] = profile.saved_destinations.filter(pk=dest.pk).exists()
+        else:
+            context['is_wishlisted'] = False
 
         return context
 

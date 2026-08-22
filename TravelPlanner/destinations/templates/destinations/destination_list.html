@@ -220,7 +220,11 @@
                     <button type="button" class="btn btn-dark btn-sm rounded-circle position-absolute m-3 d-flex align-items-center justify-content-center btn-wishlist-card" 
                             style="top: 45px; right: 0; z-index: 2; width: 34px; height: 34px; padding: 0; border: 0 !important; background-color: rgba(15,23,42,0.7) !important;"
                             data-dest-id="{{ dest.pk }}" onclick="toggleCatalogWishlist(this, event)">
-                        <i class="fa-regular fa-heart text-white" style="font-size: 14px;"></i>
+                        {% if dest.pk in wishlisted_ids %}
+                            <i class="fa-solid fa-heart text-danger" style="font-size: 14px;"></i>
+                        {% else %}
+                            <i class="fa-regular fa-heart text-white" style="font-size: 14px;"></i>
+                        {% endif %}
                     </button>
                     <span class="badge bg-primary position-absolute bottom-0 start-0 m-3 px-3 py-1.5 rounded-pill fw-bold" style="z-index: 2; font-size: 0.75rem;">{{ dest.category }}</span>
                 </div>
@@ -332,28 +336,37 @@
     </div>
     {% endif %}
 </div>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Update all wishlist buttons on the page from localStorage
-    document.querySelectorAll('.btn-wishlist-card').forEach(btn => {
-        const destId = btn.getAttribute('data-dest-id');
-        const isSaved = localStorage.getItem('wishlist_dest_' + destId) === 'true';
-        updateCardWishlistUI(btn, isSaved);
-    });
-});
-
 function toggleCatalogWishlist(btn, event) {
     if (event) {
         event.stopPropagation();
         event.preventDefault();
     }
     const destId = btn.getAttribute('data-dest-id');
-    const key = 'wishlist_dest_' + destId;
-    const currentlySaved = localStorage.getItem(key) === 'true';
-    const nextSaved = !currentlySaved;
-    localStorage.setItem(key, nextSaved ? 'true' : 'false');
-    updateCardWishlistUI(btn, nextSaved);
+    
+    // Toggle via backend if logged in
+    fetch(`/accounts/wishlist/${destId}/toggle/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken') || '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.status === 403 || response.status === 302) {
+            window.location.href = "{% url 'accounts:login' %}?next=" + window.location.pathname;
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data && data.hasOwnProperty('saved')) {
+            updateCardWishlistUI(btn, data.saved);
+        }
+    })
+    .catch(err => {
+        console.error("Wishlist operation failed", err);
+    });
 }
 
 function updateCardWishlistUI(btn, saved) {
@@ -363,6 +376,22 @@ function updateCardWishlistUI(btn, saved) {
     } else {
         icon.className = 'fa-regular fa-heart text-white';
     }
+}
+
+// Helper function to get csrf token from cookies
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 </script>
 {% endblock %}

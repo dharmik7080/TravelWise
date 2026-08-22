@@ -298,7 +298,33 @@ class TripItineraryUpdateView(LoginRequiredMixin, generic.UpdateView):
         context = self.get_context_data()
         formset = context['formset']
         if formset.is_valid():
-            formset.save()
+            # Save the formset with commit=False so we can adjust day numbers
+            instances = formset.save(commit=False)
+            
+            # Delete objects marked for deletion
+            for obj in formset.deleted_objects:
+                obj.delete()
+
+            # Collect remaining/new instances in the order submitted
+            ordered_instances = []
+            for f in formset.forms:
+                if f in formset.deleted_forms or (f.instance.pk is None and not f.has_changed()):
+                    continue
+                ordered_instances.append(f.instance)
+
+            # Assign temporary large positive day numbers to prevent UNIQUE constraint errors
+            # while satisfying SQLite PositiveIntegerField CHECK constraint
+            for idx, instance in enumerate(ordered_instances, start=1):
+                instance.day_number = 10000 + idx
+                if instance.pk:
+                    instance.save(update_fields=['day_number'])
+
+            # Now save them with the correct final positive day numbers in sequence
+            for idx, instance in enumerate(ordered_instances, start=1):
+                instance.day_number = idx
+                instance.trip = self.object
+                instance.save()
+
             messages.success(self.request, "Your trip itinerary has been updated successfully!")
             return redirect('trips:detail', pk=self.object.pk)
         else:
