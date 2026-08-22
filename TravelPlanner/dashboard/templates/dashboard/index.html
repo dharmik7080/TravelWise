@@ -2,6 +2,11 @@
 {% load humanize %}
 {% block title %}Dashboard | GlobeTrotter{% endblock %}
 
+{% block extra_css %}
+<!-- Load Plotly JS early to resolve inline script timing dependencies -->
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5 flex-grow-1">
     <!-- Welcome Banner Section -->
@@ -444,6 +449,4 @@
 </div>
 {% endblock %}
 
-{% block extra_js %}
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-{% endblock %}
+
