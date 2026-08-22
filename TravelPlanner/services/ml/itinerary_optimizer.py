@@ -124,8 +124,6 @@ class ItineraryOptimizer:
             day_entry_fees = 0.0
             day_attractions = []
 
-            slots = {'morning': None, 'afternoon': None, 'evening': None}
-
             # 1. Morning scheduling: Prefer Outdoor attractions (or Indoor if rainy)
             morning_candidate = cls._select_best_for_slot(
                 scored_pool=scored_pool,
@@ -136,7 +134,6 @@ class ItineraryOptimizer:
             if morning_candidate:
                 duration = cls._get_estimated_duration(morning_candidate)
                 if day_sightseeing_time + duration <= 8.0:
-                    slots['morning'] = f"{morning_candidate.attraction_name} ({morning_candidate.category})"
                     used_attractions.add(morning_candidate.pk)
                     day_sightseeing_time += duration
                     day_entry_fees += float(morning_candidate.entry_fee)
@@ -152,7 +149,6 @@ class ItineraryOptimizer:
             if afternoon_candidate:
                 duration = cls._get_estimated_duration(afternoon_candidate)
                 if day_sightseeing_time + duration <= 8.0:
-                    slots['afternoon'] = f"{afternoon_candidate.attraction_name} ({afternoon_candidate.category})"
                     used_attractions.add(afternoon_candidate.pk)
                     day_sightseeing_time += duration
                     day_entry_fees += float(afternoon_candidate.entry_fee)
@@ -168,11 +164,20 @@ class ItineraryOptimizer:
             if evening_candidate:
                 duration = cls._get_estimated_duration(evening_candidate)
                 if day_sightseeing_time + duration <= 8.0:
-                    slots['evening'] = f"{evening_candidate.attraction_name} ({evening_candidate.category})"
                     used_attractions.add(evening_candidate.pk)
                     day_sightseeing_time += duration
                     day_entry_fees += float(evening_candidate.entry_fee)
                     day_attractions.append(evening_candidate)
+
+            # Geospatial Route Optimization (Phase 4)
+            from services.route_optimizer import RouteOptimizer
+            optimized_attrs, transitions = RouteOptimizer.optimize_route(day_attractions)
+
+            slots = {'morning': None, 'afternoon': None, 'evening': None}
+            slot_keys = ['morning', 'afternoon', 'evening']
+            for idx, attr in enumerate(optimized_attrs):
+                if idx < len(slot_keys):
+                    slots[slot_keys[idx]] = f"{attr.attraction_name} ({attr.category})"
 
             # Apply standard fallback slots if empty
             if not slots['morning']:
@@ -182,22 +187,32 @@ class ItineraryOptimizer:
             if not slots['evening']:
                 slots['evening'] = "Relax and enjoy local street food markets"
 
+            # Route distance and travel time calculation
+            day_distance = sum(t['distance_km'] for t in transitions)
+            day_travel_time_min = sum(t['travel_time_min'] for t in transitions)
+
             # Step 10: Calculate Daily Summary parameters
-            top_spot = day_attractions[0].attraction_name if day_attractions else f"Sightseeing in {destination.destination_name}"
+            top_spot = optimized_attrs[0].attraction_name if optimized_attrs else f"Sightseeing in {destination.destination_name}"
             difficulty = "Relaxed"
             if day_sightseeing_time > 6.5:
                 difficulty = "Busy"
             elif day_sightseeing_time > 4.0:
                 difficulty = "Moderate"
 
-            travel_time = round(len(day_attractions) * 0.4, 1)  # 24 minutes per transit slot
             allowance = 1000 if budget_level == 'Luxury' else (300 if budget_level == 'Moderate' else 100)
             daily_budget = int(day_entry_fees + allowance)
 
-            summary_str = f"[Pace: {difficulty} • Sightseeing: {round(day_sightseeing_time, 1)}h • Travel: {travel_time}h • Budget: ₹{daily_budget} • Top Spot: {top_spot}]"
+            sightseeing_str = f"{round(day_sightseeing_time, 1)}h"
+            travel_time_str = f"{day_travel_time_min} min"
 
-            # Step 9: Compile Explainable AI reasons list
+            summary_str = f"[Pace: {difficulty} • Sightseeing: {sightseeing_str} • Travel: {travel_time_str} • Budget: ₹{daily_budget} • Route: {round(day_distance, 1)} km • Attractions: {len(optimized_attrs)} • Top Spot: {top_spot}]"
+
+            # Compile explanation and insights
             reasons = []
+            reasons.append("✔ Geospatial Route Optimization: Attractions ordered by geographic proximity using a Nearest Neighbor heuristic")
+            reasons.append(f"✔ Reduced unnecessary travel: {round(day_distance, 1)} km distance (~{travel_time_str} travel time)")
+            reasons.append("✔ Each day's route optimized independently")
+
             if is_rainy:
                 reasons.append("✔ Indoor activities scheduled earlier due to rainy weather forecasts")
             else:
@@ -213,7 +228,6 @@ class ItineraryOptimizer:
             else:
                 reasons.append("✔ Local markets scheduled for evening shopping")
 
-            reasons.append("✔ Nearby attractions clustered together to minimize local transit times")
             reasons.append(f"✔ Matches your {travel_type} travel profile constraints")
 
             why_str = "[Why: " + " • ".join(reasons) + "]"

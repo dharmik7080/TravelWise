@@ -45,15 +45,16 @@ export class RouteRenderer {
             let dayDistance = 0.0;
             let lastCoord = null;
 
+            let markerIndex = 1;
             slots.forEach(slot => {
                 const item = dayData[slot];
                 if (item && item.lat && item.lon) {
                     const coord = [item.lat, item.lon];
-                    latLngs.append ? latLngs.push(coord) : latLngs.push(coord);
+                    latLngs.push(coord);
                     allLatLngs.push(coord);
 
-                    // Create marker for slot
-                    const markerIcon = markerManager.createCustomIcon(slot);
+                    // Create numbered marker for slot
+                    const markerIcon = markerManager.createCustomIcon(slot, markerIndex);
                     const marker = L.marker(coord, { 
                         icon: markerIcon,
                         lat: item.lat,
@@ -62,13 +63,14 @@ export class RouteRenderer {
                     
                     marker.bindPopup(`
                         <div style="font-family: 'Poppins', sans-serif;">
-                            <strong class="text-primary d-block">${item.name}</strong>
+                            <strong class="text-primary d-block">${markerIndex}. ${item.name}</strong>
                             <span class="badge bg-secondary mb-1">${slot.toUpperCase()}</span><br>
                             <span class="small text-muted">Category: ${item.category || 'Sightseeing'}</span>
                         </div>
                     `);
                     
                     marker.addTo(dayGroup);
+                    markerIndex++;
 
                     // Add distance
                     if (lastCoord) {
@@ -77,22 +79,26 @@ export class RouteRenderer {
                             coord[0], coord[1]
                         );
                         dayDistance += dist;
+
+                        const color = DAY_ROUTE_COLORS[dayNum] || '#6c757d';
+                        const segmentPolyline = L.polyline([lastCoord, coord], {
+                            color: color,
+                            weight: 3.5,
+                            opacity: 0.8,
+                            dashArray: '5, 8'
+                        });
+                        
+                        const timeMin = estimateTravelTime(dist);
+                        segmentPolyline.bindTooltip(`${dist.toFixed(1)} km (~${timeMin} min)`, {
+                            permanent: true,
+                            direction: 'center',
+                            className: 'route-distance-tooltip'
+                        });
+                        segmentPolyline.addTo(dayGroup);
                     }
                     lastCoord = coord;
                 }
             });
-
-            // Draw polyline connecting stops if there are at least 2 stops
-            if (latLngs.length >= 2) {
-                const color = DAY_ROUTE_COLORS[dayNum] || '#6c757d';
-                const polyline = L.polyline(latLngs, {
-                    color: color,
-                    weight: 3.5,
-                    opacity: 0.8,
-                    dashArray: '5, 8'
-                });
-                polyline.addTo(dayGroup);
-            }
 
             dayGroup.addTo(this.map);
             this.routeLayers[dayNum] = dayGroup;

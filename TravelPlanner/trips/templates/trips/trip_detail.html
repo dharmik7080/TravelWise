@@ -3,6 +3,22 @@
 {% load humanize %}
 {% block title %}{{ trip.destination.destination_name }} Trip Details | GlobeTrotter{% endblock %}
 
+{% block extra_css %}
+<style>
+    .route-distance-tooltip {
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
+        color: #f8fafc !important;
+        font-size: 11px !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 500 !important;
+        padding: 2px 6px !important;
+        border-radius: 4px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5 flex-grow-1">
     <div class="row justify-content-center">
@@ -368,33 +384,133 @@
                                 };
                             }
 
-                            document.querySelectorAll('.itinerary-evening-slot').forEach(slot => {
-                                const rawEl = slot.querySelector('.raw-evening-text');
-                                if (!rawEl) return;
-                                
-                                const parsed = formatItineraryText(rawEl.textContent);
-                                let html = `<p class="text-white small mb-0">${parsed.description || 'Dinner & leisure'}</p>`;
-                                
-                                if (parsed.stats) {
-                                    html += `
-                                        <div class="mt-2 pt-2 border-top border-secondary border-opacity-30 d-flex flex-wrap gap-1">
-                                            ${parsed.stats.map(s => `<span class="badge bg-primary bg-opacity-10 text-primary small fw-semibold" style="font-size: 10px;">${s}</span>`).join('')}
+                            const payloadElement = document.getElementById('itinerary-map-payload');
+                            if (payloadElement) {
+                                let data;
+                                try {
+                                    data = JSON.parse(payloadElement.textContent);
+                                } catch (e) {
+                                    console.error(e);
+                                    return;
+                                }
+
+                                document.querySelectorAll('#itinerary-list-view > .col-12').forEach((dayCard, idx) => {
+                                    const dayNum = String(idx + 1);
+                                    const dayInfo = data.itinerary[dayNum];
+                                    if (!dayInfo) return;
+                                    
+                                    const cardBody = dayCard.querySelector('.card-body');
+                                    if (!cardBody) return;
+                                    
+                                    const morningEl = cardBody.querySelector('.col-md-4:nth-child(1) p');
+                                    const afternoonEl = cardBody.querySelector('.col-md-4:nth-child(2) p');
+                                    const eveningEl = cardBody.querySelector('.col-md-4:nth-child(3) p');
+                                    
+                                    const morningText = morningEl ? morningEl.textContent : '';
+                                    const afternoonText = afternoonEl ? afternoonEl.textContent : '';
+                                    const eveningText = eveningEl ? eveningEl.textContent : '';
+                                    
+                                    const transitions = dayInfo.transitions || [];
+                                    const morningToAfternoon = transitions[0];
+                                    const afternoonToEvening = transitions[1];
+                                    
+                                    let morningArrow = '';
+                                    if (morningToAfternoon && morningToAfternoon.distance_km > 0) {
+                                        morningArrow = `
+                                            <div class="d-flex align-items-center gap-2 my-2 py-1 ps-4 border-start border-secondary border-opacity-30 ms-3">
+                                                <span class="text-secondary small font-monospace"><i class="fa-solid fa-arrow-down-long text-primary me-1"></i> ${morningToAfternoon.distance_km} km (~${morningToAfternoon.travel_time_min} min travel)</span>
+                                            </div>
+                                        `;
+                                    }
+                                    
+                                    let afternoonArrow = '';
+                                    if (afternoonToEvening && afternoonToEvening.distance_km > 0) {
+                                        afternoonArrow = `
+                                            <div class="d-flex align-items-center gap-2 my-2 py-1 ps-4 border-start border-secondary border-opacity-30 ms-3">
+                                                <span class="text-secondary small font-monospace"><i class="fa-solid fa-arrow-down-long text-primary me-1"></i> ${afternoonToEvening.distance_km} km (~${afternoonToEvening.travel_time_min} min travel)</span>
+                                            </div>
+                                        `;
+                                    }
+
+                                    const rawEveningText = eveningEl ? eveningEl.textContent : eveningText;
+                                    const parsed = formatItineraryText(rawEveningText);
+                                    
+                                    let eveningHtml = `<p class="text-white small mb-0">${parsed.description || 'Dinner & leisure'}</p>`;
+                                    if (parsed.stats) {
+                                        eveningHtml += `
+                                            <div class="mt-2 pt-2 border-top border-secondary border-opacity-30 d-flex flex-wrap gap-1">
+                                                ${parsed.stats.map(s => `<span class="badge bg-primary bg-opacity-10 text-primary small fw-semibold" style="font-size: 10px;">${s}</span>`).join('')}
+                                            </div>
+                                        `;
+                                    }
+                                    if (parsed.why && parsed.why.length > 0) {
+                                        eveningHtml += `
+                                            <div class="mt-2 border-top border-secondary border-opacity-10 pt-2">
+                                                <small class="text-muted d-block fw-bold mb-1" style="font-size: 10px;">Plan Insights:</small>
+                                                <ul class="list-unstyled mb-0" style="padding-left: 0;">
+                                                    ${parsed.why.map(w => `<li class="text-secondary small mb-0.5" style="font-size: 11px;"><i class="fa-solid fa-circle-info text-info me-1" style="font-size: 9px;"></i>${w.replace(/^✔\s*/, '')}</li>`).join('')}
+                                                </ul>
+                                            </div>
+                                        `;
+                                    }
+                                    
+                                    // Re-render body as a vertical timeline
+                                    cardBody.innerHTML = `
+                                        <div class="d-flex flex-column">
+                                            <!-- Morning Stop -->
+                                            <div class="d-flex align-items-start gap-3">
+                                                <div class="bg-warning bg-opacity-10 text-warning border border-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0; font-size: 11px; font-weight: bold;">1</div>
+                                                <div>
+                                                    <span class="text-muted small d-block mb-0.5"><i class="fa-solid fa-sun text-warning me-1"></i> Morning</span>
+                                                    <p class="text-white small mb-0">${morningText}</p>
+                                                </div>
+                                            </div>
+                                            
+                                            ${morningArrow}
+                                            
+                                            <!-- Afternoon Stop -->
+                                            <div class="d-flex align-items-start gap-3">
+                                                <div class="bg-primary bg-opacity-10 text-primary border border-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0; font-size: 11px; font-weight: bold;">2</div>
+                                                <div>
+                                                    <span class="text-muted small d-block mb-0.5"><i class="fa-solid fa-cloud-sun text-primary me-1"></i> Afternoon</span>
+                                                    <p class="text-white small mb-0">${afternoonText}</p>
+                                                </div>
+                                            </div>
+                                            
+                                            ${afternoonArrow}
+                                            
+                                            <!-- Evening Stop -->
+                                            <div class="d-flex align-items-start gap-3">
+                                                <div class="bg-secondary bg-opacity-10 text-secondary border border-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0; font-size: 11px; font-weight: bold;">3</div>
+                                                <div>
+                                                    <span class="text-muted small d-block mb-0.5"><i class="fa-solid fa-moon text-secondary me-1"></i> Evening</span>
+                                                    ${eveningHtml}
+                                                </div>
+                                            </div>
                                         </div>
                                     `;
-                                }
-                                if (parsed.why && parsed.why.length > 0) {
-                                    html += `
-                                        <div class="mt-2 border-top border-secondary border-opacity-10 pt-2">
-                                            <small class="text-muted d-block fw-bold mb-1" style="font-size: 10px;">Plan Insights:</small>
-                                            <ul class="list-unstyled mb-0" style="padding-left: 0;">
-                                                ${parsed.why.map(w => `<li class="text-secondary small mb-0.5" style="font-size: 11px;"><i class="fa-solid fa-circle-info text-info me-1" style="font-size: 9px;"></i>${w.replace(/^✔\s*/, '')}</li>`).join('')}
-                                            </ul>
-                                        </div>
-                                    `;
-                                }
-                                
-                                rawEl.outerHTML = html;
-                            });
+
+                                    // Add summary badge to card header
+                                    const headerRight = dayCard.querySelector('.card-header');
+                                    if (headerRight) {
+                                        const totalAttractions = (dayInfo.morning ? 1 : 0) + (dayInfo.afternoon ? 1 : 0) + (dayInfo.evening ? 1 : 0);
+                                        const distanceKm = dayInfo.distance_km || 0;
+                                        const travelTimeMin = dayInfo.travel_time_min || 0;
+                                        let sightseeingTime = parsed.stats ? parsed.stats.find(s => s.toLowerCase().includes('sightseeing')) : '';
+                                        if (!sightseeingTime) sightseeingTime = 'Sightseeing: 6.0h';
+
+                                        const summaryBadge = document.createElement('div');
+                                        summaryBadge.className = 'text-secondary small font-monospace float-end d-none d-sm-block';
+                                        summaryBadge.innerHTML = `
+                                            <span class="me-2"><i class="fa-solid fa-route text-info me-1"></i>${totalAttractions} Stops</span>
+                                            <span class="me-2"><i class="fa-solid fa-road text-success me-1"></i>${distanceKm} km</span>
+                                            <span class="me-2"><i class="fa-regular fa-clock text-warning me-1"></i>${travelTimeMin} min Travel</span>
+                                            <span><i class="fa-solid fa-person-walking text-primary me-1"></i>${sightseeingTime.replace('Sightseeing:', '').trim()}</span>
+                                        `;
+                                        headerRight.appendChild(summaryBadge);
+                                    }
+                                });
+                            }
                         });
                     </script>
 

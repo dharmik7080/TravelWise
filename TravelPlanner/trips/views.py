@@ -199,31 +199,44 @@ class TripDetailView(LoginRequiredMixin, generic.DetailView):
         dest = trip.destination
         d_lat, d_lon = MapsDataService.get_destination_coords(dest)
 
-        def get_slot_data(slot_text):
-            if not slot_text:
-                return None
-            target_attr = None
-            for attr in dest.attractions.all():
-                if attr.attraction_name.lower() in slot_text.lower():
-                    target_attr = attr
-                    break
-            
-            if target_attr:
-                a_lat, a_lon = MapsDataService.get_attraction_coords(d_lat, d_lon, target_attr.attraction_name)
-                return {
-                    'name': target_attr.attraction_name,
-                    'category': target_attr.category,
-                    'lat': a_lat,
-                    'lon': a_lon
-                }
-            return None
-
         itinerary_data = {}
         for day_row in trip.itinerary_days.all():
+            day_attrs = []
+            # Find the actual attraction objects matching the slots
+            for slot_text in [day_row.morning, day_row.afternoon, day_row.evening]:
+                if not slot_text:
+                    continue
+                for attr in dest.attractions.all():
+                    if attr.attraction_name.lower() in slot_text.lower():
+                        day_attrs.append(attr)
+                        break
+
+            from services.route_optimizer import RouteOptimizer
+            optimized_attrs, transitions = RouteOptimizer.optimize_route(day_attrs)
+
+            slots_data = {'morning': None, 'afternoon': None, 'evening': None}
+            slot_keys = ['morning', 'afternoon', 'evening']
+
+            for idx, attr in enumerate(optimized_attrs):
+                if idx < len(slot_keys):
+                    a_lat, a_lon = MapsDataService.get_attraction_coords(d_lat, d_lon, attr.attraction_name)
+                    slots_data[slot_keys[idx]] = {
+                        'name': attr.attraction_name,
+                        'category': attr.category,
+                        'lat': a_lat,
+                        'lon': a_lon
+                    }
+
+            day_distance = sum(t['distance_km'] for t in transitions)
+            day_travel_time_min = sum(t['travel_time_min'] for t in transitions)
+
             itinerary_data[str(day_row.day_number)] = {
-                'morning': get_slot_data(day_row.morning),
-                'afternoon': get_slot_data(day_row.afternoon),
-                'evening': get_slot_data(day_row.evening)
+                'morning': slots_data['morning'],
+                'afternoon': slots_data['afternoon'],
+                'evening': slots_data['evening'],
+                'distance_km': round(day_distance, 1),
+                'travel_time_min': day_travel_time_min,
+                'transitions': transitions
             }
 
         context['itinerary_map_payload'] = json.dumps({

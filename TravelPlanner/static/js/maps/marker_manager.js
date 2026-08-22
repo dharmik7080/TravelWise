@@ -17,11 +17,16 @@ const MARKER_COLORS = {
 /**
  * Constructs a custom Leaflet DivIcon utilizing custom SVG pins.
  */
-export function createCustomIcon(type) {
+export function createCustomIcon(type, number = null) {
     const color = MARKER_COLORS[type.toLowerCase()] || '#6c757d';
+    let innerElement = '<circle cx="12" cy="9" r="2.5" fill="#ffffff"/>';
+    if (number !== null) {
+        innerElement = `<text x="12" y="12" fill="#ffffff" font-size="9" font-family="Poppins, sans-serif" font-weight="bold" text-anchor="middle">${number}</text>`;
+    }
     const svgHtml = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" style="filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.3));">
-            <path fill="${color}" stroke="#ffffff" stroke-width="1.5" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            <path fill="${color}" stroke="#ffffff" stroke-width="1.5" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5"/>
+            ${innerElement}
         </svg>
     `;
     return L.divIcon({
