@@ -45,7 +45,7 @@ class WeatherService:
         
         # 4. Make request with timeout and exception safety
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'TravelWise/1.0'})
+            req = urllib.request.Request(url, headers={'User-Agent': 'GlobeTrotter/1.0'})
             with urllib.request.urlopen(req, timeout=5) as response:
                 if response.status == 200:
                     data = json.loads(response.read().decode('utf-8'))

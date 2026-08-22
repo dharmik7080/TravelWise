@@ -42,7 +42,7 @@ def get_wikimedia_image(query):
         }
         query_string = urllib.parse.urlencode(params)
         full_url = f"{url}?{query_string}"
-        headers = {'User-Agent': 'TravelWise/1.0 (contact@travelwise.com)'}
+        headers = {'User-Agent': 'GlobeTrotter/1.0 (contact@globetrotter.com)'}
         req = urllib.request.Request(full_url, headers=headers)
         with urllib.request.urlopen(req, timeout=10) as response:
             res = json.loads(response.read().decode('utf-8'))
@@ -89,7 +89,7 @@ def save_and_optimize_image(raw_data, filepath):
 
 def download_and_process_url(url, filepath):
     try:
-        headers = {'User-Agent': 'TravelWise/1.0 (contact@travelwise.com)'}
+        headers = {'User-Agent': 'GlobeTrotter/1.0 (contact@globetrotter.com)'}
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as response:
             raw_data = response.read()

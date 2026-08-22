@@ -1,6 +1,6 @@
-# TravelWise — Intelligent Personalized Travel Planning Portal
+# GlobeTrotter — Intelligent Personalized Travel Planning Portal
 
-TravelWise is a production-grade, collaborative travel planning platform designed to help travelers discover destinations across India, build optimized day-wise itineraries, forecast travel costs using Machine Learning, and visualize route logs. 
+GlobeTrotter is a production-grade, collaborative travel planning platform designed to help travelers discover destinations across India, build optimized day-wise itineraries, forecast travel costs using Machine Learning, and visualize route logs. 
 
 Originally built matching the Odoo **GlobeTrotter** hackathon specification, this project has been upgraded into a premium portfolio product equipped with advanced NLP algorithms, regression model pipelines, live APIs, and geographic mapping modules.
 
@@ -40,7 +40,7 @@ Originally built matching the Odoo **GlobeTrotter** hackathon specification, thi
 ## 📂 Project Structure
 
 ```text
-TravelWise/
+GlobeTrotter/
 ├── TravelPlanner/           # Main Django Project Source
 │   ├── TravelPlanner/       # Configuration, main URLs, settings
 │   ├── accounts/            # Authentication, user profiles & wishlist
@@ -67,8 +67,8 @@ Ensure you have **Python 3.10+** and `pip` installed.
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/dharmikthakkar/TravelWise.git
-cd TravelWise
+git clone https://github.com/dharmikthakkar/GlobeTrotter.git
+cd GlobeTrotter
 ```
 
 ### 3. Create a Virtual Environment & Install Dependencies
