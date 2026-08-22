@@ -29,6 +29,9 @@ class Trip(models.Model):
     budget = models.DecimalField(max_digits=10, decimal_places=2)
     travel_type = models.CharField(max_length=50, choices=TRAVEL_TYPE_CHOICES)
     notes = models.TextField(blank=True, null=True)
+    trip_name = models.CharField(max_length=200, default="My Awesome Trip", blank=True)
+    description = models.TextField(blank=True, null=True)
+    cover_image = models.ImageField(upload_to='trip_covers/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):

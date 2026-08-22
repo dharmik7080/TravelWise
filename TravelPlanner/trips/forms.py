@@ -16,13 +16,14 @@ class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
         fields = [
-            'destination', 'start_date', 'end_date', 'number_of_travelers',
-            'budget', 'travel_type', 'notes'
+            'trip_name', 'destination', 'start_date', 'end_date', 'number_of_travelers',
+            'budget', 'travel_type', 'description', 'cover_image', 'notes'
         ]
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
-            'notes': forms.Textarea(attrs={'rows': 4}),
+            'description': forms.Textarea(attrs={'rows': 3}),
+            'notes': forms.Textarea(attrs={'rows': 3}),
         }
 
     def __init__(self, *args, **kwargs):

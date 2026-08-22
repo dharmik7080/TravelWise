@@ -8,7 +8,9 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-                {% if trip.destination.image %}
+                {% if trip.cover_image %}
+                    <img src="{{ trip.cover_image.url }}" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;" alt="{{ trip.trip_name }}">
+                {% elif trip.destination.image %}
                     <img src="{{ trip.destination.image.url }}" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;" alt="{{ trip.destination.destination_name }}">
                 {% else %}
                     <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted" style="height: 300px;">
@@ -26,8 +28,11 @@
                                     <span class="d-none">{{ trip.test_legacy_days_left }}</span>
                                 </span>
                             </div>
-                            <h1 class="fw-bold text-dark mb-1">Trip to {{ trip.destination.destination_name }}</h1>
-                            <p class="text-primary fw-semibold mb-0"><i class="fa-solid fa-location-dot me-1"></i> {{ trip.destination.city }}, {{ trip.destination.state }}</p>
+                            <h1 class="fw-bold text-dark mb-1">{{ trip.trip_name }}</h1>
+                            <p class="text-primary fw-semibold mb-0"><i class="fa-solid fa-location-dot me-1"></i> {{ trip.destination.destination_name }} ({{ trip.destination.city }}, {{ trip.destination.state }})</p>
+                            {% if trip.description %}
+                                <p class="text-secondary small mb-0 mt-2" style="max-width: 600px;">{{ trip.description }}</p>
+                            {% endif %}
                         </div>
                         <div class="text-end">
                             <span class="badge bg-success px-3 py-2 rounded-pill fs-6 fw-bold">₹{{ trip.budget|intcomma }}</span>

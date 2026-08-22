@@ -14,9 +14,7 @@
                 <li class="nav-item">
                     <a class="nav-link {% if '/destinations/' in request.path and '/recommendations/' not in request.path %}active{% endif %}" href="{% url 'destinations:list' %}">Destinations</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if '/recommendations/' in request.path %}active{% endif %}" href="{% url 'destinations:recommendations' %}">Get AI Suggestions</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link {% if '/packages/' in request.path %}active{% endif %}" href="{% url 'packages:list' %}">Itineraries</a>
                 </li>

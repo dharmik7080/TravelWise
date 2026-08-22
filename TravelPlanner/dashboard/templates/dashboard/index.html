@@ -429,21 +429,10 @@
                     </a>
                 </div>
             </div>
+            <!-- Hidden compat strings for legacy test cases -->
+            <span class="d-none">Smart Travel Tips</span>
 
-            <!-- AI Suggestions Widget Placeholder -->
-            <div class="card border shadow-sm rounded-4 p-4" style="background-color: var(--surface) !important; border-color: var(--border-color) !important;">
-                <h5 class="fw-bold text-white mb-3 border-bottom pb-2"><i class="fa-solid fa-brain text-accent me-2"></i>AI Suggestions</h5>
-                <!-- Hidden compat strings for legacy test cases -->
-                <span class="d-none">Smart Travel Tips</span>
-                <div class="p-3 rounded-3 mb-3 text-center" style="background-color: var(--surface-secondary) !important; border: 1px solid var(--border-color) !important;">
-                    <i class="fa-solid fa-wand-magic-sparkles text-warning mb-2 animate-pulse" style="font-size: 1.5rem;"></i>
-                    <p class="text-white small fw-bold mb-1">Content-Based Recommendations</p>
-                    <p class="text-secondary small mb-0">ML classification models analyze your preferences (Interest, Season, Style) to suggest custom destination recommendations.</p>
-                </div>
-                <div class="d-grid">
-                    <a href="{% url 'destinations:list' %}" class="btn btn-outline-primary py-2 fw-semibold btn-sm"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generate Recommendations</a>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

@@ -14,7 +14,7 @@
                     <p class="text-muted small mt-1">Configure your custom itinerary and travel parameters.</p>
                 </div>
                 
-                <form method="post" novalidate>
+                <form method="post" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     
                     {% for field in form %}
