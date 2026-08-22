@@ -9,10 +9,10 @@ pip install -r TravelPlanner/requirements.txt
 python TravelPlanner/manage.py migrate --no-input
 
 # Seed initial database values
-python TravelPlanner/manage.py import_destinations
-python TravelPlanner/manage.py import_attractions
-python TravelPlanner/manage.py import_packages
-python TravelPlanner/manage.py import_seasons
+python TravelPlanner/manage.py import_destinations TravelPlanner/destinations.csv
+python TravelPlanner/manage.py import_attractions TravelPlanner/attractions.csv
+python TravelPlanner/manage.py import_packages TravelPlanner/packages.csv
+python TravelPlanner/manage.py import_seasons TravelPlanner/best_seasons.csv
 
 # Collect static files
 python TravelPlanner/manage.py collectstatic --no-input --clear
