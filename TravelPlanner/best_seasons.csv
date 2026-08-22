@@ -1,0 +1,76 @@
+destination_name,season,peak_months,average_temperature,rainfall,travel_tip
+Srinagar,Summer,April to October,15°C - 30°C,Low,Book shikara rides and houseboats well in advance.
+Gulmarg,Winter,December to March,-5°C - 10°C,Heavy Snowfall,Perfect for skiing. Carry heavy woolen garments.
+Pahalgam,Summer,April to June,10°C - 25°C,Moderate,Great base for the Amarnath Yatra. Enjoy horse riding.
+Leh,Summer,June to September,15°C - 30°C,Very Low,Acclimatize for 24-48 hours to prevent altitude sickness.
+Manali,Summer,March to June,10°C - 25°C,Low,Ideal for paragliding and river rafting. Carry light woolens.
+Shimla,Summer,March to June,15°C - 30°C,Moderate,Avoid walking on Mall Road during peak afternoon heat.
+Dharamshala,Spring,September to November,15°C - 25°C,Low,Perfect for trekking to Triund. Respect temple customs.
+Dalhousie,Summer,March to May,15°C - 25°C,Low,Enjoy boating at Chamera lake and zorbing at Khajjiar.
+Mussoorie,Summer,April to June,15°C - 25°C,Moderate,Expect heavy weekend traffic. Travel early to waterfalls.
+Nainital,Summer,March to June,10°C - 25°C,Low,Book boat rides in the morning for calm lake views.
+Rishikesh,Autumn,October to March,15°C - 28°C,Low,Attend the evening Ganga Aarti. Try white water rafting.
+Haridwar,Spring,October to April,10°C - 25°C,Low,Rent lockers for shoes at Har Ki Pauri to avoid theft.
+Auli,Winter,December to March,-4°C - 12°C,Heavy Snowfall,Rent quality ski equipment locally from certified stores.
+Jaipur,Winter,October to March,10°C - 25°C,Very Low,Purchase a Composite Entry Ticket to save money on entry fees.
+Udaipur,Winter,October to March,12°C - 28°C,Low,Enjoy a sunset boat cruise at Lake Pichola.
+Jodhpur,Winter,October to March,10°C - 27°C,Low,Visit Mehrangarh Fort in the morning to avoid heat.
+Jaisalmer,Winter,November to February,5°C - 24°C,Negligible,Carry warm clothes as desert temperatures drop at night.
+Pushkar,Winter,October to March,10°C - 28°C,Low,Respect local culture by removing shoes near holy lake.
+Ranthambore,Winter,October to April,10°C - 30°C,Low,Book safaris several months in advance for top zones.
+Mount Abu,Summer,March to June,20°C - 32°C,Moderate,Dress modestly for the Dilwara Jain Temples.
+Agra,Winter,October to March,8°C - 25°C,Low,Taj Mahal is closed on Fridays. Arrive at sunrise to avoid crowd.
+Varanasi,Winter,October to March,10°C - 25°C,Low,Book river boat rides in early morning for sunrise views.
+Lucknow,Winter,October to March,10°C - 25°C,Low,Sample local Tunday Kababi and buy authentic Chikankari.
+Khajuraho,Winter,October to March,12°C - 26°C,Low,Attend the light and sound show at Western Group of Temples.
+Pachmarhi,Summer,October to June,18°C - 35°C,Moderate,Hire a local gypsy to navigate Satpura Biosphere Reserve.
+Orchha,Winter,October to March,10°C - 25°C,Low,Enjoy river rafting on Betwa River near the Chhatris.
+Gwalior,Winter,October to March,10°C - 25°C,Low,Observe the impressive sound and light show at the fort.
+Mumbai,Winter,November to February,18°C - 30°C,Low,Travel in local trains during non-peak hours to avoid massive crowds.
+Pune,Winter,October to March,15°C - 28°C,Low,Try regional street food like Misal Pav and Vada Pav.
+Mahabaleshwar,Winter,November to February,12°C - 25°C,Low,Visit strawberry farms in winter to taste fresh berries.
+Lonavala,Monsoon,June to September,18°C - 26°C,Heavy Rainfall,Monsoon is best to experience waterfalls and misty hills.
+North Goa,Winter,November to February,20°C - 32°C,Very Low,Rent a scooter locally to explore beaches comfortably.
+South Goa,Winter,November to February,20°C - 32°C,Very Low,"Choose South Goa for a quiet, relaxing holiday."
+Hampi,Winter,October to March,15°C - 33°C,Low,Rent a bicycle to explore the vast ruins easily.
+Coorg,Autumn,October to April,15°C - 28°C,Moderate,"Buy local spices, honey, and fresh coffee beans."
+Mysore,Winter,October to March,15°C - 30°C,Low,Visit Mysore Palace illuminated on Sunday nights.
+Bengaluru,Winter,October to March,15°C - 30°C,Low,Take a stroll in Cubbon Park on Sunday mornings.
+Gokarna,Winter,October to March,18°C - 32°C,Low,Trek between the five major beaches during sunset.
+Ooty,Summer,April to June,15°C - 25°C,Moderate,Book Nilgiri Toy Train tickets in advance on IRCTC.
+Kodaikanal,Summer,April to June,15°C - 25°C,Moderate,Rent a bicycle to ride around Kodaikanal Lake path.
+Chennai,Winter,November to February,20°C - 30°C,Moderate,Visit Marina Beach during early mornings or evenings.
+Mahabalipuram,Winter,October to March,18°C - 30°C,Low,Observe the magnificent relief carvings using a local guide.
+Madurai,Winter,October to March,20°C - 32°C,Low,Dress conservatively when entering Meenakshi Temple.
+Rameswaram,Winter,October to March,20°C - 30°C,Low,Take a holy dip in the 22 temple wells.
+Kanyakumari,Winter,October to March,22°C - 33°C,Low,Arrive early at the ferry to Vivekananda Rock to beat queues.
+Munnar,Autumn,September to May,15°C - 25°C,Moderate,Avoid trekking in national park during monsoon landslide season.
+Alleppey,Winter,November to February,20°C - 32°C,Low,Opt for an overnight houseboat stay for backwater views.
+Wayanad,Autumn,October to May,18°C - 28°C,Moderate,Edakkal Caves are closed on Mondays. Wear sturdy shoes.
+Kovalam,Winter,November to February,22°C - 33°C,Low,Climb the lighthouse at Lighthouse Beach for views.
+Thekkady,Winter,October to March,15°C - 28°C,Moderate,Book Periyar boat cruise tickets early in morning.
+Kochi,Winter,November to February,22°C - 32°C,Moderate,Observe Chinese fishing nets action in evening.
+Varkala,Winter,November to February,22°C - 32°C,Low,Enjoy dinner at Varkala Cliff cliffside cafes.
+Kumarakom,Winter,November to February,20°C - 32°C,Low,Great base for luxury Ayurvedic spa resorts.
+Darjeeling,Spring,October to May,8°C - 20°C,Moderate,Wake up at 3:30 AM to catch the Tiger Hill sunrise.
+Kalimpong,Spring,March to May,15°C - 25°C,Moderate,Enjoy river rafting on Teesta River nearby.
+Gangtok,Spring,October to June,10°C - 22°C,Low,Nathu La requires a special inner line permit.
+Pelling,Spring,October to May,10°C - 20°C,Moderate,Walk carefully on the Pelling Glass Skywalk.
+Shillong,Spring,October to April,15°C - 25°C,Low,Visit local cafes in Shillong for live rock performances.
+Cherrapunji,Monsoon,June to September,15°C - 23°C,Very Heavy,Carry raincoats. Treks to root bridges are physically demanding.
+Kaziranga,Winter,November to April,10°C - 25°C,Low,National Park remains closed during the monsoon season.
+Majuli,Winter,October to March,12°C - 25°C,Low,Ferry services from Jorhat are suspended in high currents.
+Tawang,Spring,March to June,10°C - 22°C,Moderate,Inner Line Permit (ILP) is required to enter Arunachal.
+Ziro,Autumn,September to November,15°C - 25°C,Low,Ziro Music Festival is held in late September.
+Puri,Winter,October to March,18°C - 30°C,Low,Only Hindus are permitted inside Jagannath Temple.
+Konark,Winter,October to March,18°C - 30°C,Low,Attend the annual Konark Dance Festival in December.
+Bhubaneswar,Winter,October to March,15°C - 30°C,Low,Hire local ASI guides at Udayagiri cave sites.
+Kolkata,Autumn,October to March,18°C - 30°C,Moderate,Durga Puja in Autumn is the best time to experience Kolkata.
+Visakhapatnam,Winter,October to March,18°C - 32°C,Low,Visit the submarine museum in the evening hours.
+Tirupati,Winter,September to March,18°C - 32°C,Low,Book Darshan tickets online weeks/months in advance.
+Araku Valley,Winter,October to March,15°C - 26°C,Low,Enjoy local bamboo chicken dish and buy coffee powders.
+Pondicherry,Winter,October to March,22°C - 32°C,Low,Explore the French Quarter by renting a bicycle.
+Havelock Island,Winter,November to April,22°C - 30°C,Low,Book ferry tickets between Port Blair and Havelock in advance.
+Port Blair,Winter,November to April,22°C - 31°C,Low,Attend the light and sound show at Cellular Jail.
+Gir National Park,Winter,December to March,10°C - 28°C,Low,The park is closed from mid-June to mid-October.
+Rann of Kutch,Winter,November to February,12°C - 25°C,Minimal,Visit during a full moon night for magical desert views.

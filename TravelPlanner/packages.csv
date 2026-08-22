@@ -1,0 +1,226 @@
+package_name,destination_name,duration,package_type,price,description,image
+Budget Exploration of Srinagar,Srinagar,3,Budget,7350.0,An affordable package to explore the best highlights of Srinagar including basic lodgings.,packages/srinagar-budget.jpg
+Standard Experience in Srinagar,Srinagar,4,Standard,14000.0,Enjoy a comfortable tour of Srinagar with standard accommodations and guided sightseeing tours.,packages/srinagar-standard.jpg
+Luxury Gateway to Srinagar,Srinagar,5,Luxury,31500.0,"Indulge in premium luxury travel to Srinagar featuring boutique resorts, private cars, and personal guides.",packages/srinagar-luxury.jpg
+Budget Exploration of Gulmarg,Gulmarg,2,Budget,8400.0,An affordable package to explore the best highlights of Gulmarg including basic lodgings.,packages/gulmarg-budget.jpg
+Standard Experience in Gulmarg,Gulmarg,3,Standard,18000.0,Enjoy a comfortable tour of Gulmarg with standard accommodations and guided sightseeing tours.,packages/gulmarg-standard.jpg
+Luxury Gateway to Gulmarg,Gulmarg,4,Luxury,43200.0,"Indulge in premium luxury travel to Gulmarg featuring boutique resorts, private cars, and personal guides.",packages/gulmarg-luxury.jpg
+Budget Exploration of Pahalgam,Pahalgam,3,Budget,6300.0,An affordable package to explore the best highlights of Pahalgam including basic lodgings.,packages/pahalgam-budget.jpg
+Standard Experience in Pahalgam,Pahalgam,4,Standard,12000.0,Enjoy a comfortable tour of Pahalgam with standard accommodations and guided sightseeing tours.,packages/pahalgam-standard.jpg
+Luxury Gateway to Pahalgam,Pahalgam,5,Luxury,27000.0,"Indulge in premium luxury travel to Pahalgam featuring boutique resorts, private cars, and personal guides.",packages/pahalgam-luxury.jpg
+Budget Exploration of Leh,Leh,5,Budget,19250.0,An affordable package to explore the best highlights of Leh including basic lodgings.,packages/leh-budget.jpg
+Standard Experience in Leh,Leh,6,Standard,33000.0,Enjoy a comfortable tour of Leh with standard accommodations and guided sightseeing tours.,packages/leh-standard.jpg
+Luxury Gateway to Leh,Leh,7,Luxury,69300.0,"Indulge in premium luxury travel to Leh featuring boutique resorts, private cars, and personal guides.",packages/leh-luxury.jpg
+Budget Exploration of Manali,Manali,3,Budget,5880.0,An affordable package to explore the best highlights of Manali including basic lodgings.,packages/manali-budget.jpg
+Standard Experience in Manali,Manali,4,Standard,11200.0,Enjoy a comfortable tour of Manali with standard accommodations and guided sightseeing tours.,packages/manali-standard.jpg
+Luxury Gateway to Manali,Manali,5,Luxury,25200.0,"Indulge in premium luxury travel to Manali featuring boutique resorts, private cars, and personal guides.",packages/manali-luxury.jpg
+Budget Exploration of Shimla,Shimla,3,Budget,6300.0,An affordable package to explore the best highlights of Shimla including basic lodgings.,packages/shimla-budget.jpg
+Standard Experience in Shimla,Shimla,4,Standard,12000.0,Enjoy a comfortable tour of Shimla with standard accommodations and guided sightseeing tours.,packages/shimla-standard.jpg
+Luxury Gateway to Shimla,Shimla,5,Luxury,27000.0,"Indulge in premium luxury travel to Shimla featuring boutique resorts, private cars, and personal guides.",packages/shimla-luxury.jpg
+Budget Exploration of Dharamshala,Dharamshala,3,Budget,3780.0,An affordable package to explore the best highlights of Dharamshala including basic lodgings.,packages/dharamshala-budget.jpg
+Standard Experience in Dharamshala,Dharamshala,4,Standard,7200.0,Enjoy a comfortable tour of Dharamshala with standard accommodations and guided sightseeing tours.,packages/dharamshala-standard.jpg
+Luxury Gateway to Dharamshala,Dharamshala,5,Luxury,16200.0,"Indulge in premium luxury travel to Dharamshala featuring boutique resorts, private cars, and personal guides.",packages/dharamshala-luxury.jpg
+Budget Exploration of Dalhousie,Dalhousie,2,Budget,3500.0,An affordable package to explore the best highlights of Dalhousie including basic lodgings.,packages/dalhousie-budget.jpg
+Standard Experience in Dalhousie,Dalhousie,3,Standard,7500.0,Enjoy a comfortable tour of Dalhousie with standard accommodations and guided sightseeing tours.,packages/dalhousie-standard.jpg
+Luxury Gateway to Dalhousie,Dalhousie,4,Luxury,18000.0,"Indulge in premium luxury travel to Dalhousie featuring boutique resorts, private cars, and personal guides.",packages/dalhousie-luxury.jpg
+Budget Exploration of Mussoorie,Mussoorie,2,Budget,4200.0,An affordable package to explore the best highlights of Mussoorie including basic lodgings.,packages/mussoorie-budget.jpg
+Standard Experience in Mussoorie,Mussoorie,3,Standard,9000.0,Enjoy a comfortable tour of Mussoorie with standard accommodations and guided sightseeing tours.,packages/mussoorie-standard.jpg
+Luxury Gateway to Mussoorie,Mussoorie,4,Luxury,21600.0,"Indulge in premium luxury travel to Mussoorie featuring boutique resorts, private cars, and personal guides.",packages/mussoorie-luxury.jpg
+Budget Exploration of Nainital,Nainital,2,Budget,4060.0,An affordable package to explore the best highlights of Nainital including basic lodgings.,packages/nainital-budget.jpg
+Standard Experience in Nainital,Nainital,3,Standard,8700.0,Enjoy a comfortable tour of Nainital with standard accommodations and guided sightseeing tours.,packages/nainital-standard.jpg
+Luxury Gateway to Nainital,Nainital,4,Luxury,20880.0,"Indulge in premium luxury travel to Nainital featuring boutique resorts, private cars, and personal guides.",packages/nainital-luxury.jpg
+Budget Exploration of Rishikesh,Rishikesh,3,Budget,3150.0,An affordable package to explore the best highlights of Rishikesh including basic lodgings.,packages/rishikesh-budget.jpg
+Standard Experience in Rishikesh,Rishikesh,4,Standard,6000.0,Enjoy a comfortable tour of Rishikesh with standard accommodations and guided sightseeing tours.,packages/rishikesh-standard.jpg
+Luxury Gateway to Rishikesh,Rishikesh,5,Luxury,13500.0,"Indulge in premium luxury travel to Rishikesh featuring boutique resorts, private cars, and personal guides.",packages/rishikesh-luxury.jpg
+Budget Exploration of Haridwar,Haridwar,2,Budget,1680.0,An affordable package to explore the best highlights of Haridwar including basic lodgings.,packages/haridwar-budget.jpg
+Standard Experience in Haridwar,Haridwar,3,Standard,3600.0,Enjoy a comfortable tour of Haridwar with standard accommodations and guided sightseeing tours.,packages/haridwar-standard.jpg
+Luxury Gateway to Haridwar,Haridwar,4,Luxury,8640.0,"Indulge in premium luxury travel to Haridwar featuring boutique resorts, private cars, and personal guides.",packages/haridwar-luxury.jpg
+Budget Exploration of Auli,Auli,3,Budget,10500.0,An affordable package to explore the best highlights of Auli including basic lodgings.,packages/auli-budget.jpg
+Standard Experience in Auli,Auli,4,Standard,20000.0,Enjoy a comfortable tour of Auli with standard accommodations and guided sightseeing tours.,packages/auli-standard.jpg
+Luxury Gateway to Auli,Auli,5,Luxury,45000.0,"Indulge in premium luxury travel to Auli featuring boutique resorts, private cars, and personal guides.",packages/auli-luxury.jpg
+Budget Exploration of Jaipur,Jaipur,3,Budget,6720.0,An affordable package to explore the best highlights of Jaipur including basic lodgings.,packages/jaipur-budget.jpg
+Standard Experience in Jaipur,Jaipur,4,Standard,12800.0,Enjoy a comfortable tour of Jaipur with standard accommodations and guided sightseeing tours.,packages/jaipur-standard.jpg
+Luxury Gateway to Jaipur,Jaipur,5,Luxury,28800.0,"Indulge in premium luxury travel to Jaipur featuring boutique resorts, private cars, and personal guides.",packages/jaipur-luxury.jpg
+Budget Exploration of Udaipur,Udaipur,3,Budget,10080.0,An affordable package to explore the best highlights of Udaipur including basic lodgings.,packages/udaipur-budget.jpg
+Standard Experience in Udaipur,Udaipur,4,Standard,19200.0,Enjoy a comfortable tour of Udaipur with standard accommodations and guided sightseeing tours.,packages/udaipur-standard.jpg
+Luxury Gateway to Udaipur,Udaipur,5,Luxury,43200.0,"Indulge in premium luxury travel to Udaipur featuring boutique resorts, private cars, and personal guides.",packages/udaipur-luxury.jpg
+Budget Exploration of Jodhpur,Jodhpur,2,Budget,3920.0,An affordable package to explore the best highlights of Jodhpur including basic lodgings.,packages/jodhpur-budget.jpg
+Standard Experience in Jodhpur,Jodhpur,3,Standard,8400.0,Enjoy a comfortable tour of Jodhpur with standard accommodations and guided sightseeing tours.,packages/jodhpur-standard.jpg
+Luxury Gateway to Jodhpur,Jodhpur,4,Luxury,20160.0,"Indulge in premium luxury travel to Jodhpur featuring boutique resorts, private cars, and personal guides.",packages/jodhpur-luxury.jpg
+Budget Exploration of Jaisalmer,Jaisalmer,3,Budget,6300.0,An affordable package to explore the best highlights of Jaisalmer including basic lodgings.,packages/jaisalmer-budget.jpg
+Standard Experience in Jaisalmer,Jaisalmer,4,Standard,12000.0,Enjoy a comfortable tour of Jaisalmer with standard accommodations and guided sightseeing tours.,packages/jaisalmer-standard.jpg
+Luxury Gateway to Jaisalmer,Jaisalmer,5,Luxury,27000.0,"Indulge in premium luxury travel to Jaisalmer featuring boutique resorts, private cars, and personal guides.",packages/jaisalmer-luxury.jpg
+Budget Exploration of Pushkar,Pushkar,2,Budget,2100.0,An affordable package to explore the best highlights of Pushkar including basic lodgings.,packages/pushkar-budget.jpg
+Standard Experience in Pushkar,Pushkar,3,Standard,4500.0,Enjoy a comfortable tour of Pushkar with standard accommodations and guided sightseeing tours.,packages/pushkar-standard.jpg
+Luxury Gateway to Pushkar,Pushkar,4,Luxury,10800.0,"Indulge in premium luxury travel to Pushkar featuring boutique resorts, private cars, and personal guides.",packages/pushkar-luxury.jpg
+Budget Exploration of Ranthambore,Ranthambore,2,Budget,7000.0,An affordable package to explore the best highlights of Ranthambore including basic lodgings.,packages/ranthambore-budget.jpg
+Standard Experience in Ranthambore,Ranthambore,3,Standard,15000.0,Enjoy a comfortable tour of Ranthambore with standard accommodations and guided sightseeing tours.,packages/ranthambore-standard.jpg
+Luxury Gateway to Ranthambore,Ranthambore,4,Luxury,36000.0,"Indulge in premium luxury travel to Ranthambore featuring boutique resorts, private cars, and personal guides.",packages/ranthambore-luxury.jpg
+Budget Exploration of Mount Abu,Mount Abu,2,Budget,3640.0,An affordable package to explore the best highlights of Mount Abu including basic lodgings.,packages/mount_abu-budget.jpg
+Standard Experience in Mount Abu,Mount Abu,3,Standard,7800.0,Enjoy a comfortable tour of Mount Abu with standard accommodations and guided sightseeing tours.,packages/mount_abu-standard.jpg
+Luxury Gateway to Mount Abu,Mount Abu,4,Luxury,18720.0,"Indulge in premium luxury travel to Mount Abu featuring boutique resorts, private cars, and personal guides.",packages/mount_abu-luxury.jpg
+Budget Exploration of Agra,Agra,2,Budget,4200.0,An affordable package to explore the best highlights of Agra including basic lodgings.,packages/agra-budget.jpg
+Standard Experience in Agra,Agra,3,Standard,9000.0,Enjoy a comfortable tour of Agra with standard accommodations and guided sightseeing tours.,packages/agra-standard.jpg
+Luxury Gateway to Agra,Agra,4,Luxury,21600.0,"Indulge in premium luxury travel to Agra featuring boutique resorts, private cars, and personal guides.",packages/agra-luxury.jpg
+Budget Exploration of Varanasi,Varanasi,3,Budget,3360.0,An affordable package to explore the best highlights of Varanasi including basic lodgings.,packages/varanasi-budget.jpg
+Standard Experience in Varanasi,Varanasi,4,Standard,6400.0,Enjoy a comfortable tour of Varanasi with standard accommodations and guided sightseeing tours.,packages/varanasi-standard.jpg
+Luxury Gateway to Varanasi,Varanasi,5,Luxury,14400.0,"Indulge in premium luxury travel to Varanasi featuring boutique resorts, private cars, and personal guides.",packages/varanasi-luxury.jpg
+Budget Exploration of Lucknow,Lucknow,2,Budget,3500.0,An affordable package to explore the best highlights of Lucknow including basic lodgings.,packages/lucknow-budget.jpg
+Standard Experience in Lucknow,Lucknow,3,Standard,7500.0,Enjoy a comfortable tour of Lucknow with standard accommodations and guided sightseeing tours.,packages/lucknow-standard.jpg
+Luxury Gateway to Lucknow,Lucknow,4,Luxury,18000.0,"Indulge in premium luxury travel to Lucknow featuring boutique resorts, private cars, and personal guides.",packages/lucknow-luxury.jpg
+Budget Exploration of Khajuraho,Khajuraho,2,Budget,3920.0,An affordable package to explore the best highlights of Khajuraho including basic lodgings.,packages/khajuraho-budget.jpg
+Standard Experience in Khajuraho,Khajuraho,3,Standard,8400.0,Enjoy a comfortable tour of Khajuraho with standard accommodations and guided sightseeing tours.,packages/khajuraho-standard.jpg
+Luxury Gateway to Khajuraho,Khajuraho,4,Luxury,20160.0,"Indulge in premium luxury travel to Khajuraho featuring boutique resorts, private cars, and personal guides.",packages/khajuraho-luxury.jpg
+Budget Exploration of Pachmarhi,Pachmarhi,2,Budget,2800.0,An affordable package to explore the best highlights of Pachmarhi including basic lodgings.,packages/pachmarhi-budget.jpg
+Standard Experience in Pachmarhi,Pachmarhi,3,Standard,6000.0,Enjoy a comfortable tour of Pachmarhi with standard accommodations and guided sightseeing tours.,packages/pachmarhi-standard.jpg
+Luxury Gateway to Pachmarhi,Pachmarhi,4,Luxury,14400.0,"Indulge in premium luxury travel to Pachmarhi featuring boutique resorts, private cars, and personal guides.",packages/pachmarhi-luxury.jpg
+Budget Exploration of Orchha,Orchha,2,Budget,2520.0,An affordable package to explore the best highlights of Orchha including basic lodgings.,packages/orchha-budget.jpg
+Standard Experience in Orchha,Orchha,3,Standard,5400.0,Enjoy a comfortable tour of Orchha with standard accommodations and guided sightseeing tours.,packages/orchha-standard.jpg
+Luxury Gateway to Orchha,Orchha,4,Luxury,12960.0,"Indulge in premium luxury travel to Orchha featuring boutique resorts, private cars, and personal guides.",packages/orchha-luxury.jpg
+Budget Exploration of Gwalior,Gwalior,2,Budget,3080.0,An affordable package to explore the best highlights of Gwalior including basic lodgings.,packages/gwalior-budget.jpg
+Standard Experience in Gwalior,Gwalior,3,Standard,6600.0,Enjoy a comfortable tour of Gwalior with standard accommodations and guided sightseeing tours.,packages/gwalior-standard.jpg
+Luxury Gateway to Gwalior,Gwalior,4,Luxury,15840.0,"Indulge in premium luxury travel to Gwalior featuring boutique resorts, private cars, and personal guides.",packages/gwalior-luxury.jpg
+Budget Exploration of Mumbai,Mumbai,3,Budget,10500.0,An affordable package to explore the best highlights of Mumbai including basic lodgings.,packages/mumbai-budget.jpg
+Standard Experience in Mumbai,Mumbai,4,Standard,20000.0,Enjoy a comfortable tour of Mumbai with standard accommodations and guided sightseeing tours.,packages/mumbai-standard.jpg
+Luxury Gateway to Mumbai,Mumbai,5,Luxury,45000.0,"Indulge in premium luxury travel to Mumbai featuring boutique resorts, private cars, and personal guides.",packages/mumbai-luxury.jpg
+Budget Exploration of Pune,Pune,2,Budget,3360.0,An affordable package to explore the best highlights of Pune including basic lodgings.,packages/pune-budget.jpg
+Standard Experience in Pune,Pune,3,Standard,7200.0,Enjoy a comfortable tour of Pune with standard accommodations and guided sightseeing tours.,packages/pune-standard.jpg
+Luxury Gateway to Pune,Pune,4,Luxury,17280.0,"Indulge in premium luxury travel to Pune featuring boutique resorts, private cars, and personal guides.",packages/pune-luxury.jpg
+Budget Exploration of Mahabaleshwar,Mahabaleshwar,2,Budget,3920.0,An affordable package to explore the best highlights of Mahabaleshwar including basic lodgings.,packages/mahabaleshwar-budget.jpg
+Standard Experience in Mahabaleshwar,Mahabaleshwar,3,Standard,8400.0,Enjoy a comfortable tour of Mahabaleshwar with standard accommodations and guided sightseeing tours.,packages/mahabaleshwar-standard.jpg
+Luxury Gateway to Mahabaleshwar,Mahabaleshwar,4,Luxury,20160.0,"Indulge in premium luxury travel to Mahabaleshwar featuring boutique resorts, private cars, and personal guides.",packages/mahabaleshwar-luxury.jpg
+Budget Exploration of Lonavala,Lonavala,2,Budget,3640.0,An affordable package to explore the best highlights of Lonavala including basic lodgings.,packages/lonavala-budget.jpg
+Standard Experience in Lonavala,Lonavala,3,Standard,7800.0,Enjoy a comfortable tour of Lonavala with standard accommodations and guided sightseeing tours.,packages/lonavala-standard.jpg
+Luxury Gateway to Lonavala,Lonavala,4,Luxury,18720.0,"Indulge in premium luxury travel to Lonavala featuring boutique resorts, private cars, and personal guides.",packages/lonavala-luxury.jpg
+Budget Exploration of North Goa,North Goa,3,Budget,7350.0,An affordable package to explore the best highlights of North Goa including basic lodgings.,packages/north_goa-budget.jpg
+Standard Experience in North Goa,North Goa,4,Standard,14000.0,Enjoy a comfortable tour of North Goa with standard accommodations and guided sightseeing tours.,packages/north_goa-standard.jpg
+Luxury Gateway to North Goa,North Goa,5,Luxury,31500.0,"Indulge in premium luxury travel to North Goa featuring boutique resorts, private cars, and personal guides.",packages/north_goa-luxury.jpg
+Budget Exploration of South Goa,South Goa,3,Budget,9450.0,An affordable package to explore the best highlights of South Goa including basic lodgings.,packages/south_goa-budget.jpg
+Standard Experience in South Goa,South Goa,4,Standard,18000.0,Enjoy a comfortable tour of South Goa with standard accommodations and guided sightseeing tours.,packages/south_goa-standard.jpg
+Luxury Gateway to South Goa,South Goa,5,Luxury,40500.0,"Indulge in premium luxury travel to South Goa featuring boutique resorts, private cars, and personal guides.",packages/south_goa-luxury.jpg
+Budget Exploration of Hampi,Hampi,3,Budget,3780.0,An affordable package to explore the best highlights of Hampi including basic lodgings.,packages/hampi-budget.jpg
+Standard Experience in Hampi,Hampi,4,Standard,7200.0,Enjoy a comfortable tour of Hampi with standard accommodations and guided sightseeing tours.,packages/hampi-standard.jpg
+Luxury Gateway to Hampi,Hampi,5,Luxury,16200.0,"Indulge in premium luxury travel to Hampi featuring boutique resorts, private cars, and personal guides.",packages/hampi-luxury.jpg
+Budget Exploration of Coorg,Coorg,3,Budget,5880.0,An affordable package to explore the best highlights of Coorg including basic lodgings.,packages/coorg-budget.jpg
+Standard Experience in Coorg,Coorg,4,Standard,11200.0,Enjoy a comfortable tour of Coorg with standard accommodations and guided sightseeing tours.,packages/coorg-standard.jpg
+Luxury Gateway to Coorg,Coorg,5,Luxury,25200.0,"Indulge in premium luxury travel to Coorg featuring boutique resorts, private cars, and personal guides.",packages/coorg-luxury.jpg
+Budget Exploration of Mysore,Mysore,2,Budget,3360.0,An affordable package to explore the best highlights of Mysore including basic lodgings.,packages/mysore-budget.jpg
+Standard Experience in Mysore,Mysore,3,Standard,7200.0,Enjoy a comfortable tour of Mysore with standard accommodations and guided sightseeing tours.,packages/mysore-standard.jpg
+Luxury Gateway to Mysore,Mysore,4,Luxury,17280.0,"Indulge in premium luxury travel to Mysore featuring boutique resorts, private cars, and personal guides.",packages/mysore-luxury.jpg
+Budget Exploration of Bengaluru,Bengaluru,2,Budget,5600.0,An affordable package to explore the best highlights of Bengaluru including basic lodgings.,packages/bengaluru-budget.jpg
+Standard Experience in Bengaluru,Bengaluru,3,Standard,12000.0,Enjoy a comfortable tour of Bengaluru with standard accommodations and guided sightseeing tours.,packages/bengaluru-standard.jpg
+Luxury Gateway to Bengaluru,Bengaluru,4,Luxury,28800.0,"Indulge in premium luxury travel to Bengaluru featuring boutique resorts, private cars, and personal guides.",packages/bengaluru-luxury.jpg
+Budget Exploration of Gokarna,Gokarna,2,Budget,2240.0,An affordable package to explore the best highlights of Gokarna including basic lodgings.,packages/gokarna-budget.jpg
+Standard Experience in Gokarna,Gokarna,3,Standard,4800.0,Enjoy a comfortable tour of Gokarna with standard accommodations and guided sightseeing tours.,packages/gokarna-standard.jpg
+Luxury Gateway to Gokarna,Gokarna,4,Luxury,11520.0,"Indulge in premium luxury travel to Gokarna featuring boutique resorts, private cars, and personal guides.",packages/gokarna-luxury.jpg
+Budget Exploration of Ooty,Ooty,3,Budget,5880.0,An affordable package to explore the best highlights of Ooty including basic lodgings.,packages/ooty-budget.jpg
+Standard Experience in Ooty,Ooty,4,Standard,11200.0,Enjoy a comfortable tour of Ooty with standard accommodations and guided sightseeing tours.,packages/ooty-standard.jpg
+Luxury Gateway to Ooty,Ooty,5,Luxury,25200.0,"Indulge in premium luxury travel to Ooty featuring boutique resorts, private cars, and personal guides.",packages/ooty-luxury.jpg
+Budget Exploration of Kodaikanal,Kodaikanal,2,Budget,3640.0,An affordable package to explore the best highlights of Kodaikanal including basic lodgings.,packages/kodaikanal-budget.jpg
+Standard Experience in Kodaikanal,Kodaikanal,3,Standard,7800.0,Enjoy a comfortable tour of Kodaikanal with standard accommodations and guided sightseeing tours.,packages/kodaikanal-standard.jpg
+Luxury Gateway to Kodaikanal,Kodaikanal,4,Luxury,18720.0,"Indulge in premium luxury travel to Kodaikanal featuring boutique resorts, private cars, and personal guides.",packages/kodaikanal-luxury.jpg
+Budget Exploration of Chennai,Chennai,2,Budget,3360.0,An affordable package to explore the best highlights of Chennai including basic lodgings.,packages/chennai-budget.jpg
+Standard Experience in Chennai,Chennai,3,Standard,7200.0,Enjoy a comfortable tour of Chennai with standard accommodations and guided sightseeing tours.,packages/chennai-standard.jpg
+Luxury Gateway to Chennai,Chennai,4,Luxury,17280.0,"Indulge in premium luxury travel to Chennai featuring boutique resorts, private cars, and personal guides.",packages/chennai-luxury.jpg
+Budget Exploration of Mahabalipuram,Mahabalipuram,2,Budget,3080.0,An affordable package to explore the best highlights of Mahabalipuram including basic lodgings.,packages/mahabalipuram-budget.jpg
+Standard Experience in Mahabalipuram,Mahabalipuram,3,Standard,6600.0,Enjoy a comfortable tour of Mahabalipuram with standard accommodations and guided sightseeing tours.,packages/mahabalipuram-standard.jpg
+Luxury Gateway to Mahabalipuram,Mahabalipuram,4,Luxury,15840.0,"Indulge in premium luxury travel to Mahabalipuram featuring boutique resorts, private cars, and personal guides.",packages/mahabalipuram-luxury.jpg
+Budget Exploration of Madurai,Madurai,2,Budget,2240.0,An affordable package to explore the best highlights of Madurai including basic lodgings.,packages/madurai-budget.jpg
+Standard Experience in Madurai,Madurai,3,Standard,4800.0,Enjoy a comfortable tour of Madurai with standard accommodations and guided sightseeing tours.,packages/madurai-standard.jpg
+Luxury Gateway to Madurai,Madurai,4,Luxury,11520.0,"Indulge in premium luxury travel to Madurai featuring boutique resorts, private cars, and personal guides.",packages/madurai-luxury.jpg
+Budget Exploration of Rameswaram,Rameswaram,2,Budget,2100.0,An affordable package to explore the best highlights of Rameswaram including basic lodgings.,packages/rameswaram-budget.jpg
+Standard Experience in Rameswaram,Rameswaram,3,Standard,4500.0,Enjoy a comfortable tour of Rameswaram with standard accommodations and guided sightseeing tours.,packages/rameswaram-standard.jpg
+Luxury Gateway to Rameswaram,Rameswaram,4,Luxury,10800.0,"Indulge in premium luxury travel to Rameswaram featuring boutique resorts, private cars, and personal guides.",packages/rameswaram-luxury.jpg
+Budget Exploration of Kanyakumari,Kanyakumari,2,Budget,2520.0,An affordable package to explore the best highlights of Kanyakumari including basic lodgings.,packages/kanyakumari-budget.jpg
+Standard Experience in Kanyakumari,Kanyakumari,3,Standard,5400.0,Enjoy a comfortable tour of Kanyakumari with standard accommodations and guided sightseeing tours.,packages/kanyakumari-standard.jpg
+Luxury Gateway to Kanyakumari,Kanyakumari,4,Luxury,12960.0,"Indulge in premium luxury travel to Kanyakumari featuring boutique resorts, private cars, and personal guides.",packages/kanyakumari-luxury.jpg
+Budget Exploration of Munnar,Munnar,3,Budget,6300.0,An affordable package to explore the best highlights of Munnar including basic lodgings.,packages/munnar-budget.jpg
+Standard Experience in Munnar,Munnar,4,Standard,12000.0,Enjoy a comfortable tour of Munnar with standard accommodations and guided sightseeing tours.,packages/munnar-standard.jpg
+Luxury Gateway to Munnar,Munnar,5,Luxury,27000.0,"Indulge in premium luxury travel to Munnar featuring boutique resorts, private cars, and personal guides.",packages/munnar-luxury.jpg
+Budget Exploration of Alleppey,Alleppey,2,Budget,4480.0,An affordable package to explore the best highlights of Alleppey including basic lodgings.,packages/alleppey-budget.jpg
+Standard Experience in Alleppey,Alleppey,3,Standard,9600.0,Enjoy a comfortable tour of Alleppey with standard accommodations and guided sightseeing tours.,packages/alleppey-standard.jpg
+Luxury Gateway to Alleppey,Alleppey,4,Luxury,23040.0,"Indulge in premium luxury travel to Alleppey featuring boutique resorts, private cars, and personal guides.",packages/alleppey-luxury.jpg
+Budget Exploration of Wayanad,Wayanad,3,Budget,5250.0,An affordable package to explore the best highlights of Wayanad including basic lodgings.,packages/wayanad-budget.jpg
+Standard Experience in Wayanad,Wayanad,4,Standard,10000.0,Enjoy a comfortable tour of Wayanad with standard accommodations and guided sightseeing tours.,packages/wayanad-standard.jpg
+Luxury Gateway to Wayanad,Wayanad,5,Luxury,22500.0,"Indulge in premium luxury travel to Wayanad featuring boutique resorts, private cars, and personal guides.",packages/wayanad-luxury.jpg
+Budget Exploration of Kovalam,Kovalam,2,Budget,5600.0,An affordable package to explore the best highlights of Kovalam including basic lodgings.,packages/kovalam-budget.jpg
+Standard Experience in Kovalam,Kovalam,3,Standard,12000.0,Enjoy a comfortable tour of Kovalam with standard accommodations and guided sightseeing tours.,packages/kovalam-standard.jpg
+Luxury Gateway to Kovalam,Kovalam,4,Luxury,28800.0,"Indulge in premium luxury travel to Kovalam featuring boutique resorts, private cars, and personal guides.",packages/kovalam-luxury.jpg
+Budget Exploration of Thekkady,Thekkady,2,Budget,4200.0,An affordable package to explore the best highlights of Thekkady including basic lodgings.,packages/thekkady-budget.jpg
+Standard Experience in Thekkady,Thekkady,3,Standard,9000.0,Enjoy a comfortable tour of Thekkady with standard accommodations and guided sightseeing tours.,packages/thekkady-standard.jpg
+Luxury Gateway to Thekkady,Thekkady,4,Luxury,21600.0,"Indulge in premium luxury travel to Thekkady featuring boutique resorts, private cars, and personal guides.",packages/thekkady-luxury.jpg
+Budget Exploration of Kochi,Kochi,2,Budget,3640.0,An affordable package to explore the best highlights of Kochi including basic lodgings.,packages/kochi-budget.jpg
+Standard Experience in Kochi,Kochi,3,Standard,7800.0,Enjoy a comfortable tour of Kochi with standard accommodations and guided sightseeing tours.,packages/kochi-standard.jpg
+Luxury Gateway to Kochi,Kochi,4,Luxury,18720.0,"Indulge in premium luxury travel to Kochi featuring boutique resorts, private cars, and personal guides.",packages/kochi-luxury.jpg
+Budget Exploration of Varkala,Varkala,2,Budget,2520.0,An affordable package to explore the best highlights of Varkala including basic lodgings.,packages/varkala-budget.jpg
+Standard Experience in Varkala,Varkala,3,Standard,5400.0,Enjoy a comfortable tour of Varkala with standard accommodations and guided sightseeing tours.,packages/varkala-standard.jpg
+Luxury Gateway to Varkala,Varkala,4,Luxury,12960.0,"Indulge in premium luxury travel to Varkala featuring boutique resorts, private cars, and personal guides.",packages/varkala-luxury.jpg
+Budget Exploration of Kumarakom,Kumarakom,2,Budget,7000.0,An affordable package to explore the best highlights of Kumarakom including basic lodgings.,packages/kumarakom-budget.jpg
+Standard Experience in Kumarakom,Kumarakom,3,Standard,15000.0,Enjoy a comfortable tour of Kumarakom with standard accommodations and guided sightseeing tours.,packages/kumarakom-standard.jpg
+Luxury Gateway to Kumarakom,Kumarakom,4,Luxury,36000.0,"Indulge in premium luxury travel to Kumarakom featuring boutique resorts, private cars, and personal guides.",packages/kumarakom-luxury.jpg
+Budget Exploration of Darjeeling,Darjeeling,3,Budget,6300.0,An affordable package to explore the best highlights of Darjeeling including basic lodgings.,packages/darjeeling-budget.jpg
+Standard Experience in Darjeeling,Darjeeling,4,Standard,12000.0,Enjoy a comfortable tour of Darjeeling with standard accommodations and guided sightseeing tours.,packages/darjeeling-standard.jpg
+Luxury Gateway to Darjeeling,Darjeeling,5,Luxury,27000.0,"Indulge in premium luxury travel to Darjeeling featuring boutique resorts, private cars, and personal guides.",packages/darjeeling-luxury.jpg
+Budget Exploration of Kalimpong,Kalimpong,2,Budget,2520.0,An affordable package to explore the best highlights of Kalimpong including basic lodgings.,packages/kalimpong-budget.jpg
+Standard Experience in Kalimpong,Kalimpong,3,Standard,5400.0,Enjoy a comfortable tour of Kalimpong with standard accommodations and guided sightseeing tours.,packages/kalimpong-standard.jpg
+Luxury Gateway to Kalimpong,Kalimpong,4,Luxury,12960.0,"Indulge in premium luxury travel to Kalimpong featuring boutique resorts, private cars, and personal guides.",packages/kalimpong-luxury.jpg
+Budget Exploration of Gangtok,Gangtok,3,Budget,6720.0,An affordable package to explore the best highlights of Gangtok including basic lodgings.,packages/gangtok-budget.jpg
+Standard Experience in Gangtok,Gangtok,4,Standard,12800.0,Enjoy a comfortable tour of Gangtok with standard accommodations and guided sightseeing tours.,packages/gangtok-standard.jpg
+Luxury Gateway to Gangtok,Gangtok,5,Luxury,28800.0,"Indulge in premium luxury travel to Gangtok featuring boutique resorts, private cars, and personal guides.",packages/gangtok-luxury.jpg
+Budget Exploration of Pelling,Pelling,2,Budget,3500.0,An affordable package to explore the best highlights of Pelling including basic lodgings.,packages/pelling-budget.jpg
+Standard Experience in Pelling,Pelling,3,Standard,7500.0,Enjoy a comfortable tour of Pelling with standard accommodations and guided sightseeing tours.,packages/pelling-standard.jpg
+Luxury Gateway to Pelling,Pelling,4,Luxury,18000.0,"Indulge in premium luxury travel to Pelling featuring boutique resorts, private cars, and personal guides.",packages/pelling-luxury.jpg
+Budget Exploration of Shillong,Shillong,3,Budget,5880.0,An affordable package to explore the best highlights of Shillong including basic lodgings.,packages/shillong-budget.jpg
+Standard Experience in Shillong,Shillong,4,Standard,11200.0,Enjoy a comfortable tour of Shillong with standard accommodations and guided sightseeing tours.,packages/shillong-standard.jpg
+Luxury Gateway to Shillong,Shillong,5,Luxury,25200.0,"Indulge in premium luxury travel to Shillong featuring boutique resorts, private cars, and personal guides.",packages/shillong-luxury.jpg
+Budget Exploration of Cherrapunji,Cherrapunji,2,Budget,4200.0,An affordable package to explore the best highlights of Cherrapunji including basic lodgings.,packages/cherrapunji-budget.jpg
+Standard Experience in Cherrapunji,Cherrapunji,3,Standard,9000.0,Enjoy a comfortable tour of Cherrapunji with standard accommodations and guided sightseeing tours.,packages/cherrapunji-standard.jpg
+Luxury Gateway to Cherrapunji,Cherrapunji,4,Luxury,21600.0,"Indulge in premium luxury travel to Cherrapunji featuring boutique resorts, private cars, and personal guides.",packages/cherrapunji-luxury.jpg
+Budget Exploration of Kaziranga,Kaziranga,2,Budget,6300.0,An affordable package to explore the best highlights of Kaziranga including basic lodgings.,packages/kaziranga-budget.jpg
+Standard Experience in Kaziranga,Kaziranga,3,Standard,13500.0,Enjoy a comfortable tour of Kaziranga with standard accommodations and guided sightseeing tours.,packages/kaziranga-standard.jpg
+Luxury Gateway to Kaziranga,Kaziranga,4,Luxury,32400.0,"Indulge in premium luxury travel to Kaziranga featuring boutique resorts, private cars, and personal guides.",packages/kaziranga-luxury.jpg
+Budget Exploration of Majuli,Majuli,2,Budget,2100.0,An affordable package to explore the best highlights of Majuli including basic lodgings.,packages/majuli-budget.jpg
+Standard Experience in Majuli,Majuli,3,Standard,4500.0,Enjoy a comfortable tour of Majuli with standard accommodations and guided sightseeing tours.,packages/majuli-standard.jpg
+Luxury Gateway to Majuli,Majuli,4,Luxury,10800.0,"Indulge in premium luxury travel to Majuli featuring boutique resorts, private cars, and personal guides.",packages/majuli-luxury.jpg
+Budget Exploration of Tawang,Tawang,4,Budget,8400.0,An affordable package to explore the best highlights of Tawang including basic lodgings.,packages/tawang-budget.jpg
+Standard Experience in Tawang,Tawang,5,Standard,15000.0,Enjoy a comfortable tour of Tawang with standard accommodations and guided sightseeing tours.,packages/tawang-standard.jpg
+Luxury Gateway to Tawang,Tawang,6,Luxury,32400.0,"Indulge in premium luxury travel to Tawang featuring boutique resorts, private cars, and personal guides.",packages/tawang-luxury.jpg
+Budget Exploration of Ziro,Ziro,2,Budget,2240.0,An affordable package to explore the best highlights of Ziro including basic lodgings.,packages/ziro-budget.jpg
+Standard Experience in Ziro,Ziro,3,Standard,4800.0,Enjoy a comfortable tour of Ziro with standard accommodations and guided sightseeing tours.,packages/ziro-standard.jpg
+Luxury Gateway to Ziro,Ziro,4,Luxury,11520.0,"Indulge in premium luxury travel to Ziro featuring boutique resorts, private cars, and personal guides.",packages/ziro-luxury.jpg
+Budget Exploration of Puri,Puri,2,Budget,2520.0,An affordable package to explore the best highlights of Puri including basic lodgings.,packages/puri-budget.jpg
+Standard Experience in Puri,Puri,3,Standard,5400.0,Enjoy a comfortable tour of Puri with standard accommodations and guided sightseeing tours.,packages/puri-standard.jpg
+Luxury Gateway to Puri,Puri,4,Luxury,12960.0,"Indulge in premium luxury travel to Puri featuring boutique resorts, private cars, and personal guides.",packages/puri-luxury.jpg
+Budget Exploration of Konark,Konark,2,Budget,3080.0,An affordable package to explore the best highlights of Konark including basic lodgings.,packages/konark-budget.jpg
+Standard Experience in Konark,Konark,3,Standard,6600.0,Enjoy a comfortable tour of Konark with standard accommodations and guided sightseeing tours.,packages/konark-standard.jpg
+Luxury Gateway to Konark,Konark,4,Luxury,15840.0,"Indulge in premium luxury travel to Konark featuring boutique resorts, private cars, and personal guides.",packages/konark-luxury.jpg
+Budget Exploration of Bhubaneswar,Bhubaneswar,2,Budget,2800.0,An affordable package to explore the best highlights of Bhubaneswar including basic lodgings.,packages/bhubaneswar-budget.jpg
+Standard Experience in Bhubaneswar,Bhubaneswar,3,Standard,6000.0,Enjoy a comfortable tour of Bhubaneswar with standard accommodations and guided sightseeing tours.,packages/bhubaneswar-standard.jpg
+Luxury Gateway to Bhubaneswar,Bhubaneswar,4,Luxury,14400.0,"Indulge in premium luxury travel to Bhubaneswar featuring boutique resorts, private cars, and personal guides.",packages/bhubaneswar-luxury.jpg
+Budget Exploration of Kolkata,Kolkata,3,Budget,5460.0,An affordable package to explore the best highlights of Kolkata including basic lodgings.,packages/kolkata-budget.jpg
+Standard Experience in Kolkata,Kolkata,4,Standard,10400.0,Enjoy a comfortable tour of Kolkata with standard accommodations and guided sightseeing tours.,packages/kolkata-standard.jpg
+Luxury Gateway to Kolkata,Kolkata,5,Luxury,23400.0,"Indulge in premium luxury travel to Kolkata featuring boutique resorts, private cars, and personal guides.",packages/kolkata-luxury.jpg
+Budget Exploration of Visakhapatnam,Visakhapatnam,2,Budget,3500.0,An affordable package to explore the best highlights of Visakhapatnam including basic lodgings.,packages/visakhapatnam-budget.jpg
+Standard Experience in Visakhapatnam,Visakhapatnam,3,Standard,7500.0,Enjoy a comfortable tour of Visakhapatnam with standard accommodations and guided sightseeing tours.,packages/visakhapatnam-standard.jpg
+Luxury Gateway to Visakhapatnam,Visakhapatnam,4,Luxury,18000.0,"Indulge in premium luxury travel to Visakhapatnam featuring boutique resorts, private cars, and personal guides.",packages/visakhapatnam-luxury.jpg
+Budget Exploration of Tirupati,Tirupati,2,Budget,4200.0,An affordable package to explore the best highlights of Tirupati including basic lodgings.,packages/tirupati-budget.jpg
+Standard Experience in Tirupati,Tirupati,3,Standard,9000.0,Enjoy a comfortable tour of Tirupati with standard accommodations and guided sightseeing tours.,packages/tirupati-standard.jpg
+Luxury Gateway to Tirupati,Tirupati,4,Luxury,21600.0,"Indulge in premium luxury travel to Tirupati featuring boutique resorts, private cars, and personal guides.",packages/tirupati-luxury.jpg
+Budget Exploration of Araku Valley,Araku Valley,2,Budget,2520.0,An affordable package to explore the best highlights of Araku Valley including basic lodgings.,packages/araku_valley-budget.jpg
+Standard Experience in Araku Valley,Araku Valley,3,Standard,5400.0,Enjoy a comfortable tour of Araku Valley with standard accommodations and guided sightseeing tours.,packages/araku_valley-standard.jpg
+Luxury Gateway to Araku Valley,Araku Valley,4,Luxury,12960.0,"Indulge in premium luxury travel to Araku Valley featuring boutique resorts, private cars, and personal guides.",packages/araku_valley-luxury.jpg
+Budget Exploration of Pondicherry,Pondicherry,2,Budget,3920.0,An affordable package to explore the best highlights of Pondicherry including basic lodgings.,packages/pondicherry-budget.jpg
+Standard Experience in Pondicherry,Pondicherry,3,Standard,8400.0,Enjoy a comfortable tour of Pondicherry with standard accommodations and guided sightseeing tours.,packages/pondicherry-standard.jpg
+Luxury Gateway to Pondicherry,Pondicherry,4,Luxury,20160.0,"Indulge in premium luxury travel to Pondicherry featuring boutique resorts, private cars, and personal guides.",packages/pondicherry-luxury.jpg
+Budget Exploration of Havelock Island,Havelock Island,3,Budget,13650.0,An affordable package to explore the best highlights of Havelock Island including basic lodgings.,packages/havelock_island-budget.jpg
+Standard Experience in Havelock Island,Havelock Island,4,Standard,26000.0,Enjoy a comfortable tour of Havelock Island with standard accommodations and guided sightseeing tours.,packages/havelock_island-standard.jpg
+Luxury Gateway to Havelock Island,Havelock Island,5,Luxury,58500.0,"Indulge in premium luxury travel to Havelock Island featuring boutique resorts, private cars, and personal guides.",packages/havelock_island-luxury.jpg
+Budget Exploration of Port Blair,Port Blair,2,Budget,4900.0,An affordable package to explore the best highlights of Port Blair including basic lodgings.,packages/port_blair-budget.jpg
+Standard Experience in Port Blair,Port Blair,3,Standard,10500.0,Enjoy a comfortable tour of Port Blair with standard accommodations and guided sightseeing tours.,packages/port_blair-standard.jpg
+Luxury Gateway to Port Blair,Port Blair,4,Luxury,25200.0,"Indulge in premium luxury travel to Port Blair featuring boutique resorts, private cars, and personal guides.",packages/port_blair-luxury.jpg
+Budget Exploration of Gir National Park,Gir National Park,2,Budget,6720.0,An affordable package to explore the best highlights of Gir National Park including basic lodgings.,packages/gir_national_park-budget.jpg
+Standard Experience in Gir National Park,Gir National Park,3,Standard,14400.0,Enjoy a comfortable tour of Gir National Park with standard accommodations and guided sightseeing tours.,packages/gir_national_park-standard.jpg
+Luxury Gateway to Gir National Park,Gir National Park,4,Luxury,34560.0,"Indulge in premium luxury travel to Gir National Park featuring boutique resorts, private cars, and personal guides.",packages/gir_national_park-luxury.jpg
+Budget Exploration of Rann of Kutch,Rann of Kutch,2,Budget,7700.0,An affordable package to explore the best highlights of Rann of Kutch including basic lodgings.,packages/rann_of_kutch-budget.jpg
+Standard Experience in Rann of Kutch,Rann of Kutch,3,Standard,16500.0,Enjoy a comfortable tour of Rann of Kutch with standard accommodations and guided sightseeing tours.,packages/rann_of_kutch-standard.jpg
+Luxury Gateway to Rann of Kutch,Rann of Kutch,4,Luxury,39600.0,"Indulge in premium luxury travel to Rann of Kutch featuring boutique resorts, private cars, and personal guides.",packages/rann_of_kutch-luxury.jpg

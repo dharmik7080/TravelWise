@@ -1,0 +1,391 @@
+attraction_name,destination_name,category,description,entry_fee,opening_time,closing_time,average_visit_time,image
+Dal Lake,Srinagar,Nature,Scenic lake famous for shikaras and wooden houseboats.,0.0,06:00:00,21:00:00,120,attractions/dal_lake.jpg
+Shalimar Bagh Mughal Garden,Srinagar,Heritage,Beautiful garden built by Mughal Emperor Jahangir.,25.0,09:00:00,18:00:00,90,attractions/shalimar_bagh_mughal_garden.jpg
+Nishat Bagh,Srinagar,Heritage,Terraced Mughal garden offering panoramic views of Dal Lake.,25.0,09:00:00,18:00:00,90,attractions/nishat_bagh.jpg
+Shankaracharya Temple,Srinagar,Spiritual,Ancient temple dedicated to Lord Shiva on a hilltop.,0.0,07:00:00,20:00:00,60,attractions/shankaracharya_temple.jpg
+Indira Gandhi Memorial Tulip Garden,Srinagar,Nature,"The largest tulip garden in Asia, showcasing vibrant blooms.",50.0,09:00:00,19:00:00,120,attractions/indira_gandhi_memorial_tulip_garden.jpg
+Hazratbal Shrine,Srinagar,Spiritual,White marble Islamic shrine housing a holy relic.,0.0,05:00:00,21:00:00,60,attractions/hazratbal_shrine.jpg
+Gulmarg Gondola,Gulmarg,Adventure,One of the highest cable cars in Asia offering snow views.,900.0,10:00:00,17:00:00,180,attractions/gulmarg_gondola.jpg
+Khilanmarg,Gulmarg,Nature,A small valley offering spectacular views of the Himalayas.,0.0,08:00:00,16:00:00,120,attractions/khilanmarg.jpg
+Gulmarg Golf Course,Gulmarg,Adventure,A beautiful 18-hole golf course located at a high altitude.,100.0,09:00:00,18:00:00,90,attractions/gulmarg_golf_course.jpg
+St. Mary's Church Gulmarg,Gulmarg,Heritage,A historic Victorian style church built during the British era.,0.0,10:00:00,17:00:00,45,attractions/st._mary's_church_gulmarg.jpg
+Alpathar Lake,Gulmarg,Nature,A high altitude lake that remains frozen until mid-June.,0.0,08:00:00,15:00:00,150,attractions/alpathar_lake.jpg
+Baisaran Valley,Pahalgam,Nature,"Known as Mini Switzerland, featuring pine forests and meadows.",50.0,08:00:00,18:00:00,120,attractions/baisaran_valley.jpg
+Aru Valley,Pahalgam,Nature,A scenic village known for its tranquil meadows and activities.,0.0,08:00:00,18:00:00,180,attractions/aru_valley.jpg
+Betaab Valley,Pahalgam,Nature,"Named after a famous Bollywood movie, featuring crystal streams.",100.0,08:00:00,18:00:00,120,attractions/betaab_valley.jpg
+Lidder Amusement Park,Pahalgam,Adventure,A small amusement park next to the rushing Lidder river.,150.0,10:00:00,19:00:00,90,attractions/lidder_amusement_park.jpg
+Sheshnag Lake,Pahalgam,Nature,A high-altitude oligotrophic lake reachable by trekking.,0.0,07:00:00,17:00:00,240,attractions/sheshnag_lake.jpg
+Leh Palace,Leh,Heritage,A 17th-century former royal palace overlooking the town.,200.0,08:00:00,17:00:00,90,attractions/leh_palace.jpg
+Shanti Stupa,Leh,Spiritual,A white-domed Buddhist stupa offering panoramic views.,0.0,05:00:00,21:00:00,60,attractions/shanti_stupa.jpg
+Magnetic Hill,Leh,Adventure,A cyclops hill where gravity-defying phenomena occur.,0.0,00:00:00,23:59:59,45,attractions/magnetic_hill.jpg
+Thiksey Monastery,Leh,Spiritual,A twelve-story Tibetan Buddhist monastery resembling Lhasa.,50.0,07:00:00,19:00:00,120,attractions/thiksey_monastery.jpg
+Pangong Tso Lake,Leh,Nature,A breathtaking endorheic lake extending from India to China.,0.0,00:00:00,23:59:59,240,attractions/pangong_tso_lake.jpg
+Hall of Fame Museum,Leh,Heritage,A museum built by the Indian Army in memory of martyrs.,100.0,09:00:00,19:00:00,90,attractions/hall_of_fame_museum.jpg
+Hadimba Temple,Manali,Spiritual,An ancient wooden temple built around a natural cave.,0.0,08:00:00,18:00:00,60,attractions/hadimba_temple.jpg
+Solang Valley,Manali,Adventure,Famous for adventure sports like paragliding and zorbing.,0.0,09:00:00,18:00:00,180,attractions/solang_valley.jpg
+Jogini Waterfalls,Manali,Nature,A scenic waterfall reachable by a short hillside trek.,0.0,08:00:00,17:00:00,120,attractions/jogini_waterfalls.jpg
+Vashisht Hot Water Springs,Manali,Spiritual,Natural sulfur hot water springs known for healing properties.,0.0,07:00:00,21:00:00,45,attractions/vashisht_hot_water_springs.jpg
+Mall Road Manali,Manali,City,"A bustling street full of shops, eateries, and local markets.",0.0,10:00:00,22:00:00,90,attractions/mall_road_manali.jpg
+Atal Tunnel,Manali,Adventure,"The longest highway single-tube tunnel above 10,000 feet.",0.0,00:00:00,23:59:59,60,attractions/atal_tunnel.jpg
+The Ridge Shimla,Shimla,City,"A large open space in the heart of Shimla, offering mountain views.",0.0,00:00:00,23:59:59,90,attractions/the_ridge_shimla.jpg
+Jakhoo Temple,Shimla,Spiritual,An ancient temple dedicated to Hanuman with a giant statue.,0.0,07:00:00,20:00:00,90,attractions/jakhoo_temple.jpg
+Kalka Shimla Toy Train,Shimla,Heritage,A UNESCO World Heritage narrow-gauge railway journey.,300.0,06:00:00,18:00:00,300,attractions/kalka_shimla_toy_train.jpg
+Mall Road Shimla,Shimla,City,Pedestrian-only avenue packed with heritage buildings and shops.,0.0,09:00:00,22:00:00,120,attractions/mall_road_shimla.jpg
+Viceregal Lodge,Shimla,Heritage,Historical British imperial residence with gardens.,100.0,09:00:00,17:00:00,90,attractions/viceregal_lodge.jpg
+Christ Church Shimla,Shimla,Heritage,"The second oldest church in North India, displaying neo-Gothic style.",0.0,08:00:00,18:00:00,45,attractions/christ_church_shimla.jpg
+Tsuglagkhang Complex,Dharamshala,Spiritual,The official residence and temple complex of the Dalai Lama.,0.0,06:00:00,19:00:00,120,attractions/tsuglagkhang_complex.jpg
+Bhagsunag Waterfall,Dharamshala,Nature,A scenic fresh waterfall located near Bhagsunath Temple.,0.0,07:00:00,18:00:00,90,attractions/bhagsunag_waterfall.jpg
+HPCA Stadium Dharamshala,Dharamshala,Adventure,A picturesque international cricket stadium with snow mountains background.,30.0,09:00:00,18:00:00,60,attractions/hpca_stadium_dharamshala.jpg
+Namgyal Monastery,Dharamshala,Spiritual,"The personal monastery of the Dalai Lama, founded in the 16th century.",0.0,06:00:00,20:00:00,90,attractions/namgyal_monastery.jpg
+St. John in the Wilderness Church,Dharamshala,Heritage,An old Anglican church built in 1852 amidst deodar trees.,0.0,09:00:00,18:00:00,45,attractions/st._john_in_the_wilderness_church.jpg
+Triund Hill,Dharamshala,Adventure,A popular trekking spot offering panoramic views of the Dhauladhars.,0.0,00:00:00,23:59:59,240,attractions/triund_hill.jpg
+Khajjiar Lake,Dalhousie,Nature,"Often called the Switzerland of India, surrounded by cedar forests.",0.0,08:00:00,18:00:00,120,attractions/khajjiar_lake.jpg
+Panchpula,Dalhousie,Nature,A scenic picnic spot featuring waterfalls and streams.,0.0,09:00:00,19:00:00,90,attractions/panchpula.jpg
+Dainkund Peak,Dalhousie,Nature,"The highest peak in Dalhousie, offering panoramic valley views.",0.0,08:00:00,17:00:00,120,attractions/dainkund_peak.jpg
+St. John's Church Dalhousie,Dalhousie,Heritage,"The oldest church in the town, embodying Protestant structure.",0.0,07:00:00,19:00:00,45,attractions/st._john's_church_dalhousie.jpg
+Satdhara Falls,Dalhousie,Nature,Mica-rich mineral springs known for medicinal virtues.,0.0,08:00:00,18:00:00,60,attractions/satdhara_falls.jpg
+Kempty Falls,Mussoorie,Nature,A popular giant waterfall where tourists enjoy bathing.,50.0,08:00:00,17:00:00,120,attractions/kempty_falls.jpg
+Gun Hill,Mussoorie,Nature,"The second highest point in Mussoorie, accessible by ropeway.",150.0,09:00:00,19:00:00,90,attractions/gun_hill.jpg
+Lal Tibba Scenic Point,Mussoorie,Nature,The highest peak in Mussoorie offering telescope views of snow peaks.,50.0,08:00:00,19:00:00,60,attractions/lal_tibba_scenic_point.jpg
+Company Garden Mussoorie,Mussoorie,Nature,A colorful municipal garden with a mini lake and amusement rides.,25.0,09:00:00,18:00:00,90,attractions/company_garden_mussoorie.jpg
+Cloud's End,Mussoorie,Nature,A quiet resort forest marker marking the geographical end of Mussoorie.,50.0,08:00:00,18:00:00,120,attractions/cloud's_end.jpg
+Naini Lake,Nainital,Nature,A crescent-shaped natural freshwater body famous for boating.,120.0,06:00:00,18:00:00,90,attractions/naini_lake.jpg
+Naina Devi Temple,Nainital,Spiritual,A sacred Hindu temple situated on the northern shore of the lake.,0.0,06:00:00,22:00:00,60,attractions/naina_devi_temple.jpg
+Naini Peak,Nainital,Nature,"Also known as China Peak, the highest mountain peak in Nainital.",0.0,08:00:00,17:00:00,180,attractions/naini_peak.jpg
+Tiffin Top,Nainital,Nature,A terraced hilltop offering scenic mountain scenery views.,0.0,08:00:00,18:00:00,90,attractions/tiffin_top.jpg
+G.B. Pant High Altitude Zoo,Nainital,Wildlife,One of the few high-altitude zoos in India.,100.0,10:00:00,16:30:00,120,attractions/g.b._pant_high_altitude_zoo.jpg
+Laxman Jhula,Rishikesh,Heritage,A famous suspension bridge across the holy Ganges River.,0.0,00:00:00,23:59:59,45,attractions/laxman_jhula.jpg
+Triveni Ghat,Rishikesh,Spiritual,A sacred bathing ghat known for the evening Ganga Aarti.,0.0,05:00:00,22:00:00,90,attractions/triveni_ghat.jpg
+Neer Garh Waterfall,Rishikesh,Nature,A natural hiking trail leading to double fresh waterfalls.,30.0,08:00:00,18:00:00,120,attractions/neer_garh_waterfall.jpg
+Parmarth Niketan Ashram,Rishikesh,Spiritual,"The largest ashram in Rishikesh, holding spiritual lectures.",0.0,06:00:00,21:00:00,90,attractions/parmarth_niketan_ashram.jpg
+Jumpin Heights,Rishikesh,Adventure,India's highest bungee jumping zone run by experts.,3500.0,09:30:00,16:00:00,180,attractions/jumpin_heights.jpg
+The Beatles Ashram,Rishikesh,Heritage,The ruins of Maharishi Mahesh Yogi ashram visited by The Beatles.,150.0,09:00:00,17:00:00,90,attractions/the_beatles_ashram.jpg
+Har Ki Pauri,Haridwar,Spiritual,"The most famous ghat on the banks of the Ganges, holding Aarti.",0.0,00:00:00,23:59:59,90,attractions/har_ki_pauri.jpg
+Mansa Devi Temple,Haridwar,Spiritual,A temple dedicated to Mansa Devi on Bilwa Parvat hill.,0.0,05:00:00,21:00:00,120,attractions/mansa_devi_temple.jpg
+Chandi Devi Temple,Haridwar,Spiritual,A hilltop temple accessible by a steep trek or ropeway.,0.0,06:00:00,20:00:00,120,attractions/chandi_devi_temple.jpg
+Bharat Mata Mandir,Haridwar,Spiritual,A unique multi-story temple dedicated to Mother India.,0.0,09:00:00,18:00:00,60,attractions/bharat_mata_mandir.jpg
+Daksh Mahadev Temple,Haridwar,Spiritual,An ancient temple of Shiva located in Kankhal district.,0.0,06:00:00,21:00:00,60,attractions/daksh_mahadev_temple.jpg
+Auli Ropeway,Auli,Adventure,A long cable car ride linking Joshimath and Auli skiing slopes.,1000.0,09:00:00,17:00:00,120,attractions/auli_ropeway.jpg
+Auli Artificial Lake,Auli,Nature,A pristine artificial lake providing snowmaking system water.,0.0,08:00:00,18:00:00,60,attractions/auli_artificial_lake.jpg
+Gorson Bugyal Trek,Auli,Adventure,A scenic meadow trek offering massive views of Nanda Devi.,0.0,07:00:00,16:00:00,180,attractions/gorson_bugyal_trek.jpg
+Kwani Bugyal,Auli,Nature,A beautiful high altitude meadow situated at 3384 meters.,0.0,08:00:00,16:00:00,240,attractions/kwani_bugyal.jpg
+Joshimath Temple Complex,Auli,Spiritual,A historic religious gateway town situated near Auli.,0.0,06:00:00,20:00:00,90,attractions/joshimath_temple_complex.jpg
+Amer Fort,Jaipur,Heritage,A majestic hilltop fortress featuring Mughal and Rajput style elements.,200.0,08:00:00,17:30:00,120,attractions/amer_fort.jpg
+Hawa Mahal,Jaipur,Heritage,"The Palace of Winds, a five-story pink sandstone structure.",50.0,09:00:00,17:00:00,60,attractions/hawa_mahal.jpg
+City Palace Jaipur,Jaipur,Heritage,A royal palace complex hosting museums and royal courtyards.,300.0,09:30:00,17:00:00,120,attractions/city_palace_jaipur.jpg
+Jantar Mantar Jaipur,Jaipur,Heritage,An astronomical observatory featuring the world's largest stone sundial.,50.0,09:00:00,16:30:00,90,attractions/jantar_mantar_jaipur.jpg
+Nahargarh Fort,Jaipur,Heritage,Fort offering sweeping panoramic views of the city.,200.0,10:00:00,22:00:00,90,attractions/nahargarh_fort.jpg
+Chokhi Dhani,Jaipur,Heritage,An ethnic mock village offering traditional Rajasthani food and dances.,900.0,17:00:00,23:00:00,180,attractions/chokhi_dhani.jpg
+City Palace Udaipur,Udaipur,Heritage,"The largest palace complex in Rajasthan, situated on Lake Pichola.",250.0,09:00:00,17:30:00,120,attractions/city_palace_udaipur.jpg
+Lake Pichola Boating,Udaipur,Nature,A scenic boat ride around the floating Jag Mandir and Lake Palace.,400.0,09:00:00,18:00:00,60,attractions/lake_pichola_boating.jpg
+Sajjangarh Monsoon Palace,Udaipur,Heritage,A hilltop palace offering spectacular sunset views of Udaipur.,150.0,09:00:00,18:00:00,90,attractions/sajjangarh_monsoon_palace.jpg
+Jagdish Temple,Udaipur,Spiritual,A large Indo-Aryan temple built in the middle of Udaipur town.,0.0,05:00:00,22:00:00,45,attractions/jagdish_temple.jpg
+Saheliyon-ki-Bari,Udaipur,Heritage,"A historic garden featuring marble fountains, kiosks, and pools.",50.0,09:00:00,19:00:00,60,attractions/saheliyon_ki_bari.jpg
+Bagore Ki Haveli,Udaipur,Heritage,An old mansion hosting an evening Rajasthani folk dance show.,100.0,09:00:00,20:00:00,90,attractions/bagore_ki_haveli.jpg
+Mehrangarh Fort,Jodhpur,Heritage,"One of the largest forts in India, containing royal treasures.",200.0,09:00:00,17:00:00,120,attractions/mehrangarh_fort.jpg
+Jaswant Thada,Jodhpur,Heritage,A beautiful white marble cenotaph built by the royal family.,50.0,09:00:00,17:00:00,45,attractions/jaswant_thada.jpg
+Umaid Bhawan Palace Museum,Jodhpur,Heritage,"Part museum, part luxury hotel, one of the largest private residences.",100.0,09:00:00,17:00:00,90,attractions/umaid_bhawan_palace_museum.jpg
+Mandore Gardens,Jodhpur,Heritage,Historical town gardens featuring Cenotaphs and temples.,0.0,08:00:00,20:00:00,90,attractions/mandore_gardens.jpg
+Ghanta Ghar Clock Tower,Jodhpur,City,A historic marketplace clock tower surrounding Sardar Market.,0.0,09:00:00,21:00:00,60,attractions/ghanta_ghar_clock_tower.jpg
+Jaisalmer Fort,Jaisalmer,Heritage,A living fort where a quarter of the city's population resides.,100.0,09:00:00,18:00:00,120,attractions/jaisalmer_fort.jpg
+Patwon Ki Haveli,Jaisalmer,Heritage,A cluster of five historic Havelis showing intricate carvings.,100.0,09:00:00,18:00:00,90,attractions/patwon_ki_haveli.jpg
+Sam Sand Dunes,Jaisalmer,Adventure,Sand dunes offering camel safaris and overnight desert camping.,500.0,15:00:00,23:00:00,240,attractions/sam_sand_dunes.jpg
+Gadisar Lake,Jaisalmer,Nature,A rainwater conservation reservoir surrounded by temples.,0.0,08:00:00,20:00:00,60,attractions/gadisar_lake.jpg
+Kuldhara Abandoned Village,Jaisalmer,Heritage,An old abandoned ghost village known for its mystery.,50.0,08:00:00,18:00:00,60,attractions/kuldhara_abandoned_village.jpg
+Brahma Temple,Pushkar,Spiritual,One of the very few temples in the world dedicated to Lord Brahma.,0.0,06:00:00,21:00:00,45,attractions/brahma_temple.jpg
+Pushkar Lake Ghats,Pushkar,Spiritual,Dozens of bathing ghats where pilgrims take holy dips.,0.0,00:00:00,23:59:59,60,attractions/pushkar_lake_ghats.jpg
+Savitri Temple,Pushkar,Spiritual,A hilltop temple offering sunrise views over Pushkar.,0.0,05:00:00,19:00:00,90,attractions/savitri_temple.jpg
+Varaha Temple,Pushkar,Spiritual,"The oldest temple in Pushkar, dedicated to Lord Vishnu.",0.0,06:00:00,20:00:00,45,attractions/varaha_temple.jpg
+Pushkar Camel Fair Grounds,Pushkar,Heritage,The venue of the world-famous Pushkar camel festival.,0.0,09:00:00,21:00:00,120,attractions/pushkar_camel_fair_grounds.jpg
+Ranthambore National Park Safari,Ranthambore,Wildlife,A jeep safari inside zones to spot Bengal tigers.,1200.0,06:00:00,18:00:00,210,attractions/ranthambore_national_park_safari.jpg
+Ranthambore Fort,Ranthambore,Heritage,A UNESCO-listed fort located inside the national park territory.,0.0,06:00:00,18:00:00,120,attractions/ranthambore_fort.jpg
+Trinetra Ganesha Temple,Ranthambore,Spiritual,A historic three-eyed Ganesha temple situated in the fort.,0.0,06:00:00,18:00:00,60,attractions/trinetra_ganesha_temple.jpg
+Padam Talao Lake,Ranthambore,Nature,"The largest lake in the park, famous for water lily blooms.",0.0,06:00:00,18:00:00,45,attractions/padam_talao_lake.jpg
+Kachida Valley,Ranthambore,Nature,A rocky outpost valley known for panther sightings.,0.0,06:00:00,18:00:00,90,attractions/kachida_valley.jpg
+Dilwara Temples,Mount Abu,Spiritual,Famous Jain temples known for spectacular marble carvings.,0.0,12:00:00,17:00:00,90,attractions/dilwara_temples.jpg
+Nakki Lake,Mount Abu,Nature,"A sacred lake situated in the hills, offering boating activities.",100.0,08:00:00,18:00:00,60,attractions/nakki_lake.jpg
+Toad Rock,Mount Abu,Nature,"A large rock formation resembling a toad, offering views.",0.0,06:00:00,18:00:00,45,attractions/toad_rock.jpg
+Guru Shikhar,Mount Abu,Nature,The highest peak in the Aravali Range.,0.0,08:00:00,18:00:00,90,attractions/guru_shikhar.jpg
+Sunset Point Mount Abu,Mount Abu,Nature,Scenic sunset point overlooking green hills.,0.0,16:00:00,19:00:00,60,attractions/sunset_point_mount_abu.jpg
+Taj Mahal,Agra,Heritage,The world-famous white marble mausoleum built by Shah Jahan.,50.0,06:00:00,18:30:00,180,attractions/taj_mahal.jpg
+Agra Fort,Agra,Heritage,A massive red sandstone Mughal fort overlooking the Yamuna River.,50.0,06:00:00,18:00:00,120,attractions/agra_fort.jpg
+Itimad-ud-Daulah Tomb,Agra,Heritage,"Often called the Baby Taj, an exquisite Mughal marble tomb.",30.0,06:00:00,18:00:00,60,attractions/itimad_ud_daulah_tomb.jpg
+Mehtab Bagh,Agra,Heritage,A garden complex located opposite the Taj Mahal across the river.,30.0,06:00:00,18:00:00,90,attractions/mehtab_bagh.jpg
+Fatehpur Sikri Palace,Agra,Heritage,The majestic ghost city built by Emperor Akbar.,50.0,06:00:00,18:00:00,150,attractions/fatehpur_sikri_palace.jpg
+Kashi Vishwanath Temple,Varanasi,Spiritual,A sacred temple dedicated to Lord Shiva with golden spires.,0.0,03:00:00,23:00:00,120,attractions/kashi_vishwanath_temple.jpg
+Dashashwamedh Ghat,Varanasi,Spiritual,"The main ghat in Varanasi, hosting the iconic evening Ganga Aarti.",0.0,00:00:00,23:59:59,90,attractions/dashashwamedh_ghat.jpg
+Assi Ghat,Varanasi,Spiritual,Ghat located at the confluence of Ganges and Assi rivers.,0.0,00:00:00,23:59:59,60,attractions/assi_ghat.jpg
+Sarnath Archaeological Site,Varanasi,Spiritual,The historical park where Lord Buddha first taught the Dharma.,50.0,08:00:00,18:00:00,120,attractions/sarnath_archaeological_site.jpg
+Banaras Hindu University,Varanasi,Heritage,A massive green university campus hosting temples.,0.0,09:00:00,19:00:00,90,attractions/banaras_hindu_university.jpg
+Ramnagar Fort,Varanasi,Heritage,A 18th-century sand-stone fort with museum near the river.,50.0,10:00:00,17:00:00,90,attractions/ramnagar_fort.jpg
+Bara Imambara,Lucknow,Heritage,A monumental shrine housing a spectacular architectural labyrinth.,50.0,06:00:00,17:00:00,120,attractions/bara_imambara.jpg
+Chhota Imambara,Lucknow,Heritage,An ornate congregation hall with chandeliers and gardens.,50.0,06:00:00,17:00:00,60,attractions/chhota_imambara.jpg
+Rumi Darwaza,Lucknow,Heritage,An imposing historic gateway built by Nawab Asaf-ud-Daula.,0.0,00:00:00,23:59:59,30,attractions/rumi_darwaza.jpg
+British Residency Lucknow,Lucknow,Heritage,"Ruins of colonial buildings, key in the 1857 Uprising.",25.0,07:00:00,18:00:00,90,attractions/british_residency_lucknow.jpg
+Hazratganj Market,Lucknow,City,"The central shopping street of Lucknow, famous for Chikankari clothes.",0.0,10:00:00,22:00:00,120,attractions/hazratganj_market.jpg
+Kandariya Mahadeva Temple,Khajuraho,Heritage,The largest and most ornate temple in the western group.,40.0,06:00:00,18:00:00,90,attractions/kandariya_mahadeva_temple.jpg
+Lakshmana Temple,Khajuraho,Heritage,A well-preserved temple dedicated to Vaikuntha Vishnu.,40.0,06:00:00,18:00:00,60,attractions/lakshmana_temple.jpg
+Duladeo Temple,Khajuraho,Heritage,"A late temple in the southern group, dedicated to Shiva.",0.0,06:00:00,18:00:00,45,attractions/duladeo_temple.jpg
+Archaeological Museum Khajuraho,Khajuraho,Heritage,A museum housing sculptures recovered from site digs.,10.0,09:00:00,17:00:00,60,attractions/archaeological_museum_khajuraho.jpg
+Raneh Falls,Khajuraho,Nature,A natural waterfall forming a deep canyon in crystalline rocks.,100.0,08:00:00,17:00:00,120,attractions/raneh_falls.jpg
+Bee Falls,Pachmarhi,Nature,A popular waterfall supplying drinking water to the town.,15.0,09:00:00,17:00:00,90,attractions/bee_falls.jpg
+Dhoopgarh Peak,Pachmarhi,Nature,"The highest point in Madhya Pradesh, offering sunsets.",0.0,06:00:00,19:00:00,120,attractions/dhoopgarh_peak.jpg
+Pandav Caves,Pachmarhi,Heritage,Five rock-cut Buddhist temples where Pandavas allegedly stayed.,0.0,08:00:00,18:00:00,60,attractions/pandav_caves.jpg
+Jata Shankar Caves,Pachmarhi,Spiritual,A natural cave shrine of Lord Shiva located in a ravine.,0.0,07:00:00,19:00:00,90,attractions/jata_shankar_caves.jpg
+Handi Khoh,Pachmarhi,Nature,"A deep, forest-covered ravine with a 300-foot cliff.",0.0,09:00:00,17:00:00,45,attractions/handi_khoh.jpg
+Orchha Fort Complex,Orchha,Heritage,A huge fort compound containing Raja Mahal and Jahangir Mahal.,50.0,09:00:00,17:00:00,120,attractions/orchha_fort_complex.jpg
+Chaturbhuj Temple,Orchha,Spiritual,A colossal temple constructed on a massive stone platform.,0.0,06:00:00,20:00:00,90,attractions/chaturbhuj_temple.jpg
+Orchha Chhatris,Orchha,Heritage,Fourteen majestic stone cenotaphs on the banks of Betwa River.,0.0,08:00:00,18:00:00,90,attractions/orchha_chhatris.jpg
+Ram Raja Temple,Orchha,Spiritual,The only temple where Lord Ram is worshipped as a reigning King.,0.0,08:00:00,22:00:00,60,attractions/ram_raja_temple.jpg
+Laxminarayan Temple Orchha,Orchha,Spiritual,A grand temple displaying a unique mix of fort and temple design.,0.0,09:00:00,17:00:00,60,attractions/laxminarayan_temple_orchha.jpg
+Gwalior Fort,Gwalior,Heritage,An ancient fort complex described as the pearl in the necklace.,75.0,06:00:00,17:30:00,150,attractions/gwalior_fort.jpg
+Jai Vilas Palace Museum,Gwalior,Heritage,The majestic Italianate palace of Scindias containing museums.,150.0,10:00:00,17:00:00,120,attractions/jai_vilas_palace_museum.jpg
+Sas Bahu Temples,Gwalior,Spiritual,Two twin 11th-century temples displaying beautiful carvings.,0.0,08:00:00,18:00:00,60,attractions/sas_bahu_temples.jpg
+Tomb of Tansen,Gwalior,Heritage,The final resting place of Akbar's legendary musician.,0.0,08:00:00,20:00:00,45,attractions/tomb_of_tansen.jpg
+Sun Temple Gwalior,Gwalior,Spiritual,A red sandstone temple built replicating Konark design.,0.0,06:00:00,20:00:00,60,attractions/sun_temple_gwalior.jpg
+Gateway of India,Mumbai,Heritage,An iconic arch monument built during the British Raj.,0.0,00:00:00,23:59:59,45,attractions/gateway_of_india.jpg
+Marine Drive,Mumbai,City,A scenic 3km promenade overlooking the Arabian Sea.,0.0,00:00:00,23:59:59,90,attractions/marine_drive.jpg
+Chhatrapati Shivaji Maharaj Terminus,Mumbai,Heritage,A UNESCO-listed Victorian Gothic railway terminal.,0.0,00:00:00,23:59:59,45,attractions/chhatrapati_shivaji_maharaj_terminus.jpg
+Elephanta Caves,Mumbai,Spiritual,A network of cave temples carved on Elephanta Island.,250.0,09:00:00,17:00:00,240,attractions/elephanta_caves.jpg
+Siddhivinayak Temple,Mumbai,Spiritual,A highly revered temple dedicated to Lord Ganesha.,0.0,05:30:00,22:00:00,90,attractions/siddhivinayak_temple.jpg
+Haji Ali Dargah,Mumbai,Spiritual,A mosque and tomb located on an islet off the coast.,0.0,06:00:00,22:00:00,90,attractions/haji_ali_dargah.jpg
+Shaniwar Wada,Pune,Heritage,A historic fortification seat of Peshwas of Maratha Empire.,25.0,08:00:00,18:30:00,90,attractions/shaniwar_wada.jpg
+Aga Khan Palace,Pune,Heritage,A majestic palace which served as a prison for Mahatma Gandhi.,50.0,09:00:00,17:30:00,90,attractions/aga_khan_palace.jpg
+Dagadusheth Halwai Ganapathi Temple,Pune,Spiritual,A famous temple housing a massive golden Ganesha idol.,0.0,06:00:00,23:00:00,60,attractions/dagadusheth_halwai_ganapathi_temple.jpg
+Sinhagad Fort,Pune,Adventure,A hillside fortress offering trekking and panoramic views.,50.0,06:00:00,18:00:00,180,attractions/sinhagad_fort.jpg
+Osho Ashram,Pune,Spiritual,A tranquil meditation resort campus in Koregaon Park.,970.0,09:00:00,18:00:00,120,attractions/osho_ashram.jpg
+Venna Lake,Mahabaleshwar,Nature,A scenic lake offering boating and horse riding on banks.,150.0,08:00:00,20:00:00,90,attractions/venna_lake.jpg
+Arthur's Seat Mahabaleshwar,Mahabaleshwar,Nature,A popular viewpoint overlooking the deep Savitri valley.,0.0,09:00:00,18:00:00,60,attractions/arthur's_seat_mahabaleshwar.jpg
+Mapro Garden,Mahabaleshwar,Nature,A strawberry processing park offering cafes and retail shops.,0.0,08:00:00,23:00:00,90,attractions/mapro_garden.jpg
+Pratapgad Fort,Mahabaleshwar,Heritage,A historic hill fort built by Chhatrapati Shivaji Maharaj.,0.0,08:00:00,18:00:00,120,attractions/pratapgad_fort.jpg
+Mahabaleshwar Mandir,Mahabaleshwar,Spiritual,An old temple containing natural water springs.,0.0,06:00:00,21:00:00,45,attractions/mahabaleshwar_mandir.jpg
+Karla Caves,Lonavala,Spiritual,Ancient Buddhist rock-cut caves dating back to 2nd century BC.,25.0,09:00:00,18:00:00,90,attractions/karla_caves.jpg
+Bhushi Dam,Lonavala,Nature,A popular masonry dam where people enjoy water cascading over steps.,0.0,09:00:00,17:00:00,120,attractions/bhushi_dam.jpg
+Lohagad Fort,Lonavala,Adventure,A grand hill fort built on a long mountain spur.,0.0,09:00:00,18:00:00,150,attractions/lohagad_fort.jpg
+Tiger's Point Lonavala,Lonavala,Nature,A cliff viewpoint offering views of waterfalls and clouds.,0.0,06:00:00,19:00:00,60,attractions/tiger's_point_lonavala.jpg
+Lonavala Wax Museum,Lonavala,City,An entertainment wax museum featuring life-like statues.,200.0,09:00:00,21:30:00,90,attractions/lonavala_wax_museum.jpg
+Calangute Beach,North Goa,Beach,"The Queen of Beaches, famous for seafood and water sports.",0.0,06:00:00,23:00:00,120,attractions/calangute_beach.jpg
+Baga Beach,North Goa,Beach,"A happening beach known for nightlife, shacks, and water sports.",0.0,06:00:00,23:59:59,120,attractions/baga_beach.jpg
+Aguada Fort,North Goa,Heritage,A 17th-century Portuguese fortress and lighthouse.,25.0,09:00:00,18:00:00,90,attractions/aguada_fort.jpg
+Anjuna Flea Market,North Goa,City,"A bustling Wednesday market offering clothing, jewelry, and spices.",0.0,09:00:00,18:00:00,150,attractions/anjuna_flea_market.jpg
+Basilica of Bom Jesus,North Goa,Spiritual,UNESCO world heritage site containing mortal remains of St. Francis Xavier.,0.0,09:00:00,18:30:00,90,attractions/basilica_of_bom_jesus.jpg
+Chapora Fort,North Goa,Heritage,Hilltop fort famous for Dil Chahta Hai movie views.,0.0,09:00:00,17:30:00,60,attractions/chapora_fort.jpg
+Colva Beach,South Goa,Beach,A quiet white-sand beach lined with palms and shacks.,0.0,06:00:00,23:00:00,90,attractions/colva_beach.jpg
+Palolem Beach,South Goa,Beach,A beautiful crescent-shaped beach offering dolphin cruises.,0.0,06:00:00,22:00:00,120,attractions/palolem_beach.jpg
+Cabo de Rama Fort,South Goa,Heritage,A historic fort overlooking the blue ocean waters.,0.0,09:00:00,17:30:00,90,attractions/cabo_de_rama_fort.jpg
+Dudhsagar Waterfalls,South Goa,Nature,A four-tiered waterfall falling down steep mountains.,400.0,09:00:00,16:00:00,240,attractions/dudhsagar_waterfalls.jpg
+Margao Municipal Market,South Goa,City,A traditional Goan market selling spices and fresh fish.,0.0,08:00:00,20:00:00,90,attractions/margao_municipal_market.jpg
+Virupaksha Temple,Hampi,Spiritual,An active 7th-century Hindu temple dedicated to Shiva.,25.0,06:00:00,18:00:00,90,attractions/virupaksha_temple.jpg
+Vijaya Vittala Temple,Hampi,Heritage,Famous temple housing the iconic stone chariot.,40.0,08:30:00,17:30:00,120,attractions/vijaya_vittala_temple.jpg
+Hampi Stone Chariot,Hampi,Heritage,A monumental shrine carved in the shape of a stone chariot.,0.0,08:30:00,17:30:00,30,attractions/hampi_stone_chariot.jpg
+Lotus Mahal Hampi,Hampi,Heritage,A beautiful secular palace showcasing Indo-Islamic design.,0.0,08:30:00,17:30:00,60,attractions/lotus_mahal_hampi.jpg
+Matanga Hill,Hampi,Nature,A hill offering gorgeous sunrise and sunset views over Hampi.,0.0,05:00:00,19:00:00,90,attractions/matanga_hill.jpg
+Elephant Stables Hampi,Hampi,Heritage,Eleven large domed chambers designed for royal elephants.,0.0,08:30:00,17:30:00,60,attractions/elephant_stables_hampi.jpg
+Abbey Falls,Coorg,Nature,A scenic waterfall surrounded by cardamom plantations.,15.0,09:00:00,17:00:00,90,attractions/abbey_falls.jpg
+Raja's Seat,Coorg,Nature,A seasonal flower garden providing spectacular valley views.,5.0,06:00:00,20:00:00,60,attractions/raja's_seat.jpg
+Dubare Elephant Camp,Coorg,Wildlife,An elephant training camp next to the Cauvery River.,100.0,09:00:00,17:00:00,150,attractions/dubare_elephant_camp.jpg
+Namdroling Golden Temple,Coorg,Spiritual,A gorgeous Tibetan Buddhist monastery housing large statues.,0.0,09:00:00,18:00:00,120,attractions/namdroling_golden_temple.jpg
+Talakaveri,Coorg,Spiritual,The source birthplace of the sacred Cauvery River.,0.0,06:00:00,20:30:00,90,attractions/talakaveri.jpg
+Mysore Palace,Mysore,Heritage,The majestic royal palace seat of Wodeyar dynasty.,100.0,10:00:00,17:30:00,120,attractions/mysore_palace.jpg
+Chamundeshwari Temple,Mysore,Spiritual,A hilltop temple dedicated to Chamundeshwari deity.,0.0,07:30:00,21:00:00,90,attractions/chamundeshwari_temple.jpg
+Brindavan Gardens,Mysore,Nature,Beautiful terrace gardens famous for musical fountain shows.,50.0,09:00:00,21:00:00,120,attractions/brindavan_gardens.jpg
+Mysore Zoo,Mysore,Wildlife,One of the oldest and most famous zoos in India.,100.0,08:30:00,17:30:00,150,attractions/mysore_zoo.jpg
+St. Philomena's Church Mysore,Mysore,Heritage,A tall Gothic style cathedral containing relics.,0.0,05:00:00,18:00:00,45,attractions/st._philomena's_church_mysore.jpg
+Lalbagh Botanical Garden,Bengaluru,Nature,A historic 240-acre greenhouse garden built by Hyder Ali.,25.0,06:00:00,19:00:00,90,attractions/lalbagh_botanical_garden.jpg
+Bangalore Palace,Bengaluru,Heritage,A majestic Tudor style palace resembling Windsor Castle.,230.0,10:00:00,17:30:00,120,attractions/bangalore_palace.jpg
+Cubbon Park,Bengaluru,Nature,A huge green park located in the central administrative area.,0.0,06:00:00,18:00:00,90,attractions/cubbon_park.jpg
+Visvesvaraya Museum,Bengaluru,City,An interactive science and technology museum.,85.0,10:00:00,18:00:00,150,attractions/visvesvaraya_museum.jpg
+Bull Temple,Bengaluru,Spiritual,An old temple hosting a massive monolithic Nandi bull.,0.0,06:00:00,20:00:00,45,attractions/bull_temple.jpg
+Mahabaleshwar Temple Gokarna,Gokarna,Spiritual,A sacred Shiva temple housing the Atma Linga.,0.0,06:00:00,20:00:00,90,attractions/mahabaleshwar_temple_gokarna.jpg
+Om Beach,Gokarna,Beach,A naturally shaped Om symbol beach offering boat rides.,0.0,00:00:00,23:59:59,120,attractions/om_beach.jpg
+Kudle Beach,Gokarna,Beach,A wide sandy beach famous for sunsets and beach volleyball.,0.0,00:00:00,23:59:59,90,attractions/kudle_beach.jpg
+Half Moon Beach,Gokarna,Beach,A small secluded cove reachable by trekking over cliffs.,0.0,00:00:00,23:59:59,120,attractions/half_moon_beach.jpg
+Paradise Beach Gokarna,Gokarna,Beach,A remote rocky beach popular with campers.,0.0,00:00:00,23:59:59,120,attractions/paradise_beach_gokarna.jpg
+Ooty Botanical Gardens,Ooty,Nature,A terraced garden featuring fossilized tree trunks.,30.0,07:00:00,18:30:00,120,attractions/ooty_botanical_gardens.jpg
+Ooty Lake,Ooty,Nature,An artificial lake offering boating and a mini train.,100.0,09:00:00,18:00:00,90,attractions/ooty_lake.jpg
+Doddabetta Peak,Ooty,Nature,"The highest point in South India, offering telescopic views.",10.0,09:00:00,18:00:00,90,attractions/doddabetta_peak.jpg
+Nilgiri Mountain Railway,Ooty,Heritage,A historic steam engine toy train journey.,200.0,07:00:00,15:00:00,300,attractions/nilgiri_mountain_railway.jpg
+Ooty Rose Garden,Ooty,Nature,An extensive rose garden showing thousands of varieties.,30.0,09:00:00,18:00:00,90,attractions/ooty_rose_garden.jpg
+Kodaikanal Lake,Kodaikanal,Nature,A star-shaped lake offering rowing boats.,100.0,09:00:00,18:00:00,90,attractions/kodaikanal_lake.jpg
+Coaker's Walk,Kodaikanal,Nature,A scenic paved pathway along steep mountain cliffs.,10.0,07:00:00,19:00:00,60,attractions/coaker's_walk.jpg
+Bryant Park,Kodaikanal,Nature,A botanical garden showing structural roses and dahlias.,30.0,09:00:00,18:00:00,90,attractions/bryant_park.jpg
+Silver Cascade Falls,Kodaikanal,Nature,A roadside waterfall coming down from cliffs.,0.0,00:00:00,23:59:59,30,attractions/silver_cascade_falls.jpg
+Pillar Rocks,Kodaikanal,Nature,Three granite boulders standing vertically in cliffs.,5.0,09:00:00,16:30:00,60,attractions/pillar_rocks.jpg
+Marina Beach,Chennai,Beach,The longest natural urban beach in the country.,0.0,00:00:00,23:59:59,90,attractions/marina_beach.jpg
+Kapaleeshwarar Temple,Chennai,Spiritual,A Dravidian temple showcasing towering Gopurams.,0.0,05:00:00,21:00:00,90,attractions/kapaleeshwarar_temple.jpg
+Fort St. George Museum,Chennai,Heritage,A British fort enclosing assembly structures.,100.0,09:00:00,17:00:00,90,attractions/fort_st._george_museum.jpg
+Government Museum Chennai,Chennai,Heritage,A large museum containing Bronze artifacts.,15.0,09:30:00,17:00:00,120,attractions/government_museum_chennai.jpg
+San Thome Basilica,Chennai,Spiritual,A neo-Gothic cathedral built over the tomb of St. Thomas.,0.0,06:00:00,21:00:00,60,attractions/san_thome_basilica.jpg
+Shore Temple,Mahabalipuram,Heritage,An old temple built overlooking the Bay of Bengal.,40.0,06:00:00,18:00:00,90,attractions/shore_temple.jpg
+Pancha Rathas,Mahabalipuram,Heritage,Five monolithic rock-cut chariot structures.,40.0,06:00:00,18:00:00,90,attractions/pancha_rathas.jpg
+Krishna's Butterball,Mahabalipuram,Nature,A giant balancing granite boulder resting on a slope.,0.0,06:00:00,18:00:00,45,attractions/krishna's_butterball.jpg
+Arjuna's Penance,Mahabalipuram,Heritage,A colossal bas-relief carving detailing mythical tales.,0.0,06:00:00,18:00:00,45,attractions/arjuna's_penance.jpg
+Mahabalipuram Beach,Mahabalipuram,Beach,A sandy beach situated adjacent to Shore Temple.,0.0,00:00:00,23:59:59,90,attractions/mahabalipuram_beach.jpg
+Meenakshi Amman Temple,Madurai,Spiritual,A massive temple displaying 14 colorful Gopurams.,0.0,05:00:00,22:00:00,150,attractions/meenakshi_amman_temple.jpg
+Thirumalai Nayakkar Mahal,Madurai,Heritage,A 17th-century palace showing grand pillars.,10.0,09:00:00,17:00:00,90,attractions/thirumalai_nayakkar_mahal.jpg
+Gandhi Memorial Museum Madurai,Madurai,Heritage,A museum housing the blood-stained garment of Gandhi.,0.0,10:00:00,17:45:00,90,attractions/gandhi_memorial_museum_madurai.jpg
+Alagar Koyil,Madurai,Spiritual,A temple of Lord Vishnu situated on hills.,0.0,06:00:00,18:00:00,90,attractions/alagar_koyil.jpg
+Vandiyur Mariamman Teppakulam,Madurai,Spiritual,A massive temple tank reservoir with an island temple.,0.0,06:00:00,21:00:00,60,attractions/vandiyur_mariamman_teppakulam.jpg
+Ramanathaswamy Temple,Rameswaram,Spiritual,Famous for its massive pillared corridors.,0.0,05:00:00,21:00:00,120,attractions/ramanathaswamy_temple.jpg
+Pamban Bridge,Rameswaram,Heritage,A historic cantilever railway bridge crossing sea waters.,0.0,00:00:00,23:59:59,45,attractions/pamban_bridge.jpg
+Dhanushkodi Beach,Rameswaram,Beach,A ghost town beach at the tip of India's border.,0.0,06:00:00,18:00:00,120,attractions/dhanushkodi_beach.jpg
+Agnitheertham,Rameswaram,Spiritual,The sacred beach where pilgrims bathe before entering temples.,0.0,05:00:00,18:00:00,60,attractions/agnitheertham.jpg
+Dr. A.P.J. Abdul Kalam Memorial,Rameswaram,Heritage,A memorial built honoring India's Missile Man.,0.0,09:00:00,18:00:00,60,attractions/dr._a.p.j._abdul_kalam_memorial.jpg
+Vivekananda Rock Memorial,Kanyakumari,Spiritual,A memorial built on a rock offshore.,50.0,08:00:00,16:00:00,120,attractions/vivekananda_rock_memorial.jpg
+Thiruvalluvar Statue,Kanyakumari,Heritage,A 133-foot tall stone statue of Tamil poet.,0.0,08:00:00,16:00:00,60,attractions/thiruvalluvar_statue.jpg
+Kanyakumari Temple,Kanyakumari,Spiritual,A 3000-year-old temple overlooking the ocean.,0.0,04:30:00,20:30:00,60,attractions/kanyakumari_temple.jpg
+Sunset View Point,Kanyakumari,Nature,A popular beach view point showing spectacular sunsets.,0.0,16:00:00,19:00:00,60,attractions/sunset_view_point.jpg
+Triveni Sangam,Kanyakumari,Nature,"The confluence of Bay of Bengal, Arabian Sea, and Indian Ocean.",0.0,00:00:00,23:59:59,45,attractions/triveni_sangam.jpg
+Eravikulam National Park,Munnar,Wildlife,Home of the endangered Nilgiri Tahr mountain goat.,200.0,07:30:00,16:00:00,180,attractions/eravikulam_national_park.jpg
+Mattupetty Dam,Munnar,Nature,A scenic masonry dam offering speed boat rides.,30.0,09:00:00,17:00:00,90,attractions/mattupetty_dam.jpg
+Anamudi Peak,Munnar,Nature,The highest mountain peak in South India.,0.0,08:00:00,16:00:00,120,attractions/anamudi_peak.jpg
+Tea Museum Munnar,Munnar,Heritage,A museum tracking history of local tea estates.,75.0,09:00:00,17:00:00,90,attractions/tea_museum_munnar.jpg
+Echo Point Munnar,Munnar,Nature,A scenic lake point famous for natural acoustics.,0.0,06:00:00,18:00:00,60,attractions/echo_point_munnar.jpg
+Alleppey Backwaters,Alleppey,Nature,"A network of canals, lagoons, and rivers with houseboats.",0.0,00:00:00,23:59:59,240,attractions/alleppey_backwaters.jpg
+Alappuzha Beach,Alleppey,Beach,A sandy beach featuring a 150-year-old historic pier.,0.0,06:00:00,22:00:00,90,attractions/alappuzha_beach.jpg
+Pathiramanal Island,Alleppey,Nature,A small island haven for rare migratory birds.,0.0,06:00:00,18:00:00,120,attractions/pathiramanal_island.jpg
+Krishnapuram Palace,Alleppey,Heritage,A palace displaying fine murals and antiquities.,20.0,09:00:00,16:30:00,90,attractions/krishnapuram_palace.jpg
+Alleppey Lighthouse,Alleppey,Heritage,An old red-white lighthouse offering panoramic views.,20.0,15:00:00,17:00:00,45,attractions/alleppey_lighthouse.jpg
+Banasura Sagar Dam,Wayanad,Nature,"The largest earth dam in India, offering boating.",40.0,09:00:00,17:00:00,120,attractions/banasura_sagar_dam.jpg
+Edakkal Caves,Wayanad,Heritage,Caves displaying Neolithic rock carvings.,20.0,09:00:00,16:00:00,120,attractions/edakkal_caves.jpg
+Chembra Peak,Wayanad,Adventure,A popular trekking peak hosting a heart-shaped lake.,20.0,07:00:00,14:00:00,240,attractions/chembra_peak.jpg
+Soochipara Waterfalls,Wayanad,Nature,A three-tiered waterfall surrounded by forests.,50.0,09:00:00,17:00:00,90,attractions/soochipara_waterfalls.jpg
+Pookode Lake,Wayanad,Nature,A natural freshwater lake offering paddle boats.,30.0,09:00:00,17:00:00,90,attractions/pookode_lake.jpg
+Lighthouse Beach,Kovalam,Beach,"The most popular beach, dominated by a tall lighthouse.",0.0,06:00:00,22:00:00,120,attractions/lighthouse_beach.jpg
+Hawa Beach,Kovalam,Beach,"Also known as Eve's beach, popular for catamaran rides.",0.0,06:00:00,22:00:00,90,attractions/hawa_beach.jpg
+Samudra Beach,Kovalam,Beach,A quiet sandy beach located in northern Kovalam.,0.0,06:00:00,22:00:00,90,attractions/samudra_beach.jpg
+Halcyon Castle,Kovalam,Heritage,A palace built by the Royal Family of Travancore.,0.0,09:00:00,18:00:00,45,attractions/halcyon_castle.jpg
+Vellayani Lake,Kovalam,Nature,A scenic freshwater lake located in Kovalam suburbs.,0.0,08:00:00,18:00:00,90,attractions/vellayani_lake.jpg
+Periyar National Park Boat Cruise,Thekkady,Wildlife,A lake boat cruise to spot wild elephants.,250.0,07:00:00,15:00:00,120,attractions/periyar_national_park_boat_cruise.jpg
+Periyar Tiger Trail,Thekkady,Wildlife,A guided trekking trail inside tiger habitats.,3000.0,07:00:00,16:00:00,300,attractions/periyar_tiger_trail.jpg
+Abraham's Spice Garden,Thekkady,Nature,An organic farm explaining spice crops.,100.0,08:00:00,18:00:00,90,attractions/abraham's_spice_garden.jpg
+Anakkara,Thekkady,Nature,A spice cultivation hub offering local shopping.,0.0,09:00:00,19:00:00,90,attractions/anakkara.jpg
+Mangala Devi Temple,Thekkady,Spiritual,A ancient temple situated deep in reserve forests.,0.0,06:00:00,17:00:00,120,attractions/mangala_devi_temple.jpg
+Fort Kochi Beach,Kochi,Beach,A beach famous for giant Chinese Fishing Nets.,0.0,06:00:00,22:00:00,90,attractions/fort_kochi_beach.jpg
+Mattancherry Palace,Kochi,Heritage,"Also known as the Dutch Palace, hosting historic murals.",5.0,09:00:00,17:00:00,90,attractions/mattancherry_palace.jpg
+Paradesi Synagogue,Kochi,Spiritual,The oldest active synagogue in the Commonwealth.,5.0,10:00:00,17:00:00,60,attractions/paradesi_synagogue.jpg
+Santa Cruz Cathedral Basilica,Kochi,Spiritual,A grand Gothic style basilica built by Portuguese.,0.0,09:00:00,18:00:00,60,attractions/santa_cruz_cathedral_basilica.jpg
+St. Francis Church Kochi,Kochi,Heritage,"The oldest European church in India, where Vasco da Gama lay buried.",0.0,09:00:00,17:00:00,45,attractions/st._francis_church_kochi.jpg
+Varkala Cliff Beach,Varkala,Beach,A sandy beach framed by unique towering red cliffs.,0.0,06:00:00,22:00:00,120,attractions/varkala_cliff_beach.jpg
+Janardhana Swamy Temple,Varkala,Spiritual,A 2000-year-old temple dedicated to Lord Vishnu.,0.0,06:00:00,20:00:00,90,attractions/janardhana_swamy_temple.jpg
+Kappil Beach,Varkala,Beach,A quiet estuary beach where lakes merge with the sea.,0.0,00:00:00,23:59:59,90,attractions/kappil_beach.jpg
+Anjengo Fort,Varkala,Heritage,An old British fort constructed in the late 17th century.,0.0,09:00:00,18:00:00,60,attractions/anjengo_fort.jpg
+Sivagiri Mutt,Varkala,Spiritual,A sacred ashram pilgrimage founded by Sree Narayana Guru.,0.0,06:00:00,19:00:00,90,attractions/sivagiri_mutt.jpg
+Kumarakom Bird Sanctuary,Kumarakom,Wildlife,A sanctuary hosting rare migratory birds.,50.0,06:30:00,17:00:00,120,attractions/kumarakom_bird_sanctuary.jpg
+Vembanad Lake Boating,Kumarakom,Nature,A boat cruise on the largest lake in Kerala.,300.0,09:00:00,18:00:00,90,attractions/vembanad_lake_boating.jpg
+Aravukad Temple,Kumarakom,Spiritual,A historic local temple showing fine architecture.,0.0,06:00:00,19:00:00,45,attractions/aravukad_temple.jpg
+Bay Island Driftwood Museum,Kumarakom,Heritage,A museum housing unique driftwood sculptures.,50.0,10:00:00,17:00:00,60,attractions/bay_island_driftwood_museum.jpg
+Kumarakom Beach,Kumarakom,Beach,A small sandy beach area next to local resorts.,0.0,06:00:00,19:00:00,60,attractions/kumarakom_beach.jpg
+Tiger Hill Darjeeling,Darjeeling,Nature,A peak offering spectacular sunrise views over Mount Kanchenjunga.,50.0,04:00:00,16:00:00,90,attractions/tiger_hill_darjeeling.jpg
+Darjeeling Toy Train,Darjeeling,Heritage,A historic Himalayan railway steam train ride.,1400.0,08:00:00,16:00:00,120,attractions/darjeeling_toy_train.jpg
+Batasia Loop,Darjeeling,Heritage,A spiral railway loop surrounding a war memorial.,20.0,06:00:00,17:00:00,60,attractions/batasia_loop.jpg
+Padmaja Naidu Himalayan Zoo,Darjeeling,Wildlife,A zoo conserving snow leopards and red pandas.,100.0,08:30:00,16:30:00,120,attractions/padmaja_naidu_himalayan_zoo.jpg
+Himalayan Mountaineering Institute,Darjeeling,Heritage,A mountaineering museum set up by Tenzing Norgay.,100.0,09:00:00,17:00:00,90,attractions/himalayan_mountaineering_institute.jpg
+Ghoom Monastery,Darjeeling,Spiritual,An old Tibetan Buddhist monastery housing Maitreya Buddha.,0.0,06:00:00,18:00:00,45,attractions/ghoom_monastery.jpg
+Durpin Monastery,Kalimpong,Spiritual,A Buddhist monastery offering views of Kalimpong.,0.0,09:00:00,17:00:00,90,attractions/durpin_monastery.jpg
+Pine View Nursery,Kalimpong,Nature,A nursery showing hundreds of species of cacti.,20.0,08:30:00,17:30:00,60,attractions/pine_view_nursery.jpg
+Graham's Homes,Kalimpong,Heritage,A sprawling school campus built in the British era.,0.0,09:00:00,17:00:00,90,attractions/graham's_homes.jpg
+Deolo Hill,Kalimpong,Nature,A high park offering panoramic mountain views.,20.0,08:00:00,18:00:00,120,attractions/deolo_hill.jpg
+Morgan House,Kalimpong,Heritage,A colonial British cottage now used as a tourist lodge.,0.0,09:00:00,17:00:00,45,attractions/morgan_house.jpg
+Rumtek Monastery,Gangtok,Spiritual,A highly sacred Tibetan Buddhist monastery complex.,50.0,08:00:00,17:00:00,120,attractions/rumtek_monastery.jpg
+Nathu La Pass,Gangtok,Adventure,A high mountain pass connecting India and Tibet.,200.0,08:00:00,14:00:00,240,attractions/nathu_la_pass.jpg
+Tsomgo Lake,Gangtok,Nature,A high altitude glacial lake situated at 3753 meters.,0.0,08:00:00,15:00:00,180,attractions/tsomgo_lake.jpg
+Gangtok Ropeway,Gangtok,Adventure,A cable car offering aerial views of Gangtok city.,150.0,09:30:00,16:30:00,60,attractions/gangtok_ropeway.jpg
+MG Marg Gangtok,Gangtok,City,A clean pedestrian avenue with shops and cafes.,0.0,10:00:00,21:30:00,90,attractions/mg_marg_gangtok.jpg
+Hanuman Tok,Gangtok,Spiritual,A temple dedicated to Hanuman situated on high peaks.,0.0,07:00:00,18:00:00,60,attractions/hanuman_tok.jpg
+Pemayangtse Monastery,Pelling,Spiritual,An old premier Buddhist monastery in Sikkim.,50.0,09:00:00,18:00:00,90,attractions/pemayangtse_monastery.jpg
+Pelling Skywalk,Pelling,Adventure,India's first glass skywalk offering views of Chenrezig statue.,100.0,09:00:00,18:00:00,120,attractions/pelling_skywalk.jpg
+Rabdentse Ruins,Pelling,Heritage,The ancient ruins of the second capital of Sikkim.,0.0,09:00:00,17:00:00,90,attractions/rabdentse_ruins.jpg
+Kanchenjunga Falls,Pelling,Nature,A giant high waterfall crashing down rocky cliffs.,20.0,08:00:00,17:00:00,60,attractions/kanchenjunga_falls.jpg
+Khecheopalri Lake,Pelling,Spiritual,A sacred wishing lake hidden in dense forests.,20.0,08:00:00,18:00:00,90,attractions/khecheopalri_lake.jpg
+Shillong Peak,Shillong,Nature,The highest point in Shillong offering city views.,50.0,09:00:00,17:00:00,90,attractions/shillong_peak.jpg
+Elephant Falls,Shillong,Nature,A three-tiered waterfall with stepping walkways.,20.0,09:00:00,17:00:00,60,attractions/elephant_falls.jpg
+Umiam Lake,Shillong,Nature,A massive reservoir lake offering water sports.,50.0,09:00:00,18:00:00,120,attractions/umiam_lake.jpg
+Don Bosco Museum,Shillong,Heritage,A major museum of indigenous cultures of Northeast.,100.0,09:00:00,17:30:00,150,attractions/don_bosco_museum.jpg
+Ward's Lake,Shillong,Nature,A horseshoe-shaped lake situated in city center.,25.0,09:00:00,17:30:00,90,attractions/ward's_lake.jpg
+Nohkalikai Falls,Cherrapunji,Nature,"The tallest plunge waterfall in India, dropping 340 meters.",20.0,09:00:00,17:00:00,90,attractions/nohkalikai_falls.jpg
+Double Decker Living Root Bridge,Cherrapunji,Adventure,A unique bio-engineered tree bridge at Nongriat.,50.0,06:00:00,17:00:00,240,attractions/double_decker_living_root_bridge.jpg
+Mawsmai Cave,Cherrapunji,Adventure,A lit limestone cave system showing stalactites.,20.0,09:00:00,17:00:00,90,attractions/mawsmai_cave.jpg
+Seven Sisters Falls Cherra,Cherrapunji,Nature,A seven-segmented plunge waterfall coming off cliffs.,0.0,09:00:00,17:00:00,60,attractions/seven_sisters_falls_cherra.jpg
+Eco Park Cherrapunji,Cherrapunji,Nature,A park on cliffs offering views of Bangladesh plains.,20.0,08:00:00,18:00:00,60,attractions/eco_park_cherrapunji.jpg
+Elephant Safari Kaziranga,Kaziranga,Wildlife,An early morning elephant safari to spot rhinos.,800.0,05:00:00,07:30:00,120,attractions/elephant_safari_kaziranga.jpg
+Jeep Safari Kaziranga,Kaziranga,Wildlife,A safari exploring core zones like Kohora and Bagori.,2000.0,07:30:00,16:00:00,180,attractions/jeep_safari_kaziranga.jpg
+Kaziranga National Orchid Park,Kaziranga,Nature,A large conservatory showcasing rare orchids.,100.0,08:00:00,18:00:00,90,attractions/kaziranga_national_orchid_park.jpg
+Hollongapar Gibbon Sanctuary,Kaziranga,Wildlife,"Home of India's only gibbons, the Hoolock Gibbon.",250.0,06:00:00,17:00:00,150,attractions/hollongapar_gibbon_sanctuary.jpg
+Kakochang Waterfalls,Kaziranga,Nature,A scenic waterfall located close to rubber estates.,0.0,08:00:00,17:00:00,120,attractions/kakochang_waterfalls.jpg
+Kamalabari Satra,Majuli,Spiritual,A famous Vaishnavite monastery center for arts.,0.0,09:00:00,17:00:00,90,attractions/kamalabari_satra.jpg
+Dakhinpat Satra,Majuli,Spiritual,A royal satra showing ancient manuscripts.,0.0,09:00:00,17:00:00,90,attractions/dakhinpat_satra.jpg
+Garmur Satra,Majuli,Spiritual,A prominent Satra housing old armaments.,0.0,09:00:00,17:00:00,60,attractions/garmur_satra.jpg
+Tengapania,Majuli,Nature,A picnic spot situated next to Brahmaputra riverbanks.,0.0,08:00:00,18:00:00,60,attractions/tengapania.jpg
+Samaguri Satra,Majuli,Heritage,Famed Satra known for masks craftsmanship.,0.0,09:00:00,17:00:00,90,attractions/samaguri_satra.jpg
+Tawang Monastery,Tawang,Spiritual,The second largest Buddhist monastery in the world.,0.0,07:00:00,19:00:00,120,attractions/tawang_monastery.jpg
+Sela Pass,Tawang,Adventure,A high mountain pass situated at 4170 meters.,0.0,08:00:00,16:00:00,120,attractions/sela_pass.jpg
+Nuranang Falls,Tawang,Nature,"Also known as Jang Falls, a stunning 100-meter waterfall.",0.0,08:00:00,17:00:00,90,attractions/nuranang_falls.jpg
+Maduri Lake,Tawang,Nature,"Originally called Sangestar Tso, formed by an earthquake.",0.0,08:00:00,16:00:00,120,attractions/maduri_lake.jpg
+Tawang War Memorial,Tawang,Heritage,A stupa built honoring soldiers of 1962 Sino-Indian War.,0.0,09:00:00,18:00:00,60,attractions/tawang_war_memorial.jpg
+Talle Valley Wildlife Sanctuary,Ziro,Wildlife,A biodiversity reserve containing rare flora.,50.0,08:00:00,16:30:00,180,attractions/talle_valley_wildlife_sanctuary.jpg
+Meghna Cave Temple,Ziro,Spiritual,A historic cave temple dedicated to Lord Shiva.,0.0,07:00:00,18:00:00,60,attractions/meghna_cave_temple.jpg
+Tarin Fish Farm,Ziro,Nature,A unique high altitude paddy-cum-fish culture farm.,20.0,09:00:00,17:00:00,60,attractions/tarin_fish_farm.jpg
+Kile Pakho,Ziro,Nature,A ridge offering panoramic valley views.,0.0,08:00:00,17:00:00,90,attractions/kile_pakho.jpg
+Ziro Putu,Ziro,Nature,A small hillock offering panoramic Ziro valley views.,0.0,08:00:00,18:00:00,60,attractions/ziro_putu.jpg
+Jagannath Temple Puri,Puri,Spiritual,An ancient grand temple dedicated to Lord Jagannath.,0.0,05:00:00,23:00:00,120,attractions/jagannath_temple_puri.jpg
+Golden Beach Puri,Puri,Beach,A blue flag beach famous for sand art displays.,20.0,06:00:00,22:00:00,120,attractions/golden_beach_puri.jpg
+Chilika Lake at Satapada,Puri,Nature,A brackish lagoon offering dolphin watching cruises.,200.0,08:00:00,17:00:00,180,attractions/chilika_lake_at_satapada.jpg
+Gundicha Temple,Puri,Spiritual,A garden temple where deities stay during Ratha Yatra.,0.0,06:00:00,21:00:00,90,attractions/gundicha_temple.jpg
+Raghurajpur Artist Village,Puri,Heritage,A heritage crafts village famous for Pattachitra art.,0.0,09:00:00,18:00:00,120,attractions/raghurajpur_artist_village.jpg
+Konark Sun Temple,Konark,Heritage,A massive 13th-century chariot-shaped Sun temple.,40.0,06:00:00,20:00:00,120,attractions/konark_sun_temple.jpg
+Chandrabhaga Beach,Konark,Beach,A quiet sandy beach situated next to Sun Temple.,0.0,00:00:00,23:59:59,90,attractions/chandrabhaga_beach.jpg
+Konark Archaeological Museum,Konark,Heritage,A museum housing original temple carvings.,10.0,09:00:00,17:00:00,90,attractions/konark_archaeological_museum.jpg
+Kuruma Buddhist Site,Konark,Heritage,An ancient Buddhist monastery site located nearby.,0.0,08:00:00,17:00:00,60,attractions/kuruma_buddhist_site.jpg
+Ramachandi Temple,Konark,Spiritual,A temple situated at the confluence of Kushabhadra river.,0.0,06:00:00,19:00:00,60,attractions/ramachandi_temple.jpg
+Lingaraj Temple,Bhubaneswar,Spiritual,A grand 11th-century temple dedicated to Harihara.,0.0,06:00:00,21:00:00,120,attractions/lingaraj_temple.jpg
+Udayagiri and Khandagiri Caves,Bhubaneswar,Heritage,Rock-cut caves containing ancient inscriptions.,25.0,09:00:00,17:00:00,120,attractions/udayagiri_and_khandagiri_caves.jpg
+Dhauli Shanti Stupa,Bhubaneswar,Spiritual,A white peace stupa overlooking Kalinga war fields.,0.0,06:00:00,20:00:00,90,attractions/dhauli_shanti_stupa.jpg
+Nandankanan Zoological Park,Bhubaneswar,Wildlife,A zoo famous for white tiger safaris.,100.0,08:00:00,17:00:00,150,attractions/nandankanan_zoological_park.jpg
+Mukteshvara Temple,Bhubaneswar,Spiritual,An old temple famous for its arched stone gateway.,0.0,06:00:00,19:00:00,60,attractions/mukteshvara_temple.jpg
+Victoria Memorial,Kolkata,Heritage,A white marble palace museum built for Queen Victoria.,60.0,10:00:00,17:00:00,120,attractions/victoria_memorial.jpg
+Dakshineswar Kali Temple,Kolkata,Spiritual,A major temple complex dedicated to Goddess Kali.,0.0,06:00:00,21:00:00,120,attractions/dakshineswar_kali_temple.jpg
+Howrah Bridge,Kolkata,Heritage,An iconic cantilever steel bridge crossing Hooghly river.,0.0,00:00:00,23:59:59,45,attractions/howrah_bridge.jpg
+Indian Museum Kolkata,Kolkata,Heritage,The oldest and largest multipurpose museum in Asia.,50.0,10:00:00,17:00:00,150,attractions/indian_museum_kolkata.jpg
+Belur Math,Kolkata,Spiritual,"Headquarters of Ramakrishna Mission, promoting universal religion.",0.0,06:00:00,20:30:00,90,attractions/belur_math.jpg
+Science City Kolkata,Kolkata,City,A major interactive science exhibition park.,100.0,09:00:00,20:00:00,180,attractions/science_city_kolkata.jpg
+Rishikonda Beach,Visakhapatnam,Beach,A blue flag beach popular for swimming and windsurfing.,20.0,06:00:00,18:00:00,120,attractions/rishikonda_beach.jpg
+INS Kursura Submarine Museum,Visakhapatnam,Heritage,A decommissioned submarine set up on the beach.,70.0,14:00:00,20:30:00,90,attractions/ins_kursura_submarine_museum.jpg
+Kailasagiri,Visakhapatnam,Nature,A hilltop park offering panoramic views of the bay.,20.0,08:00:00,20:00:00,90,attractions/kailasagiri.jpg
+Yarada Beach,Visakhapatnam,Beach,A tranquil beach surrounded by hills on three sides.,0.0,06:00:00,18:00:00,90,attractions/yarada_beach.jpg
+Simhachalam Temple,Visakhapatnam,Spiritual,A historic temple dedicated to Lord Narasimha.,0.0,07:00:00,21:00:00,90,attractions/simhachalam_temple.jpg
+Tirumala Venkateswara Temple,Tirupati,Spiritual,The world-famous hilltop temple of Lord Venkateswara.,0.0,03:00:00,23:59:59,240,attractions/tirumala_venkateswara_temple.jpg
+Sri Kapileswara Swamy Temple,Tirupati,Spiritual,"An ancient temple dedicated to Shiva, next to a waterfall.",0.0,05:00:00,21:00:00,60,attractions/sri_kapileswara_swamy_temple.jpg
+Chandragiri Fort,Tirupati,Heritage,A 11th-century fort which served as late Vijayanagara capital.,25.0,09:00:00,17:30:00,90,attractions/chandragiri_fort.jpg
+Sri Govindaraja Swamy Temple,Tirupati,Spiritual,A prominent temple complex with an imposing tower.,0.0,05:00:00,21:30:00,90,attractions/sri_govindaraja_swamy_temple.jpg
+Talakona Waterfall,Tirupati,Nature,"The highest waterfall in Andhra Pradesh, inside reserve forests.",10.0,06:00:00,17:00:00,120,attractions/talakona_waterfall.jpg
+Borra Caves,Araku Valley,Nature,Deep limestone caves showing stalactites.,80.0,10:00:00,17:00:00,90,attractions/borra_caves.jpg
+Katiki Waterfalls,Araku Valley,Nature,A waterfall reachable by jeep track and trek.,0.0,08:00:00,17:00:00,120,attractions/katiki_waterfalls.jpg
+Araku Tribal Museum,Araku Valley,Heritage,A museum explaining tribal lifestyle artifacts.,40.0,09:00:00,18:00:00,90,attractions/araku_tribal_museum.jpg
+Padmapuram Gardens,Araku Valley,Nature,A historical botanical garden hosting treehouse stays.,40.0,09:00:00,18:00:00,60,attractions/padmapuram_gardens.jpg
+Ananthagiri Coffee Plantations,Araku Valley,Nature,Scenic tea and coffee gardens located on hill slopes.,0.0,08:00:00,18:00:00,60,attractions/ananthagiri_coffee_plantations.jpg
+Promenade Beach,Pondicherry,Beach,A rocky beachfront boulevard lined with heritage monuments.,0.0,00:00:00,23:59:59,90,attractions/promenade_beach.jpg
+Auroville,Pondicherry,Spiritual,An experimental township containing the Matrimandir.,0.0,09:00:00,17:00:00,180,attractions/auroville.jpg
+Sri Aurobindo Ashram,Pondicherry,Spiritual,A spiritual community ashram founded by Aurobindo.,0.0,08:00:00,18:00:00,60,attractions/sri_aurobindo_ashram.jpg
+Paradise Beach Pondicherry,Pondicherry,Beach,A golden sand beach accessible by ferry across backwaters.,300.0,09:00:00,17:00:00,120,attractions/paradise_beach_pondicherry.jpg
+French Quarter,Pondicherry,Heritage,Streets filled with mustard yellow colonial buildings and cafes.,0.0,00:00:00,23:59:59,120,attractions/french_quarter.jpg
+Radhanagar Beach,Havelock Island,Beach,Award-winning beach famous for turquoise waters and sunsets.,0.0,06:00:00,18:00:00,180,attractions/radhanagar_beach.jpg
+Elephant Beach,Havelock Island,Beach,Famous for coral reefs and water sports like snorkeling.,0.0,08:00:00,15:00:00,180,attractions/elephant_beach.jpg
+Kalapathar Beach,Havelock Island,Beach,A quiet sandy beach framed by black rocks and forest tracks.,0.0,06:00:00,18:00:00,90,attractions/kalapathar_beach.jpg
+Neil's Cove,Havelock Island,Beach,A beautiful hidden lagoon cove located next to Radhanagar.,0.0,06:00:00,17:30:00,60,attractions/neil's_cove.jpg
+Havelock Dive Center,Havelock Island,Adventure,A diving school offering Scuba courses.,3500.0,07:00:00,16:00:00,150,attractions/havelock_dive_center.jpg
+Cellular Jail National Memorial,Port Blair,Heritage,The historic colonial prison housing freedom fighters.,30.0,09:00:00,17:00:00,120,attractions/cellular_jail_national_memorial.jpg
+Ross Island,Port Blair,Heritage,A colonial ruins island now home to wild deer.,100.0,08:30:00,16:00:00,150,attractions/ross_island.jpg
+Chidiya Tapu,Port Blair,Nature,A bird watching beach point famous for sunsets.,0.0,06:00:00,18:00:00,90,attractions/chidiya_tapu.jpg
+Samudrika Marine Museum,Port Blair,Heritage,A museum run by Indian Navy explaining marine life.,50.0,09:00:00,17:00:00,90,attractions/samudrika_marine_museum.jpg
+Corbyn's Cove Beach,Port Blair,Beach,A palm-fringed sandy beach offering jet ski rides.,0.0,06:00:00,21:00:00,90,attractions/corbyn's_cove_beach.jpg
+Gir Jungle Trail Safari,Gir National Park,Wildlife,A safari to spot Asiatic lions in natural forest habitats.,1000.0,06:00:00,17:00:00,180,attractions/gir_jungle_trail_safari.jpg
+Devalia Safari Park,Gir National Park,Wildlife,An enclosed safari park offering guaranteed lion sightings.,200.0,07:30:00,17:30:00,90,attractions/devalia_safari_park.jpg
+Kamleshwar Dam,Gir National Park,Nature,A scenic dam built inside Gir forest housing crocodiles.,0.0,08:00:00,17:00:00,45,attractions/kamleshwar_dam.jpg
+Durbar Hall Museum Junagadh,Gir National Park,Heritage,A museum showing weapons and royal clothing relics.,20.0,10:00:00,17:00:00,90,attractions/durbar_hall_museum_junagadh.jpg
+Somnath Temple Gate,Gir National Park,Spiritual,A nearby holy temple situated on shores of Gujarat.,0.0,06:00:00,21:30:00,90,attractions/somnath_temple_gate.jpg
+White Desert Salt Flat,Rann of Kutch,Nature,A flat salt crust desert shining white under moon.,100.0,00:00:00,23:59:59,120,attractions/white_desert_salt_flat.jpg
+Kalo Dungar Black Hill,Rann of Kutch,Nature,The highest point in Kutch offering desert panoramas.,0.0,06:00:00,18:00:00,90,attractions/kalo_dungar_black_hill.jpg
+Aina Mahal Palace Bhuj,Rann of Kutch,Heritage,A palace of mirrors built during the 18th century.,20.0,09:00:00,17:00:00,60,attractions/aina_mahal_palace_bhuj.jpg
+Prag Mahal,Rann of Kutch,Heritage,An old Italian Gothic style palace next to Aina Mahal.,20.0,09:00:00,17:00:00,60,attractions/prag_mahal.jpg
+Bhujodi Crafts Village,Rann of Kutch,Heritage,A major weavers village displaying Kutch embroidery.,0.0,09:00:00,19:00:00,120,attractions/bhujodi_crafts_village.jpg
