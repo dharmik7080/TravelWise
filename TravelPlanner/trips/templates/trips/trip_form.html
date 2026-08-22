@@ -225,12 +225,39 @@
                             if (data.estimated_cost !== undefined) {
                                 costCard.classList.remove('d-none');
                                 // Format using Indian currency formatting with no decimal places
-                                const costFormatted = new Intl.NumberFormat('en-IN', {
+                                const formatter = new Intl.NumberFormat('en-IN', {
                                     style: 'currency',
                                     currency: 'INR',
                                     maximumFractionDigits: 0
-                                }).format(data.estimated_cost);
+                                });
+                                const costFormatted = formatter.format(data.estimated_cost);
                                 costValue.innerText = costFormatted;
+
+                                const costValNum = parseFloat(data.estimated_cost);
+                                const budgetInput = document.getElementById('id_budget');
+                                const budgetVal = budgetInput ? parseFloat(budgetInput.value) : 0;
+
+                                // Update class color and display alerts based on budget comparison
+                                if (budgetVal > 0 && costValNum > budgetVal) {
+                                    costValue.className = 'fw-bold text-danger mb-1';
+                                    
+                                    let warningBox = document.getElementById('budget-warning-box');
+                                    if (!warningBox) {
+                                        warningBox = document.createElement('div');
+                                        warningBox.id = 'budget-warning-box';
+                                        warningBox.className = 'alert alert-danger border border-danger-subtle bg-danger bg-opacity-10 text-danger rounded-3 p-2.5 small mt-2';
+                                        costValue.parentNode.insertBefore(warningBox, costValue.nextSibling);
+                                    }
+                                    const budgetFormatted = formatter.format(budgetVal);
+                                    const overAmt = formatter.format(costValNum - budgetVal);
+                                    warningBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation me-1"></i>This estimate exceeds your trip budget of <strong>${budgetFormatted}</strong> by <strong>${overAmt}</strong>.`;
+                                } else {
+                                    costValue.className = 'fw-bold text-success mb-3';
+                                    const warningBox = document.getElementById('budget-warning-box');
+                                    if (warningBox) {
+                                        warningBox.remove();
+                                    }
+                                }
 
                                 // Suggest package type, attractions and activities
                                 if (data.attractions && data.attractions.length > 0) {

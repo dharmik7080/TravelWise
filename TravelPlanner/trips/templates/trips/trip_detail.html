@@ -372,6 +372,29 @@
                 const valEl = document.getElementById('trip-pred-value');
                 if (valEl) {
                     valEl.textContent = formatter.format(data.estimated_cost);
+                    
+                    const budgetVal = parseFloat("{{ trip.budget }}");
+                    const costValNum = parseFloat(data.estimated_cost);
+                    if (budgetVal > 0 && costValNum > budgetVal) {
+                        valEl.className = 'fw-bold text-danger mb-2';
+                        
+                        let warningBox = document.getElementById('budget-detail-warning');
+                        if (!warningBox) {
+                            warningBox = document.createElement('div');
+                            warningBox.id = 'budget-detail-warning';
+                            warningBox.className = 'alert alert-danger border border-danger-subtle bg-danger bg-opacity-10 text-danger rounded-3 p-2 small mt-2';
+                            valEl.parentNode.insertBefore(warningBox, valEl.nextSibling);
+                        }
+                        const budgetFormatted = formatter.format(budgetVal);
+                        const overAmt = formatter.format(costValNum - budgetVal);
+                        warningBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation me-1"></i>This estimate exceeds your trip budget of <strong>${budgetFormatted}</strong> by <strong>${overAmt}</strong>.`;
+                    } else {
+                        valEl.className = 'fw-bold text-success mb-2';
+                        const warningBox = document.getElementById('budget-detail-warning');
+                        if (warningBox) {
+                            warningBox.remove();
+                        }
+                    }
                 }
                 const resEl = document.getElementById('trip-pred-result');
                 if (resEl) {
