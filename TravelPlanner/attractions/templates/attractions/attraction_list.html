@@ -105,9 +105,9 @@
             <div class="card h-100 border-0 card-hover">
                 <div class="card-img-wrapper position-relative">
                     {% if attraction.image %}
-                        <img src="{{ attraction.image.url }}" class="hover-zoom-img" alt="{{ attraction.attraction_name }}">
+                        <img src="{{ attraction.image.url }}" class="hover-zoom-img" alt="{{ attraction.attraction_name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop';">
                     {% else %}
-                        <img src="{% static 'images/placeholder_attraction.jpg' %}" class="hover-zoom-img" alt="{{ attraction.attraction_name }}">
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop" class="hover-zoom-img" alt="{{ attraction.attraction_name }}">
                     {% endif %}
                 </div>
                 <div class="card-body p-4 d-flex flex-column justify-content-between">

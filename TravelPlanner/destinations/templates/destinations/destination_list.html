@@ -202,11 +202,9 @@
             <div class="card h-100 card-hover">
                 <div class="card-img-wrapper position-relative" style="height: 240px; overflow: hidden;">
                     {% if dest.image %}
-                        <img src="{{ dest.image.url }}" class="hover-zoom-img w-100 h-100" alt="{{ dest.destination_name }}">
+                        <img src="{{ dest.image.url }}" class="hover-zoom-img w-100 h-100" alt="{{ dest.destination_name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop';">
                     {% else %}
-                        <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-muted h-100">
-                            <i class="fa-regular fa-image fa-3x"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop" class="hover-zoom-img w-100 h-100" alt="{{ dest.destination_name }}">
                     {% endif %}
                     <!-- Gradient Overlay -->
                     <div class="position-absolute bottom-0 start-0 w-100 h-50" style="background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0) 100%); z-index: 1;"></div>
