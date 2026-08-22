@@ -53,6 +53,7 @@ class BaseCSVImportCommand(BaseCommand):
                 
                 # Check for duplicates
                 if self.is_duplicate(processed_data):
+                    self.update_duplicate(processed_data)
                     skipped_duplicates += 1
                     continue
 
@@ -82,6 +83,10 @@ class BaseCSVImportCommand(BaseCommand):
     def is_duplicate(self, processed_data):
         """Return True if duplicate, False otherwise."""
         raise NotImplementedError("Subclasses must implement is_duplicate()")
+
+    def update_duplicate(self, processed_data):
+        """Update existing record when duplicate is found."""
+        pass
 
     def save_record(self, processed_data):
         """Create database object."""

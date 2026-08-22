@@ -46,6 +46,7 @@ class Command(BaseCSVImportCommand):
         family_friendly = bool(row['family_friendly']) if 'family_friendly' in row and not pd.isna(row['family_friendly']) else True
         couple_friendly = bool(row['couple_friendly']) if 'couple_friendly' in row and not pd.isna(row['couple_friendly']) else True
         solo_friendly = bool(row['solo_friendly']) if 'solo_friendly' in row and not pd.isna(row['solo_friendly']) else True
+        image = str(row['image']).strip() if 'image' in row and not pd.isna(row['image']) else ""
 
         return {
             'destination_name': dest_name,
@@ -61,8 +62,12 @@ class Command(BaseCSVImportCommand):
             'family_friendly': family_friendly,
             'couple_friendly': couple_friendly,
             'solo_friendly': solo_friendly,
-            'average_rating': average_rating
+            'average_rating': average_rating,
+            'image': image
         }
 
     def is_duplicate(self, processed_data):
         return Destination.objects.filter(destination_name__iexact=processed_data['destination_name']).exists()
+
+    def update_duplicate(self, processed_data):
+        Destination.objects.filter(destination_name__iexact=processed_data['destination_name']).update(**processed_data)

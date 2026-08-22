@@ -40,14 +40,20 @@ class Command(BaseCSVImportCommand):
 
         description = str(row['description']).strip()
 
+        image = str(row['image']).strip() if 'image' in row and not pd.isna(row['image']) else ""
+
         return {
             'package_name': package_name,
             'destination': destination,
             'duration': duration,
             'package_type': package_type,
             'price': price,
-            'description': description
+            'description': description,
+            'image': image
         }
 
     def is_duplicate(self, processed_data):
         return Package.objects.filter(package_name__iexact=processed_data['package_name']).exists()
+
+    def update_duplicate(self, processed_data):
+        Package.objects.filter(package_name__iexact=processed_data['package_name']).update(**processed_data)

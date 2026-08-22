@@ -42,6 +42,8 @@ class Command(BaseCSVImportCommand):
         except (ValueError, TypeError):
             average_visit_time = 60
 
+        image = str(row['image']).strip() if 'image' in row and not pd.isna(row['image']) else ""
+
         return {
             'attraction_name': attraction_name,
             'destination': destination,
@@ -50,8 +52,12 @@ class Command(BaseCSVImportCommand):
             'entry_fee': entry_fee,
             'opening_time': opening_time,
             'closing_time': closing_time,
-            'average_visit_time': average_visit_time
+            'average_visit_time': average_visit_time,
+            'image': image
         }
 
     def is_duplicate(self, processed_data):
         return Attraction.objects.filter(attraction_name__iexact=processed_data['attraction_name']).exists()
+
+    def update_duplicate(self, processed_data):
+        Attraction.objects.filter(attraction_name__iexact=processed_data['attraction_name']).update(**processed_data)
