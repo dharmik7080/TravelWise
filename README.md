@@ -8,12 +8,20 @@ Originally built matching the Odoo **GlobeTrotter** hackathon specification, thi
 
 ## 🌟 Key Features
 
-### 1. Core Platform Features (PDF Specifications)
-* **Secure Authentication**: User sign-in, registration, profile details edit, and password reset workflows.
-* **Traveler Profiles & Wishlists**: Custom travel profile preferences (budget levels, target seasons, travel themes) and interactive bookmarks.
-* **Itinerary Sharing & Cloning**: Sharable read-only public URLs and one-click trip copying/cloning.
-* **Interactive Timeline View**: Day-wise summaries mapping morning, afternoon, and evening slots.
-* **Explore Catalogues**: Complete search directories for Indian destinations and tourist activities.
+### 1. 13-Screen Core Platform (PDF Specifications)
+* **Screen 1: Authentication**: Email & password inputs, registration, and full custom email password reset flow.
+* **Screen 2: Dashboard / Home**: Personal greetings, recent & upcoming trip cards, "Plan New Trip" CTA, recommended spots, and budget highlights.
+* **Screen 3: Create Trip**: Trip name, dates, boundary validations, cover photo upload, and save features.
+* **Screen 4: My Trips List**: Card layout displaying trip info, destination count, and Edit/View/Delete actions.
+* **Screen 5: Itinerary Builder**: Day-by-day morning/afternoon/evening blocks, **dynamic day additions/removals**, and **drag-and-drop day reordering** (HTML5 drag-and-drop).
+* **Screen 6: Itinerary View**: Structured schedule review with a **List View vs. Calendar Grid Toggle** on the Trip Detail page.
+* **Screen 7: City Search / Destinations**: Destination search, cost index/popularity indicators, weather integration, and database-backed wishlisting.
+* **Screen 8: Activity Search**: Category, cost, and duration filters on `/attractions/` with quick **"Add to Trip" buttons** directly on cards.
+* **Screen 9: Budget Breakdown**: Dedicated page (`/trips/<pk>/budget/`) with **Chart.js Cost Distribution (Doughnut)** and **Category Comparison (Bar)** charts, daily average spend, and overbudget warnings.
+* **Screen 10: Trip Calendar**: New standalone screen (`/trips/calendar/`) powered by **FullCalendar.js** displaying all user trips color-coded by timeline (Upcoming/Ongoing/Completed) with detail popups.
+* **Screen 11: Public Sharing**: Toggleable public URL (`/trips/shared/<share_token>/`), **"Copy Trip"** button to copy public itineraries, and social media sharing buttons (WhatsApp, X).
+* **Screen 12: User Profile**: Editable user settings, **profile photo/avatar upload**, persistent wishlist, and a modal-confirmed **"Delete Account" action**.
+* **Screen 13: Admin Dashboard**: Staff-only analytics console (`/dashboard/admin/`) tracking signups, active users, trip statistics, and top cities/activities with charts.
 
 ### 2. Extraordinary Upgrades (NLP, Machine Learning & Geospatial)
 * **ML Cost Predictor (scikit-learn)**: A dedicated machine learning service ([budget_predictor.py](TravelPlanner/services/ml/budget_predictor.py)) that trains and compares **three regression models** (Linear Regression, Random Forest, and Decision Tree Regressor) on historical package rates. It registers the best-performing model based on $R^2$, MAE, and RMSE metrics, exposing model diagnostics inside the Django Admin.
@@ -30,8 +38,8 @@ Originally built matching the Odoo **GlobeTrotter** hackathon specification, thi
 
 * **Backend**: Django 5.2 (Python)
 * **Machine Learning & NLP**: Scikit-Learn, Numpy, Joblib
-* **Frontend mapping**: Leaflet.js, OpenStreetMap
-* **UI styling**: Bootstrap 5, FontAwesome (Dark Premium theme overrides)
+* **Frontend mapping & plugins**: Leaflet.js, OpenStreetMap, FullCalendar.js
+* **UI styling**: Bootstrap 5, FontAwesome, Chart.js (Dark Premium theme overrides)
 * **Database**: SQLite (Production-ready relational schemas)
 * **External APIs**: OpenWeather API
 
@@ -67,7 +75,7 @@ Ensure you have **Python 3.10+** and `pip` installed.
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/dharmikthakkar/GlobeTrotter.git
+git clone https://github.com/dharmik7080/GlobeTrotter.git
 cd GlobeTrotter
 ```
 
@@ -116,3 +124,4 @@ Verify database constraints and optimization calculations:
 ```bash
 python TravelPlanner/manage.py test
 ```
+
