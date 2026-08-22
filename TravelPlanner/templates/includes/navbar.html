@@ -25,6 +25,13 @@
                 <li class="nav-item">
                     <a class="nav-link {% if '/trips/' in request.path %}active{% endif %}" href="{% url 'trips:index' %}">My Trips</a>
                 </li>
+                {% if user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link {% if '/dashboard/admin/' in request.path %}active{% endif %}" href="{% url 'dashboard:admin_dashboard' %}">
+                        <i class="fa-solid fa-shield-halved me-1 text-warning"></i>Admin
+                    </a>
+                </li>
+                {% endif %}
                 {% endif %}
             </ul>
             <ul class="navbar-nav align-items-lg-center">

@@ -223,6 +223,95 @@ class PredictionsView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/predictions.html'
 
 
+class AdminDashboardView(LoginRequiredMixin, TemplateView):
+    """
+    Custom staff-only Admin & Analytics Dashboard.
+    Displays platform-wide statistics, user lists, recent trips,
+    and top destinations — all themed to match the site's dark UI.
+    Only accessible to staff/superuser accounts.
+    """
+    template_name = 'dashboard/admin_dashboard.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """Restrict access to staff users only; redirect others to user dashboard."""
+        from django.http import HttpResponseForbidden
+        if not request.user.is_authenticated:
+            from django.contrib.auth.views import redirect_to_login
+            return redirect_to_login(request.get_full_path())
+        if not request.user.is_staff:
+            return HttpResponseForbidden(
+                "<h2>403 – Access Denied</h2><p>This page is only accessible to staff administrators.</p>"
+            )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        from django.contrib.auth import get_user_model
+        from django.db.models import Count, Avg
+        from django.db.models.functions import TruncMonth
+        from destinations.models import Destination
+        from attractions.models import Attraction
+        from packages.models import Package
+
+        User = get_user_model()
+
+        # --- Platform-wide counts ---
+        context['total_users'] = User.objects.count()
+        context['total_destinations'] = Destination.objects.count()
+        context['total_trips'] = Trip.objects.count()
+        context['total_packages'] = Package.objects.count()
+        context['total_attractions'] = Attraction.objects.count()
+        context['active_users'] = User.objects.filter(is_active=True).count()
+
+        # --- Recent 10 signups ---
+        context['recent_users'] = User.objects.order_by('-date_joined')[:10]
+
+        # --- Recent 10 trips across all users ---
+        context['recent_trips'] = (
+            Trip.objects.select_related('user', 'destination')
+            .order_by('-created_at')[:10]
+        )
+
+        # --- Top 5 destinations by average rating ---
+        context['top_destinations'] = (
+            Destination.objects.order_by('-average_rating')[:5]
+        )
+
+        # --- Top 5 attractions by average visit time ---
+        context['top_attractions'] = (
+            Attraction.objects.select_related('destination')
+            .order_by('-average_visit_time')[:5]
+        )
+
+        # --- Monthly trip creation counts for Chart.js ---
+        monthly_data = (
+            Trip.objects.annotate(month=TruncMonth('created_at'))
+            .values('month')
+            .annotate(count=Count('id'))
+            .order_by('month')
+        )
+        context['chart_months'] = [
+            m['month'].strftime('%b %Y') for m in monthly_data
+        ]
+        context['chart_counts'] = [m['count'] for m in monthly_data]
+
+        # --- Average budget across all trips ---
+        avg = Trip.objects.aggregate(avg=Avg('budget'))['avg']
+        context['avg_budget'] = avg or 0
+
+        # --- Trips by travel type (for donut chart) ---
+        travel_type_data = (
+            Trip.objects.values('travel_type')
+            .annotate(count=Count('id'))
+            .order_by('-count')
+        )
+        context['travel_type_labels'] = [t['travel_type'] for t in travel_type_data]
+        context['travel_type_counts'] = [t['count'] for t in travel_type_data]
+
+        return context
+
+
 class UniversalSearchView(View):
     """
     Django View that queries the TMDB /search/multi endpoint.
