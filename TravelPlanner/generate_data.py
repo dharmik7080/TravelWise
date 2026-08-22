@@ -1362,7 +1362,7 @@ all_destinations = (destinations_data + extra_dests)[:75]
 print(f"Total destinations generated: {len(all_destinations)}")
 
 # 1. Write destinations.csv
-with open('destinations.csv', 'w', newline='', encoding='utf-8') as f:
+with open(os.path.join('data', 'destinations.csv'), 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow([
         'destination_name', 'city', 'state', 'region', 'category', 'description', 
@@ -1378,7 +1378,7 @@ with open('destinations.csv', 'w', newline='', encoding='utf-8') as f:
         ])
 
 # 2. Write attractions.csv
-with open('attractions.csv', 'w', newline='', encoding='utf-8') as f:
+with open(os.path.join('data', 'attractions.csv'), 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow([
         'attraction_name', 'destination_name', 'category', 'description', 
@@ -1395,7 +1395,7 @@ with open('attractions.csv', 'w', newline='', encoding='utf-8') as f:
             ])
 
 # 3. Write packages.csv
-with open('packages.csv', 'w', newline='', encoding='utf-8') as f:
+with open(os.path.join('data', 'packages.csv'), 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow([
         'package_name', 'destination_name', 'duration', 'package_type', 'price', 'description', 'image'
@@ -1426,7 +1426,7 @@ with open('packages.csv', 'w', newline='', encoding='utf-8') as f:
         ])
 
 # 4. Write best_seasons.csv
-with open('best_seasons.csv', 'w', newline='', encoding='utf-8') as f:
+with open(os.path.join('data', 'best_seasons.csv'), 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow([
         'destination_name', 'season', 'peak_months', 'average_temperature', 'rainfall', 'travel_tip'

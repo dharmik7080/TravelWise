@@ -9,10 +9,10 @@ pip install -r TravelPlanner/requirements.txt
 python TravelPlanner/manage.py migrate --no-input
 
 # Seed initial database values
-python TravelPlanner/manage.py import_destinations TravelPlanner/destinations.csv
-python TravelPlanner/manage.py import_attractions TravelPlanner/attractions.csv
-python TravelPlanner/manage.py import_packages TravelPlanner/packages.csv
-python TravelPlanner/manage.py import_seasons TravelPlanner/best_seasons.csv
+python TravelPlanner/manage.py import_destinations TravelPlanner/data/destinations.csv
+python TravelPlanner/manage.py import_attractions TravelPlanner/data/attractions.csv
+python TravelPlanner/manage.py import_packages TravelPlanner/data/packages.csv
+python TravelPlanner/manage.py import_seasons TravelPlanner/data/best_seasons.csv
 
 # Train the Machine Learning Predictor models
 python TravelPlanner/ml/train_model.py

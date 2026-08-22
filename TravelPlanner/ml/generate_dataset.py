@@ -6,8 +6,8 @@ def generate_data():
     ml_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.dirname(ml_dir)
     
-    dest_file = os.path.join(project_dir, 'destinations.csv')
-    pkg_file = os.path.join(project_dir, 'packages.csv')
+    dest_file = os.path.join(project_dir, 'data', 'destinations.csv')
+    pkg_file = os.path.join(project_dir, 'data', 'packages.csv')
     
     # 1. Read real destinations to get real average cost profiles
     if os.path.exists(dest_file):

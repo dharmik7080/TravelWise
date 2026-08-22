@@ -19,11 +19,12 @@ db.sqlite3
 
 # Large datasets
 *.csv
-!TravelPlanner/destinations.csv
-!TravelPlanner/attractions.csv
-!TravelPlanner/packages.csv
-!TravelPlanner/best_seasons.csv
-data/
+!TravelPlanner/data/destinations.csv
+!TravelPlanner/data/attractions.csv
+!TravelPlanner/data/packages.csv
+!TravelPlanner/data/best_seasons.csv
+!TravelPlanner/ml/datasets/trip_cost_dataset.csv
+/data/
 
 # ML Models and Pickles
 *.pkl
