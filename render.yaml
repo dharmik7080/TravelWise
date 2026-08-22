@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: globetrotter
+    runtime: python
+    buildCommand: ./render-build.sh
+    startCommand: gunicorn TravelPlanner.wsgi:application --chdir TravelPlanner --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: "*"

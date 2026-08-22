@@ -24,3 +24,10 @@ data/
 # ML Models and Pickles
 *.pkl
 *.pkl.gz
+
+# Generated static and media files
+staticfiles/
+TravelPlanner/staticfiles/
+media/
+TravelPlanner/media/
+*.log
