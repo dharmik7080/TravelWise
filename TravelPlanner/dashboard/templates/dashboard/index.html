@@ -22,7 +22,7 @@
                         <div class="col-md-8">
                             <span class="badge bg-primary bg-opacity-25 text-white border border-primary border-opacity-40 px-3 py-2 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider">Welcome back</span>
                             <h1 class="display-6 fw-bold text-white mb-2">{{ greeting }}, {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}!</h1>
-                            <p class="text-light opacity-75 mb-0"><i class="fa-regular fa-calendar me-2 text-primary"></i>{{ current_date|date:"l, F d, Y" }} | Explore India's beautiful tourist sights dynamically with GlobeTrotter AI.</p>
+                            <p class="text-light opacity-75 mb-0"><i class="fa-regular fa-calendar me-2 text-primary"></i>{{ current_date|date:"l, F d, Y" }} | Explore India's beautiful tourist sights dynamically with GlobeTrotter.</p>
                         </div>
                         <div class="col-md-4 text-md-end mt-4 mt-md-0">
                             <a href="{% url 'trips:plan' %}" class="btn btn-primary btn-lg px-4 py-2.5 fw-semibold shadow-sm"><i class="fa-solid fa-plus me-2"></i>Plan a New Trip</a>

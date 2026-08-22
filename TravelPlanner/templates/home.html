@@ -282,11 +282,11 @@
         <div class="row justify-content-center">
             <div class="col-lg-10 mx-auto" style="max-width: 820px;">
                 <span class="badge bg-primary px-3 py-2 rounded-pill mb-4 text-uppercase tracking-wider fw-bold text-white shadow-sm" style="font-size: 0.8rem; letter-spacing: 0.05em;">
-                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Smart AI Travel Platform
+                    <i class="fa-solid fa-compass me-2"></i>Smart Travel Planner
                 </span>
-                <h1 class="hero-title mb-3 text-white">Explore Incredible India with <span class="text-accent">Intelligent</span> Travel Planning</h1>
+                <h1 class="hero-title mb-3 text-white">Explore Incredible India with <span class="text-accent">Personalized</span> Travel Planning</h1>
                 <p class="lead mb-5 text-light opacity-90 fs-6 leading-relaxed">
-                    Personalized Destination Discovery • AI Recommendations • Trip Budget Prediction • Live Real-time Weather • Smart Itinerary Generation
+                    Personalized Destination Discovery • Curated Itineraries • Trip Budget Planning • Live Real-time Weather • Dynamic Itinerary Builder
                 </p>
                 
                 <div class="d-flex flex-wrap gap-3 justify-content-center">
@@ -433,9 +433,9 @@
                     <div class="p-4 rounded-3 compare-card-wise border border-opacity-10 flex-grow-1 d-flex flex-column justify-content-center">
                         <h5 class="fw-bold text-success mb-3"><i class="fa-solid fa-circle-check me-2"></i>The GlobeTrotter Way</h5>
                         <ul class="list-unstyled mb-0 d-flex flex-column gap-2 text-secondary" style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>AI Recommendations</strong> score spots based on semantic matches.</li>
-                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Budget Predictors</strong> forecast package cost metrics instantly.</li>
-                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Smart Itinerary</strong> schedules sights, avoiding monsoon & peak heat.</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Curated Attractions</strong> score spots based on popularity and ratings.</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Budget Calculators</strong> aggregate package costs and entry fees instantly.</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i><strong>Dynamic Itineraries</strong> schedule sightseeing stops, matching best season windows.</li>
                         </ul>
                     </div>
                     
@@ -456,21 +456,21 @@
                     <div class="col-sm-6">
                         <div class="card p-3 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
                             <div>
-                                <i class="fa-solid fa-wand-magic-sparkles text-primary mb-2 fs-5"></i>
-                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">AI Suggestions</h6>
-                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Matches target filters and state logs to recommend locations.</p>
+                                <i class="fa-solid fa-cubes text-primary mb-2 fs-5"></i>
+                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">Curated Packages</h6>
+                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Filter itineraries and view curated routes for popular regions.</p>
                             </div>
-                            <a href="{% url 'destinations:recommendations' %}" class="small text-primary fw-bold text-decoration-none">Try AI Suggestions <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                            <a href="{% url 'packages:list' %}" class="small text-primary fw-bold text-decoration-none">Explore Packages <i class="fa-solid fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="card p-3 h-100 feature-card-premium text-start d-flex flex-column justify-content-between">
                             <div>
                                 <i class="fa-solid fa-chart-line text-success mb-2 fs-5"></i>
-                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">Budget Predictor</h6>
-                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Estimates travel package rates using linear regression algorithms.</p>
+                                <h6 class="fw-bold text-white mb-1" style="font-size: 0.95rem;">Budget Estimator</h6>
+                                <p class="text-secondary mb-3" style="font-size: 0.76rem; line-height: 1.4;">Estimates stay, transport, food, and attractions cost entries.</p>
                             </div>
-                            <a href="{% url 'trips:plan' %}" class="small text-primary fw-bold text-decoration-none">Predict Budget <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                            <a href="{% url 'trips:plan' %}" class="small text-primary fw-bold text-decoration-none">Estimate Budget <i class="fa-solid fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -553,15 +553,15 @@
     </div>
 </section>
 
-<!-- AI RECOMMENDATION PREVIEW (DEMO WIDGET) -->
+<!-- DESTINATION MATCHING PREVIEW (DEMO WIDGET) -->
 <section class="py-80 bg-sec-3 border-bottom">
     <div class="container">
         <div class="row align-items-center g-5">
             <!-- Left: Interactive Form Formulator -->
             <div class="col-lg-5">
                 <div class="card p-4 p-md-5 border-0 shadow-lg" style="background: rgba(30, 41, 59, 0.8) !important;">
-                    <h4 class="fw-bold text-white mb-3"><i class="fa-solid fa-wand-magic-sparkles text-accent me-2"></i>AI Recommender Demo</h4>
-                    <p class="text-secondary small mb-4">Choose preferences to instantly filter our curated recommendation catalog preview dynamically.</p>
+                    <h4 class="fw-bold text-white mb-3"><i class="fa-solid fa-compass text-accent me-2"></i>Destination Matcher Demo</h4>
+                    <p class="text-secondary small mb-4">Choose preferences to filter our curated destinations catalog preview dynamically.</p>
                     
                     <div class="mb-3">
                         <label class="form-label">Budget Level</label>
@@ -591,18 +591,18 @@
                         <input type="number" class="form-control" value="5" min="1">
                     </div>
 
-                    <a href="{% url 'destinations:recommendations' %}" class="btn btn-primary w-100 py-3 fw-bold">
-                        Generate Recommendations <i class="fa-solid fa-arrow-right ms-1"></i>
+                    <a href="{% url 'destinations:list' %}" class="btn btn-primary w-100 py-3 fw-bold">
+                        Browse Matching Destinations <i class="fa-solid fa-arrow-right ms-1"></i>
                     </a>
                 </div>
             </div>
 
             <!-- Right: Dynamic Results Grid -->
             <div class="col-lg-7 text-start">
-                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">AI Preview</span>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill mb-3 fw-semibold text-uppercase tracking-wider small">Matcher Preview</span>
                 <h2 class="section-title mb-3">Instant Recommendations Mapped</h2>
                 <p class="text-muted mb-4 fs-6">
-                    Our backend engine scores destinations across India, evaluating local weather averages, cost constraints, and trip themes to calculate accuracy scores. Try the generator live to save models to your profile dashboard.
+                    Our platform scores destinations across India, evaluating local weather averages, cost constraints, and trip themes to calculate suitability matches. Try the search catalog to save custom plans to your dashboard.
                 </p>
                 
                 <div id="demo-recommendations-list" class="row g-3">
@@ -715,7 +715,7 @@
                         <i class="fa-solid fa-cloud-sun fs-4"></i>
                     </div>
                     <span class="stat-num d-block mb-1" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Live</span>
-                    <span class="text-secondary small fw-semibold">Weather & AI Powered</span>
+                    <span class="text-secondary small fw-semibold">Weather & Forecasts</span>
                 </div>
             </div>
         </div>
@@ -724,7 +724,7 @@
 
 {% block extra_js %}
 <script>
-    // Initialize AI Recommendation Demo
+    // Initialize Recommendation Matcher Demo
     document.addEventListener("DOMContentLoaded", function() {
         updateDemoRecommendations();
         initScrollCounters();
