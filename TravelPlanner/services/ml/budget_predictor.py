@@ -4,12 +4,6 @@ import pickle
 import numpy as np
 import pandas as pd
 from datetime import datetime
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 class BudgetPredictor:
     _model = None
@@ -29,81 +23,69 @@ class BudgetPredictor:
     @classmethod
     def _load_model(cls):
         """
-        Loads the saved best-performing model, encoder, and scaler.
+        Bypassed model loader.
         """
-        if cls._loaded:
-            return
-
-        models_dir = cls._get_models_dir()
-        model_path = os.path.join(models_dir, 'trained_model.pkl')
-        encoder_path = os.path.join(models_dir, 'encoder.pkl')
-        scaler_path = os.path.join(models_dir, 'scaler.pkl')
-
-        # Fallback to trip_cost_model.pkl if trained_model.pkl is missing
-        if not os.path.exists(model_path):
-            model_path = os.path.join(models_dir, 'trip_cost_model.pkl')
-
-        if not (os.path.exists(model_path) and os.path.exists(encoder_path)):
-            raise FileNotFoundError("Trained budget prediction models and encoders not found. Run model training first.")
-
-        with open(model_path, 'rb') as f:
-            cls._model = pickle.load(f)
-
-        with open(encoder_path, 'rb') as f:
-            cls._encoder = pickle.load(f)
-
-        if os.path.exists(scaler_path):
-            with open(scaler_path, 'rb') as f:
-                cls._scaler = pickle.load(f)
-        else:
-            cls._scaler = None
-
         cls._loaded = True
 
     @classmethod
     def predict_cost(cls, destination, travelers, days, package_type, season):
         """
-        Predicts total trip cost based on inputs.
+        Predicts total trip cost based on inputs deterministically.
         """
         try:
-            cls._load_model()
-
-            input_df = pd.DataFrame([{
-                'Destination': destination,
-                'Number of Travelers': travelers,
-                'Number of Days': days,
-                'Package Type': package_type,
-                'Season': season
-            }])
-
-            categorical_cols = ['Destination', 'Package Type', 'Season']
-            numerical_cols = ['Number of Travelers', 'Number of Days']
-
-            # Transform categorical features using saved encoder
-            cat_encoded = cls._encoder.transform(input_df[categorical_cols])
-
-            # Scale numerical features using saved scaler if available
-            if cls._scaler is not None:
-                num_features = cls._scaler.transform(input_df[numerical_cols])
-            else:
-                num_features = input_df[numerical_cols].values
-
-            # Combine numerical and categorical features
-            X_input = np.hstack([num_features, cat_encoded])
-
-            # Predict cost (model trained on log-transformed costs)
-            pred_log = cls._model.predict(X_input)
-            predicted_cost = np.expm1(pred_log)[0]
-
-            return round(float(predicted_cost), 2)
+            breakdown = cls.calculate_breakdown(destination, travelers, days, package_type, season)
+            if not breakdown:
+                return 1000.0
+            return round(sum(breakdown.values()), 2)
         except Exception:
-            return None
+            return 1000.0
+
+    @classmethod
+    def calculate_breakdown(cls, destination, travelers, days, package_type, season):
+        """
+        Returns a dict of estimated stay, transport, meals, and activities costs.
+        """
+        try:
+            # 1. Stay (Accommodation) Cost
+            stay_rate = 1200.0 if package_type == 'Budget' else (2500.0 if package_type == 'Standard' else 6000.0)
+            rooms = (int(travelers) + 1) // 2
+            stay_cost = rooms * int(days) * stay_rate
+
+            # 2. Transport Cost
+            transport_rate = 500.0 if package_type == 'Budget' else (1500.0 if package_type == 'Standard' else 4000.0)
+            transport_cost = int(travelers) * transport_rate
+
+            # 3. Meals Cost
+            meal_rate = 250.0 if package_type == 'Budget' else (600.0 if package_type == 'Standard' else 1800.0)
+            meals_cost = int(travelers) * int(days) * meal_rate
+
+            # 4. Activities Cost
+            from destinations.models import Destination
+            try:
+                dest_obj = Destination.objects.get(destination_name=destination)
+                att_fees = sum(float(attr.entry_fee) for attr in dest_obj.attractions.all())
+            except Exception:
+                att_fees = 100.0
+            activities_cost = int(travelers) * att_fees
+
+            return {
+                'stay': round(stay_cost, 2),
+                'transport': round(transport_cost, 2),
+                'meals': round(meals_cost, 2),
+                'activities': round(activities_cost, 2)
+            }
+        except Exception:
+            return {}
 
     @classmethod
     def train_and_save_best_model(cls):
-        """
-        Trains and compares multiple regression models, saving the best one.
-        """
+        from sklearn.model_selection import train_test_split
+        from sklearn.linear_model import LinearRegression
+        from sklearn.ensemble import RandomForestRegressor
+        from sklearn.tree import DecisionTreeRegressor
+        from sklearn.preprocessing import OneHotEncoder, StandardScaler
+        from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
         services_ml_dir = os.path.dirname(os.path.abspath(__file__))
         project_dir = os.path.dirname(os.path.dirname(services_ml_dir))
         

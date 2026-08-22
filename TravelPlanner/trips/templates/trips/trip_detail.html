@@ -100,28 +100,48 @@
                             {% endif %}
                         </div>
 
-                        <!-- AI Prediction Card -->
+                        <!-- Trip Budget & Cost Breakdown Card -->
                         <div class="col-md-6">
-                            <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">AI Cost Prediction</h5>
-                            <div class="card border border-info-subtle shadow-sm rounded-4 p-3 h-100 mb-0" style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%) !important; min-height: 250px;">
+                            <h5 class="fw-bold text-dark mb-3 border-bottom pb-2">Trip Budget & Cost Breakdown</h5>
+                            <div class="card border border-info-subtle shadow-sm rounded-4 p-3 h-100 mb-0" style="background: #ffffff !important; min-height: 250px;">
                                 <div id="trip-pred-loading" class="d-flex flex-column align-items-center justify-content-center h-100 py-4">
                                     <div class="spinner-border text-primary spinner-border-sm mb-2" role="status"></div>
-                                    <span class="text-muted small">Estimating cost...</span>
+                                    <span class="text-muted small">Loading budget analysis...</span>
                                 </div>
                                 <div id="trip-pred-result" class="d-none">
-                                    <span class="text-muted small d-block mb-1 text-uppercase fw-semibold">Estimated Trip Cost</span>
-                                    <h3 id="trip-pred-value" class="fw-bold text-success mb-2">₹0</h3>
-                                    <div class="border-top pt-2">
-                                        <small class="text-muted d-block mb-1">Estimated using:</small>
-                                        <ul class="list-unstyled mb-0 text-muted small">
-                                            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Destination</li>
-                                            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Number of Travelers</li>
-                                            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Duration</li>
-                                            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Package Type</li>
-                                            <li><i class="fa-solid fa-circle-check text-success me-2"></i>Season</li>
-                                        </ul>
-                                        <small class="text-muted d-block mt-2 text-center font-monospace" style="font-size: 10px;">Actual expenses may vary.</small>
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-sm-7">
+                                            <span class="text-muted small d-block mb-1 text-uppercase fw-semibold">Estimated Trip Cost</span>
+                                            <h3 id="trip-pred-value" class="fw-bold text-success mb-1">₹0</h3>
+                                            <span id="trip-daily-avg-label" class="text-muted small d-block mb-2">Daily Average: ₹0 / day</span>
+                                            
+                                            <!-- Category list values -->
+                                            <div class="small mt-2">
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="text-muted" style="font-size: 11px;"><i class="fa-solid fa-hotel me-1 text-primary"></i> Stay:</span>
+                                                    <span class="fw-bold text-dark" id="breakdown-stay" style="font-size: 11px;">₹0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="text-muted" style="font-size: 11px;"><i class="fa-solid fa-car me-1 text-warning"></i> Transport:</span>
+                                                    <span class="fw-bold text-dark" id="breakdown-transport" style="font-size: 11px;">₹0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="text-muted" style="font-size: 11px;"><i class="fa-solid fa-utensils me-1 text-danger"></i> Meals:</span>
+                                                    <span class="fw-bold text-dark" id="breakdown-meals" style="font-size: 11px;">₹0</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-1">
+                                                    <span class="text-muted" style="font-size: 11px;"><i class="fa-solid fa-ticket me-1 text-info"></i> Activities:</span>
+                                                    <span class="fw-bold text-dark" id="breakdown-activities" style="font-size: 11px;">₹0</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5 text-center d-flex justify-content-center">
+                                            <div style="position: relative; width: 120px; height: 120px;">
+                                                <canvas id="budgetBreakdownChart" width="120" height="120"></canvas>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div id="budget-detail-warning" class="mt-2"></div>
                                 </div>
                             </div>
                         </div>
@@ -340,6 +360,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const csrfToken = '{{ csrf_token }}';
@@ -376,7 +397,7 @@
                     const budgetVal = parseFloat("{{ trip.budget }}");
                     const costValNum = parseFloat(data.estimated_cost);
                     if (budgetVal > 0 && costValNum > budgetVal) {
-                        valEl.className = 'fw-bold text-danger mb-2';
+                        valEl.className = 'fw-bold text-danger mb-1';
                         
                         let warningBox = document.getElementById('budget-detail-warning');
                         if (!warningBox) {
@@ -389,11 +410,52 @@
                         const overAmt = formatter.format(costValNum - budgetVal);
                         warningBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation me-1"></i>This estimate exceeds your trip budget of <strong>${budgetFormatted}</strong> by <strong>${overAmt}</strong>.`;
                     } else {
-                        valEl.className = 'fw-bold text-success mb-2';
+                        valEl.className = 'fw-bold text-success mb-1';
                         const warningBox = document.getElementById('budget-detail-warning');
                         if (warningBox) {
                             warningBox.remove();
                         }
+                    }
+
+                    // Populate Daily average spend
+                    const totalDays = parseInt("{{ trip.itinerary_days.count }}") || 1;
+                    const dailyAvg = costValNum / totalDays;
+                    document.getElementById('trip-daily-avg-label').textContent = "Daily Average: " + formatter.format(dailyAvg) + " / day";
+
+                    // Populate Breakdown Categories
+                    if (data.breakdown) {
+                        document.getElementById('breakdown-stay').textContent = formatter.format(data.breakdown.stay || 0);
+                        document.getElementById('breakdown-transport').textContent = formatter.format(data.breakdown.transport || 0);
+                        document.getElementById('breakdown-meals').textContent = formatter.format(data.breakdown.meals || 0);
+                        document.getElementById('breakdown-activities').textContent = formatter.format(data.breakdown.activities || 0);
+
+                        // Render Pie Chart
+                        const ctx = document.getElementById('budgetBreakdownChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Stay', 'Transport', 'Meals', 'Activities'],
+                                datasets: [{
+                                    data: [
+                                        data.breakdown.stay || 0,
+                                        data.breakdown.transport || 0,
+                                        data.breakdown.meals || 0,
+                                        data.breakdown.activities || 0
+                                    ],
+                                    backgroundColor: ['#0d6efd', '#ffc107', '#dc3545', '#0dcaf0'],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
                 const resEl = document.getElementById('trip-pred-result');

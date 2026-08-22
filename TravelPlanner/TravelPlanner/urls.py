@@ -32,25 +32,16 @@ original_admin_index = admin.site.index
 def custom_admin_index(request, extra_context=None):
     extra_context = extra_context or {}
     User = get_user_model()
+    from attractions.models import Attraction
+    
     extra_context.update({
         'total_users': User.objects.count(),
         'total_destinations': Destination.objects.count(),
         'total_trips': Trip.objects.count(),
         'total_packages': Package.objects.count(),
+        'popular_cities': Destination.objects.order_by('-average_rating')[:3],
+        'popular_activities': Attraction.objects.order_by('-average_visit_time')[:3],
     })
-    
-    # Load ML Model Metrics
-    import os
-    import json
-    urls_dir = os.path.dirname(os.path.abspath(__file__))
-    project_dir = os.path.dirname(urls_dir)
-    metrics_path = os.path.join(project_dir, 'ml', 'models', 'model_metrics.json')
-    if os.path.exists(metrics_path):
-        try:
-            with open(metrics_path, 'r') as f:
-                extra_context['ml_metrics'] = json.load(f)
-        except Exception:
-            pass
 
     return original_admin_index(request, extra_context)
 

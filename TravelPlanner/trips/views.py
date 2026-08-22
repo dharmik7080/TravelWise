@@ -392,8 +392,18 @@ class TripCostEstimateView(LoginRequiredMixin, View):
         else:
             activities = ['Local Shopping', 'Food Tasting Walks', 'Photography Tours', 'City Exploration']
 
+        from services.ml.budget_predictor import BudgetPredictor
+        breakdown = BudgetPredictor.calculate_breakdown(
+            destination=destination.destination_name,
+            travelers=travelers,
+            days=days,
+            package_type=package_type,
+            season=season
+        )
+
         return JsonResponse({
             'estimated_cost': predicted_cost,
+            'breakdown': breakdown,
             'attractions': attractions_list,
             'recommended_activities': activities,
             'package_type': package_type
