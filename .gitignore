@@ -32,6 +32,4 @@ data/
 # Generated static and media files
 staticfiles/
 TravelPlanner/staticfiles/
-media/
-TravelPlanner/media/
 *.log
